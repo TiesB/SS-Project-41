@@ -19,6 +19,15 @@ public class Tile {
         this.shape = shape;
     }
 
+    public Tile(Color color, Shape shape) {
+        this.color = color;
+        this.shape = shape;
+    }
+
+    public Tile() {
+        this(Color.EMPTY, Shape.EMPTY);
+    }
+
     public void reset() {
         this.color = Color.EMPTY;
         this.shape = Shape.EMPTY;

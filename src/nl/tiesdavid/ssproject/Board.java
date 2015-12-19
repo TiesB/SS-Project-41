@@ -13,10 +13,22 @@ public class Board {
         tiles = new ArrayList<Tile>();
     }
 
+    /**
+     * Gives whether a tile exists at a given coordinate.
+     * @param x The X coordinate of the requested tile.
+     * @param y The Y coordinate of the requested tile.
+     * @return Whether a tile exists at a given coordinate.
+     */
     public boolean tileExists(int x, int y) {
         return getTile(x, y) != null;
     }
 
+    /**
+     * Gives the tile at the given coordinate.
+     * @param x The X coordinate of the requested tile.
+     * @param y The Y coordinate of the requested tile.
+     * @return The tile at the given coordinate, or null when it's non-existent.
+     */
     public Tile getTile(int x, int y) {
         for (Tile tile : tiles) {
             if (tile.getX() == x && tile.getY() == y) {
@@ -26,6 +38,11 @@ public class Board {
         return null;
     }
 
+    /**
+     * Gives the score a player gets for putting the given tile.
+     * @param tile The tile the player would like to put down.
+     * @return The score a player gets for putting the given tile.
+     */
     public int getScore(Tile tile) {
         //TODO: Check if this works.
         int score = 0;
@@ -90,6 +107,9 @@ public class Board {
         return score;
     }
 
+    /**
+     * Resets the board to a state where there are no tiles put down.
+     */
     public void reset() {
         tiles.clear();
     }

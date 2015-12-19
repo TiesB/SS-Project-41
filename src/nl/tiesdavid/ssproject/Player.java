@@ -1,6 +1,7 @@
 package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.Color;
+import java.util.ArrayList;
 
 /**
  * Created by Ties on 19-12-2015.
@@ -20,6 +21,11 @@ public abstract class Player {
         return name;
     }
 
+    /**
+     * Gives whether or not the player has tiles that are Non-Empty left.
+     * To be used to determine whether a game is over.
+     * @return Whether or not the player has tiles that are Non-Empty left.
+     */
     public boolean hasTilesLeft() {
         for (Tile tile : tiles) {
             if (!tile.getColor().equals(Color.EMPTY)) {
@@ -29,6 +35,32 @@ public abstract class Player {
         return false;
     }
 
+    /**
+     * Reorders the list so that Non-Empty tiles are at the front of the array.
+     */
+    public void reorderTiles() {
+        ArrayList<Tile> tempList = new ArrayList<Tile>();
+
+        for (Tile tile : tiles) {
+            if (!tile.getColor().equals(Color.EMPTY)) {
+                tempList.add(tile);
+            }
+        }
+
+        for (int i = tempList.size(); i < tiles.length; i++) {
+            tempList.add(new Tile());
+        }
+
+        for (int i = 0; i < tiles.length; i++) {
+            tiles[i] = tempList.get(i);
+        }
+    }
+
+    /**
+     * Gives the number of tiles sharing a characteristic.
+     * To be used at the start of a game.
+     * @return The number of tiles sharing a characteristic.
+     */
     public int getNoOfTilesSharingACharacteristic() {
         int count = 0;
 

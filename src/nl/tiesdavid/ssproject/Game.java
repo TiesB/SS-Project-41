@@ -18,16 +18,27 @@ public class Game {
         playersAndScores = new HashMap<Player, Integer>();
     }
 
+    /**
+     * Adds a player to the game. Makes sure the # of players doesn't exceed 4.
+     * @param player The player to be added.
+     */
     public void addPlayer(Player player) {
         if (playersAndScores.size() < 4) {
             playersAndScores.put(player, 0);
         }
     }
 
+    /**
+     * Gives the bag containing the remaining not given tiles.
+     * @return The bag containing the remaining not given tiles.
+     */
     public ArrayList<Tile> getBag() {
         return bag;
     }
 
+    /**
+     * Prints the scores in a user-friendly table.
+     */
     public void printScores() {
         //TODO: Format line3 nicely (same spacing as line1).
 
