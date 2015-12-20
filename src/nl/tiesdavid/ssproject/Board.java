@@ -13,6 +13,10 @@ public class Board {
         tiles = new ArrayList<Tile>();
     }
 
+    public void addTile(Tile mTile) {
+        tiles.add(mTile);
+    }
+
     /**
      * Gives whether a tile exists at a given coordinate.
      * @param x The X coordinate of the requested tile.
@@ -51,57 +55,78 @@ public class Board {
         Tile nextTile = tile;
 
         int tempX, tempY, lengthOfLine;
+        boolean setToColor, setToShape;
 
         //Check to the left
         tempX = x;
         lengthOfLine = 1;
-        while ((nextTile = getTile(tempX - 1, y)) != null) {
-            if ((tile.getColor().equals(nextTile.getColor())
-                    || tile.getShape().equals(nextTile.getShape()))
-                    && lengthOfLine < 6) {
+        setToColor = true;
+        setToShape = true;
+        while ((nextTile = getTile(tempX - 1, y)) != null && lengthOfLine < 6) {
+            if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                setToShape = false;
                 score++;
                 lengthOfLine++;
-                tempX -= 1;
+            } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                setToColor = false;
+                score++;
+                lengthOfLine++;
             }
+            tempX -= 1;
         }
 
         //Check to the right
         tempX = x;
         lengthOfLine = 1;
-        while ((nextTile = getTile(tempX + 1, y)) != null) {
-            if ((tile.getColor().equals(nextTile.getColor())
-                    || tile.getShape().equals(nextTile.getShape()))
-                    && lengthOfLine < 6) {
+        setToColor = true;
+        setToShape = true;
+        while ((nextTile = getTile(tempX + 1, y)) != null && lengthOfLine < 6) {
+            if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                setToShape = false;
                 score++;
                 lengthOfLine++;
-                tempX += 1;
+            } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                setToColor = false;
+                score++;
+                lengthOfLine++;
             }
+            tempX += 1;
         }
 
-        //Check up
+        //Check upwards
         tempY = y;
         lengthOfLine = 1;
-        while ((nextTile = getTile(x, tempY + 1)) != null) {
-            if ((tile.getColor().equals(nextTile.getColor())
-                    || tile.getShape().equals(nextTile.getShape()))
-                    && lengthOfLine < 6) {
+        setToColor = true;
+        setToShape = true;
+        while ((nextTile = getTile(x, tempY + 1)) != null && lengthOfLine < 6) {
+            if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                setToShape = false;
                 score++;
                 lengthOfLine++;
-                tempY += 1;
+            } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                setToColor = false;
+                score++;
+                lengthOfLine++;
             }
+            tempY += 1;
         }
 
-        //Check down
+        //Check downwards
         tempY = y;
         lengthOfLine = 1;
-        while ((nextTile = getTile(x, tempY - 1)) != null) {
-            if ((tile.getColor().equals(nextTile.getColor())
-                    || tile.getShape().equals(nextTile.getShape()))
-                    && lengthOfLine < 6) {
+        setToColor = true;
+        setToShape = true;
+        while ((nextTile = getTile(x, tempY - 1)) != null && lengthOfLine < 6) {
+            if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                setToShape = false;
                 score++;
                 lengthOfLine++;
-                tempY -= 1;
+            } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                setToColor = false;
+                score++;
+                lengthOfLine++;
             }
+            tempY -= 1;
         }
 
         return score;

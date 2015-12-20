@@ -3,19 +3,27 @@
  */
 package nl.tiesdavid.ssproject;
 
+import nl.tiesdavid.ssproject.exceptions.MoveException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Game {
     private Board board;
     private ArrayList<Tile> bag;
     private Map<Player, Integer> playersAndScores;
 
+    private Random randomGenerator;
+
     public Game() {
         board = new Board();
         bag = new ArrayList<Tile>();
         playersAndScores = new HashMap<Player, Integer>();
+
+        randomGenerator = new Random();
+        randomGenerator.setSeed(System.currentTimeMillis());
     }
 
     /**
@@ -28,12 +36,25 @@ public class Game {
         }
     }
 
+    public boolean makeMove(Move move) throws MoveException {
+        //TODO: Implement. Return whether move was successful (probably want to use exceptions).
+        return true;
+    }
+
     /**
      * Gives the bag containing the remaining not given tiles.
      * @return The bag containing the remaining not given tiles.
      */
     public ArrayList<Tile> getBag() {
         return bag;
+    }
+
+    public boolean hasTilesLeft() {
+        return bag.size() > 0;
+    }
+
+    public Tile getTileFromBag() {
+        return bag.get(randomGenerator.nextInt(bag.size()));
     }
 
     /**

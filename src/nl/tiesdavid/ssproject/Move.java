@@ -3,17 +3,25 @@
  */
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.Tile;
-import nl.tiesdavid.ssproject.enums.Type;
+import nl.tiesdavid.ssproject.enums.MoveType;
+import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
+import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
+import nl.tiesdavid.ssproject.exceptions.MoveException;
 
 public class Move {
-    private Type type;
+    private MoveType moveType;
 
     private Tile tile;
-    private int x;
-    private int y;
 
-    public Move() {
+    public Move(MoveType moveType, Tile mTile, Board mBoard) throws MoveException {
+        if (!moveType.equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
+            throw new InvalidMoveTypeWithArgumentsException();
+        }
+        this.moveType = moveType;
+        this.tile = mTile;
 
+        if (mBoard.tileExists(tile.getX(), tile.getY())) {
+            throw new CoordinatesAlreadyFilledException();
+        }
     }
 }

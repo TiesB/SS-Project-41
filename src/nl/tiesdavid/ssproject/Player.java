@@ -1,6 +1,8 @@
 package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.Color;
+import nl.tiesdavid.ssproject.exceptions.MoveException;
+
 import java.util.ArrayList;
 
 /**
@@ -10,15 +12,29 @@ public abstract class Player {
     private String name;
     private Tile[] tiles;
 
-    public Player(String name) {
+    private Board mBoard;
+    private Game mGame;
+
+    public Player(String name, Board mBoard, Game mGame) {
         this.name = name;
         this.tiles = new Tile[6];
+        this.mBoard = mBoard;
+        this.mGame = mGame;
     }
 
-    public abstract Tile determineMove();
+    public abstract Move determineMove() throws MoveException;
 
     public String getName() {
         return name;
+    }
+
+    private void fillTiles() {
+        reorderTiles();
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i].isEmpty() && mGame.hasTilesLeft()) {
+                tiles[i] = mGame.getTileFromBag();
+            }
+        }
     }
 
     /**

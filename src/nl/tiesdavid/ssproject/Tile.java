@@ -28,6 +28,10 @@ public class Tile {
         this(Color.EMPTY, Shape.EMPTY);
     }
 
+    public boolean isEmpty() {
+        return this.color.equals(Color.EMPTY) && this.shape.equals(Shape.EMPTY);
+    }
+
     public void reset() {
         this.color = Color.EMPTY;
         this.shape = Shape.EMPTY;
