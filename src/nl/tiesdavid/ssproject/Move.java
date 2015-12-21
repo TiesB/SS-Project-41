@@ -4,24 +4,34 @@
 package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
-import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
-import nl.tiesdavid.ssproject.exceptions.MoveException;
+
+import java.util.ArrayList;
 
 public class Move {
     private MoveType moveType;
 
     private Tile tile;
+    private ArrayList<Tile> tileList;
 
-    public Move(MoveType moveType, Tile mTile, Board mBoard) throws MoveException {
-        if (!moveType.equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
-            throw new InvalidMoveTypeWithArgumentsException();
-        }
+    public Move(MoveType moveType, Tile mTile) {
         this.moveType = moveType;
         this.tile = mTile;
+    }
 
-        if (mBoard.tileExists(tile.getX(), tile.getY())) {
-            throw new CoordinatesAlreadyFilledException();
-        }
+    public Move(MoveType moveType, ArrayList<Tile> tiles) {
+        this.moveType = moveType;
+        this.tileList = tiles;
+    }
+
+    public MoveType getMoveType() {
+        return this.moveType;
+    }
+
+    public Tile getTile() {
+        return this.tile;
+    }
+
+    public ArrayList<Tile> getTileList() {
+        return this.tileList;
     }
 }

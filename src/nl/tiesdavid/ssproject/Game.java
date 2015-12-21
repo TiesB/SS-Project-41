@@ -3,27 +3,79 @@
  */
 package nl.tiesdavid.ssproject;
 
+import nl.tiesdavid.ssproject.enums.Color;
+import nl.tiesdavid.ssproject.enums.Shape;
+import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
+import nl.tiesdavid.ssproject.exceptions.NotEnoughPlayersException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Random;
 
 public class Game {
+    private static final int MAX_AMOUNT_OF_PLAYERS = 4;
+
     private Board board;
     private ArrayList<Tile> bag;
-    private Map<Player, Integer> playersAndScores;
+    private ArrayList<Player> players;
 
     private Random randomGenerator;
 
     public Game() {
         board = new Board();
-        bag = new ArrayList<Tile>();
-        playersAndScores = new HashMap<Player, Integer>();
+        bag = new ArrayList<>();
+        players = new ArrayList<>();
+
+        fillBag();
 
         randomGenerator = new Random();
         randomGenerator.setSeed(System.currentTimeMillis());
+    }
+
+    public void start() throws NotEnoughPlayersException {
+        if (players.size() >= 2) {
+            board.reset();
+            int player = 0;
+            Player currentPlayer;
+            while (!gameOver()) {
+                currentPlayer = players.get(player);
+                currentPlayer.makeMove();
+                player = (player + 1) % players.size();
+            }
+
+            finish();
+        } else {
+            throw new NotEnoughPlayersException();
+        }
+    }
+
+    private void finish() {
+        Collections.sort(players);
+        for (Player player : players) {
+            System.out.println(player);
+        }
+    }
+
+    private boolean gameOver() {
+        for (Player player : players) {
+            if (!player.hasTilesLeft()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void fillBag() {
+        Color[] colors = Color.values();
+        Shape[] shapes = Shape.values();
+        for (int i = 0; i < 3; i++) {
+            for (Color color : colors) {
+                for (Shape shape : shapes) {
+                    bag.add(new Tile(color, shape));
+                }
+            }
+        }
     }
 
     /**
@@ -31,14 +83,24 @@ public class Game {
      * @param player The player to be added.
      */
     public void addPlayer(Player player) {
-        if (playersAndScores.size() < 4) {
-            playersAndScores.put(player, 0);
+        if (players.size() <= MAX_AMOUNT_OF_PLAYERS) {
+            players.add(player);
         }
     }
 
-    public boolean makeMove(Move move) throws MoveException {
+    public void removePlayer(Player player) {
+        int index = players.indexOf(player);
+        players.remove(index);
+    }
+
+    public int makeMove(Move move) throws MoveException {
         //TODO: Implement. Return whether move was successful (probably want to use exceptions).
-        return true;
+        Tile tile = move.getTile();
+        if (board.tileExists(tile.getX(), tile.getY())) {
+            throw new CoordinatesAlreadyFilledException();
+        }
+
+        return 0; //TODO: Return score.
     }
 
     /**
@@ -49,12 +111,23 @@ public class Game {
         return bag;
     }
 
+    public int amountOfTilesLeft() {
+        return bag.size();
+    }
+
     public boolean hasTilesLeft() {
         return bag.size() > 0;
     }
 
     public Tile getTileFromBag() {
+        if (!hasTilesLeft()) {
+            return null;
+        }
         return bag.get(randomGenerator.nextInt(bag.size()));
+    }
+
+    public void addTileToBag(Tile tile) {
+        bag.add(tile);
     }
 
     /**
@@ -65,13 +138,11 @@ public class Game {
 
         String line1 = "";
 
-        Object[] players = playersAndScores.keySet().toArray();
-
-        for (int i = 0; i < players.length - 1; i++) {
-            line1 += ((Player)players[i]).getName();
+        for (int i = 0; i < players.size() - 1; i++) {
+            line1 += players.get(i).getName();
             line1 += " | ";
         }
-        line1 += ((Player)players[players.length - 1]).getName();
+        line1 += players.get(players.size() - 1).getName();
         System.out.println(line1);
 
         String line2 = "";
@@ -82,14 +153,17 @@ public class Game {
 
         String line3 = "";
 
-        for (int i = 0; i < players.length - 1; i++) {
-            line3 += playersAndScores.get(players[i]);
-            line3 += " | ";
+        for (int i = 0; i < players.size() - 1; i++) {
+            line3 += players.get(i).getScore() + " | ";
         }
-        line3 += playersAndScores.get(players[players.length - 1]);
+        line3 += players.get(players.size() - 1).getScore();
 
         System.out.println(line3);
 
         System.out.println();
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 }

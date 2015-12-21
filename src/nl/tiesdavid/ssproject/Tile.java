@@ -24,19 +24,6 @@ public class Tile {
         this.shape = shape;
     }
 
-    public Tile() {
-        this(Color.EMPTY, Shape.EMPTY);
-    }
-
-    public boolean isEmpty() {
-        return this.color.equals(Color.EMPTY) && this.shape.equals(Shape.EMPTY);
-    }
-
-    public void reset() {
-        this.color = Color.EMPTY;
-        this.shape = Shape.EMPTY;
-    }
-
     public int getX() {
         return this.x;
     }
@@ -59,5 +46,10 @@ public class Tile {
 
     public void setShape(Shape shape) {
         this.shape = shape;
+    }
+
+    @Override
+    public String toString() {
+        return color.toString() + shape.toString();
     }
 }

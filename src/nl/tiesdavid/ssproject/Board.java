@@ -3,18 +3,82 @@
  */
 package nl.tiesdavid.ssproject;
 
+import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
+import nl.tiesdavid.ssproject.exceptions.MoveException;
+import nl.tiesdavid.ssproject.exceptions.OutOfBoundsException;
+import nl.tiesdavid.ssproject.exceptions.TooLongLineException;
+
 import java.util.ArrayList;
 
 public class Board {
 
     private ArrayList<Tile> tiles;
+    private int minX, maxX, minY, maxY;
 
     public Board() {
-        tiles = new ArrayList<Tile>();
+        tiles = new ArrayList<>();
+        minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
-    public void addTile(Tile mTile) {
+    public int placeTile(Tile mTile) throws MoveException {
+        int x = mTile.getX();
+        int y = mTile.getY();
+        if (tileExists(x, y)) {
+            throw new CoordinatesAlreadyFilledException();
+        }
+
+        //TODO: Implement method so that it checks whether there is a tile next to the tile the player wants to place. And of course think of the first tile.
+
+        if (x < minX - 1 || x > maxX + 1 || y < minY - 1 || y > maxY + 1) {
+            throw new OutOfBoundsException();
+        }
+
+        if (isEmpty() && (x != 0 || y != 0)) {
+            throw new OutOfBoundsException();
+        }
+
+        int horizontalLine = 0;
+        int verticalLine = 0;
+
+        //To the left
+        int tempX = x - 1;
+        Tile nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            horizontalLine += 1;
+            nextTile = getTile(--tempX, y);
+        }
+
+        //To the right
+        tempX = x + 1;
+        nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            horizontalLine += 1;
+            nextTile = getTile(++tempX, y);
+        }
+
+        //Upwards
+        int tempY = y - 1;
+        nextTile = getTile(x, tempY);
+        while (nextTile != null) {
+            verticalLine += 1;
+            nextTile = getTile(x, --tempY);
+        }
+
+        //Downwards
+        tempY = y + 1;
+        nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            verticalLine += 1;
+            nextTile = getTile(x, ++tempY);
+        }
+
+        if (horizontalLine > 6 || verticalLine > 6) {
+            throw new TooLongLineException();
+        }
+
         tiles.add(mTile);
+        calculateMinMax(x, y);
+        return getScore(mTile);
     }
 
     /**
@@ -27,13 +91,17 @@ public class Board {
         return getTile(x, y) != null;
     }
 
+    public boolean isEmpty() {
+        return tiles.isEmpty();
+    }
+
     /**
      * Gives the tile at the given coordinate.
      * @param x The X coordinate of the requested tile.
      * @param y The Y coordinate of the requested tile.
      * @return The tile at the given coordinate, or null when it's non-existent.
      */
-    public Tile getTile(int x, int y) {
+    private Tile getTile(int x, int y) {
         for (Tile tile : tiles) {
             if (tile.getX() == x && tile.getY() == y) {
                 return tile;
@@ -52,27 +120,31 @@ public class Board {
         int score = 0;
         int x = tile.getX();
         int y = tile.getY();
-        Tile nextTile = tile;
 
         int tempX, tempY, lengthOfLine;
         boolean setToColor, setToShape;
+        boolean horizontalLine = false, verticalLine = false;
 
         //Check to the left
         tempX = x;
         lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
-        while ((nextTile = getTile(tempX - 1, y)) != null && lengthOfLine < 6) {
+        Tile nextTile = getTile(tempX - 1, y);
+        while (nextTile != null && lengthOfLine < 6) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                horizontalLine = true;
                 setToShape = false;
                 score++;
                 lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                horizontalLine = true;
                 setToColor = false;
                 score++;
                 lengthOfLine++;
             }
             tempX -= 1;
+            nextTile = getTile(tempX - 1, y);
         }
 
         //Check to the right
@@ -80,17 +152,21 @@ public class Board {
         lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
-        while ((nextTile = getTile(tempX + 1, y)) != null && lengthOfLine < 6) {
+        nextTile = getTile(tempX + 1, y);
+        while (nextTile != null && lengthOfLine < 6) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                horizontalLine = true;
                 setToShape = false;
                 score++;
                 lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                horizontalLine = true;
                 setToColor = false;
                 score++;
                 lengthOfLine++;
             }
             tempX += 1;
+            nextTile = getTile(tempX + 1, y);
         }
 
         //Check upwards
@@ -98,17 +174,21 @@ public class Board {
         lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
-        while ((nextTile = getTile(x, tempY + 1)) != null && lengthOfLine < 6) {
+        nextTile = getTile(x, tempY - 1);
+        while (nextTile != null && lengthOfLine < 6) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                verticalLine = true;
                 setToShape = false;
                 score++;
                 lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                verticalLine = true;
                 setToColor = false;
                 score++;
                 lengthOfLine++;
             }
-            tempY += 1;
+            tempY -= 1;
+            nextTile = getTile(x, tempY - 1);
         }
 
         //Check downwards
@@ -116,20 +196,45 @@ public class Board {
         lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
-        while ((nextTile = getTile(x, tempY - 1)) != null && lengthOfLine < 6) {
+        nextTile = getTile(x, tempY + 1);
+        while (nextTile != null && lengthOfLine < 6) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
+                verticalLine = true;
                 setToShape = false;
                 score++;
                 lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
+                verticalLine = true;
                 setToColor = false;
                 score++;
                 lengthOfLine++;
             }
-            tempY -= 1;
+            tempY += 1;
+            nextTile = getTile(x, tempY + 1);
+        }
+
+        if (horizontalLine) {
+            score++;
+        }
+        if (verticalLine) {
+            score++;
         }
 
         return score;
+    }
+
+    private void calculateMinMax(int x, int y) {
+        if (x < minX) {
+            minX = x;
+        } else if (x > maxX) {
+            maxX = x;
+        }
+
+        if (y < minY) {
+            minY = y;
+        } else if (y > maxY) {
+            maxY = y;
+        }
     }
 
     /**
@@ -137,5 +242,19 @@ public class Board {
      */
     public void reset() {
         tiles.clear();
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
+
+        for (int i = 0; i < tiles.size() - 1; i++) {
+            string += tiles.get(i) + " | ";
+        }
+        if (tiles.size() > 0) {
+            string += tiles.get(tiles.size() - 1);
+        }
+
+        return string;
     }
 }
