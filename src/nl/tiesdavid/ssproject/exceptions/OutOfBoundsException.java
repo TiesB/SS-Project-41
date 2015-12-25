@@ -3,7 +3,7 @@
  */
 package nl.tiesdavid.ssproject.exceptions;
 
-public class OutOfBoundsException extends MoveException {
+public class OutOfBoundsException extends InvalidTilePlacementException {
     @Override
     public String getMessage() {
         return "The specified coordinates are out of bounds.";

@@ -3,10 +3,7 @@
  */
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
-import nl.tiesdavid.ssproject.exceptions.MoveException;
-import nl.tiesdavid.ssproject.exceptions.OutOfBoundsException;
-import nl.tiesdavid.ssproject.exceptions.TooLongLineException;
+import nl.tiesdavid.ssproject.exceptions.*;
 
 import java.util.ArrayList;
 
@@ -20,30 +17,33 @@ public class Board {
         minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
-    public int placeTile(Tile tile) throws MoveException {
+    public int placeTile(Tile tile) throws InvalidTilePlacementException {
         int x = tile.getX();
         int y = tile.getY();
+
         if (tileExists(x, y)) {
             throw new CoordinatesAlreadyFilledException();
+        } else if (x == 0 && y == 0) {
+            return 1;
         }
-
-        //TODO: Implement method so that it checks whether there is a tile next to the tile the player wants to place. And of course think of the first tile.
 
         if (x < minX - 1 || x > maxX + 1 || y < minY - 1 || y > maxY + 1) {
             throw new OutOfBoundsException();
         }
 
-        if (isEmpty() && (x != 0 || y != 0)) {
+        if (isEmpty()) {
             throw new OutOfBoundsException();
         }
 
         int horizontalLine = 0;
         int verticalLine = 0;
+        boolean neighboringTile = false;
 
         //To the left
         int tempX = x - 1;
         Tile nextTile = getTile(tempX, y);
         while (nextTile != null) {
+            neighboringTile = true;
             horizontalLine += 1;
             nextTile = getTile(--tempX, y);
         }
@@ -52,6 +52,7 @@ public class Board {
         tempX = x + 1;
         nextTile = getTile(tempX, y);
         while (nextTile != null) {
+            neighboringTile = true;
             horizontalLine += 1;
             nextTile = getTile(++tempX, y);
         }
@@ -60,6 +61,7 @@ public class Board {
         int tempY = y - 1;
         nextTile = getTile(x, tempY);
         while (nextTile != null) {
+            neighboringTile = true;
             verticalLine += 1;
             nextTile = getTile(x, --tempY);
         }
@@ -68,8 +70,13 @@ public class Board {
         tempY = y + 1;
         nextTile = getTile(tempX, y);
         while (nextTile != null) {
+            neighboringTile = true;
             verticalLine += 1;
             nextTile = getTile(x, ++tempY);
+        }
+
+        if (!neighboringTile) {
+            throw new NoNeighboringTileException();
         }
 
         if (horizontalLine > 6 || verticalLine > 6) {
@@ -116,31 +123,28 @@ public class Board {
      * @return The score a player gets for putting the given tile.
      */
     public int getScore(Tile tile) {
+        //TODO: Maybe integrate this and place tile. Lot of redundant code now.
         int score = 0;
         int x = tile.getX();
         int y = tile.getY();
 
-        int tempX, tempY, lengthOfLine;
+        int tempX, tempY, horizontalLine = 0, verticalLine = 0;
         boolean setToColor, setToShape;
-        boolean horizontalLine = false, verticalLine = false;
 
         //Check to the left
         tempX = x;
-        lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
         Tile nextTile = getTile(tempX - 1, y);
-        while (nextTile != null && lengthOfLine < 6) {
+        while (nextTile != null) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
-                horizontalLine = true;
+                horizontalLine++;
                 setToShape = false;
                 score++;
-                lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
-                horizontalLine = true;
+                horizontalLine++;
                 setToColor = false;
                 score++;
-                lengthOfLine++;
             }
             tempX -= 1;
             nextTile = getTile(tempX - 1, y);
@@ -148,21 +152,18 @@ public class Board {
 
         //Check to the right
         tempX = x;
-        lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
         nextTile = getTile(tempX + 1, y);
-        while (nextTile != null && lengthOfLine < 6) {
+        while (nextTile != null) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
-                horizontalLine = true;
+                horizontalLine++;
                 setToShape = false;
                 score++;
-                lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
-                horizontalLine = true;
+                horizontalLine++;
                 setToColor = false;
                 score++;
-                lengthOfLine++;
             }
             tempX += 1;
             nextTile = getTile(tempX + 1, y);
@@ -170,21 +171,18 @@ public class Board {
 
         //Check upwards
         tempY = y;
-        lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
         nextTile = getTile(x, tempY - 1);
-        while (nextTile != null && lengthOfLine < 6) {
+        while (nextTile != null) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
-                verticalLine = true;
+                verticalLine++;
                 setToShape = false;
                 score++;
-                lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
-                verticalLine = true;
+                verticalLine++;
                 setToColor = false;
                 score++;
-                lengthOfLine++;
             }
             tempY -= 1;
             nextTile = getTile(x, tempY - 1);
@@ -192,31 +190,35 @@ public class Board {
 
         //Check downwards
         tempY = y;
-        lengthOfLine = 1;
         setToColor = true;
         setToShape = true;
         nextTile = getTile(x, tempY + 1);
-        while (nextTile != null && lengthOfLine < 6) {
+        while (nextTile != null) {
             if (tile.getColor().equals(nextTile.getColor()) && setToColor) {
-                verticalLine = true;
+                verticalLine++;
                 setToShape = false;
                 score++;
-                lengthOfLine++;
             } else if (tile.getShape().equals(nextTile.getShape()) && setToShape) {
-                verticalLine = true;
+                verticalLine++;
                 setToColor = false;
                 score++;
-                lengthOfLine++;
             }
             tempY += 1;
             nextTile = getTile(x, tempY + 1);
         }
 
-        if (horizontalLine) {
+        if (horizontalLine > 0) {
             score++;
         }
-        if (verticalLine) {
+        if (verticalLine > 0) {
             score++;
+        }
+
+        if (horizontalLine == 6) {
+            score += 6;
+        }
+        if (verticalLine == 6) {
+            score += 6;
         }
 
         return score;

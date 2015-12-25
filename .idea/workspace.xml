@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TilesDontShareAttributeException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidTilePlacementException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughTilesGivenException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/PlayerTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/TestPlayer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java" />
     </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,12 +49,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="123">
-      <file leaf-file-name="Qwirkle.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28412256">
-              <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
-              <folding />
+            <state vertical-scroll-proportion="0.18245125">
+              <caret line="181" column="0" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#Player#0;class#Player#0" expanded="true" />
+                <element signature="method#makeMove#0;class#Player#0" expanded="true" />
+                <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
+                <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
+                <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
+                <element signature="method#win#0;class#Player#0" expanded="true" />
+                <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
+                <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
+                <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
+                <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="true" />
+                <element signature="method#findTile#0;class#Player#0" expanded="true" />
+                <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+                <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -55,15 +78,61 @@
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
+              <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
               <folding>
                 <element signature="method#Tile#1;class#Tile#0" expanded="true" />
-                <element signature="e#793#794#0" expanded="true" />
-                <element signature="e#819#820#0" expanded="true" />
-                <element signature="e#850#851#0" expanded="true" />
-                <element signature="e#876#877#0" expanded="true" />
-                <element signature="e#1062#1063#0" expanded="true" />
-                <element signature="e#1153#1154#0" expanded="true" />
+                <element signature="e#722#723#0" expanded="true" />
+                <element signature="e#757#758#0" expanded="true" />
+                <element signature="e#963#964#0" expanded="true" />
+                <element signature="e#989#990#0" expanded="true" />
+                <element signature="e#1036#1037#0" expanded="true" />
+                <element signature="e#1074#1075#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlayerTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/PlayerTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#343#344#0" expanded="true" />
+                <element signature="e#384#385#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestPlayer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/TestPlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#addTileToDeck#0;class#TestPlayer#0" expanded="true" />
+                <element signature="e#505#506#0" expanded="true" />
+                <element signature="e#532#533#0" expanded="true" />
+                <element signature="method#handleException#0;class#TestPlayer#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BoardTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/BoardTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#resetTest#0;class#BoardTest#0" expanded="true" />
+                <element signature="method#addTileTest#0;class#BoardTest#0" expanded="true" />
+                <element signature="method#addAlreadyExistentTile#0;class#BoardTest#0" expanded="true" />
+                <element signature="method#scoreTest#0;class#BoardTest#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,32 +142,23 @@
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
+              <caret line="101" column="5" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#352#353#0" expanded="true" />
-                <element signature="e#385#386#0" expanded="true" />
                 <element signature="method#determineMove#0;class#HumanPlayer#0" expanded="true" />
                 <element signature="method#handleException#0;class#HumanPlayer#0" expanded="true" />
+                <element signature="method#getTileFromUser#0;class#HumanPlayer#0" expanded="true" />
+                <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
                 <element signature="method#addToGridAndDraw#0;class#HumanPlayer#0" expanded="true" />
-                <element signature="method#tradeTiles#0;class#HumanPlayer#0" expanded="true" />
+                <element signature="e#2894#2895#0" expanded="true" />
+                <element signature="e#2986#2987#0" expanded="true" />
+                <element signature="e#3019#3020#0" expanded="true" />
+                <element signature="e#3105#3106#0" expanded="true" />
                 <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
                 <element signature="method#readTile#0;class#HumanPlayer#0" expanded="true" />
-                <element signature="e#3287#3316#1" expanded="true" />
                 <element signature="method#parseTileString#0;class#HumanPlayer#0" expanded="true" />
                 <element signature="method#readInt#0;class#HumanPlayer#0" expanded="true" />
-                <element signature="e#5365#5394#1" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Shape.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Shape.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -107,95 +167,21 @@
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+              <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#Game#0;class#Game#0" expanded="true" />
+                <element signature="method#start#0;class#Game#0" expanded="true" />
                 <element signature="method#finish#0;class#Game#0" expanded="true" />
                 <element signature="method#gameOver#0;class#Game#0" expanded="true" />
                 <element signature="method#fillBag#0;class#Game#0" expanded="true" />
                 <element signature="docComment;method#addPlayer#0;class#Game#0" expanded="true" />
                 <element signature="method#addPlayer#0;class#Game#0" expanded="true" />
                 <element signature="method#removePlayer#0;class#Game#0" expanded="true" />
-                <element signature="method#makeMove#0;class#Game#0" expanded="true" />
                 <element signature="docComment;method#getBag#0;class#Game#0" expanded="true" />
-                <element signature="e#3568#3569#0" expanded="true" />
-                <element signature="e#3601#3602#0" expanded="true" />
                 <element signature="method#getTileFromBag#0;class#Game#0" expanded="true" />
-                <element signature="e#3887#3888#0" expanded="true" />
-                <element signature="e#3916#3917#0" expanded="true" />
                 <element signature="docComment;method#printScores#0;class#Game#0" expanded="true" />
                 <element signature="method#printScores#0;class#Game#0" expanded="true" />
-                <element signature="e#4806#4807#0" expanded="true" />
-                <element signature="e#4839#4840#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Move.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#Move#0;class#Move#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#Player#0;class#Player#0" expanded="true" />
-                <element signature="method#makeMove#0;class#Player#0" expanded="true" />
-                <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
-                <element signature="method#win#0;class#Player#0" expanded="true" />
-                <element signature="e#3055#3056#0" expanded="true" />
-                <element signature="e#3082#3083#0" expanded="true" />
-                <element signature="e#3111#3112#0" expanded="true" />
-                <element signature="e#3139#3140#0" expanded="true" />
-                <element signature="e#3187#3188#0" expanded="true" />
-                <element signature="e#3221#3222#0" expanded="true" />
-                <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
-                <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
-                <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
-                <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="true" />
-                <element signature="method#findTile#0;class#Player#0" expanded="true" />
-                <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
-                <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
-                <element signature="e#5513#5514#0" expanded="true" />
-                <element signature="e#5573#5574#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TilesDontShareAttributeException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TilesDontShareAttributeException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="78" selection-start-line="8" selection-start-column="78" selection-end-line="8" selection-end-column="78" />
-              <folding>
-                <element signature="e#201#202#0" expanded="true" />
-                <element signature="e#286#287#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Deck.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Deck.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -204,20 +190,40 @@
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+              <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Board#0;class#Board#0" expanded="true" />
-                <element signature="method#placeTile#0;class#Board#0" expanded="true" />
-                <element signature="e#2617#2618#0" expanded="true" />
-                <element signature="e#2649#2650#0" expanded="true" />
-                <element signature="e#2687#2688#0" expanded="true" />
+                <element signature="docComment;method#tileExists#0;class#Board#0" expanded="true" />
                 <element signature="docComment;method#getTile#0;class#Board#0" expanded="true" />
                 <element signature="method#getTile#0;class#Board#0" expanded="true" />
                 <element signature="method#getScore#0;class#Board#0" expanded="true" />
                 <element signature="method#calculateMinMax#0;class#Board#0" expanded="true" />
                 <element signature="docComment;method#reset#0;class#Board#0" expanded="true" />
                 <element signature="method#toString#0;class#Board#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TooLongLineException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OutOfBoundsException.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
+              <folding>
+                <element signature="e#205#206#0" expanded="true" />
+                <element signature="e#274#275#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -254,23 +260,28 @@
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/MoveException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidMoveTypeWithArguments.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidMoveTypeWithArgumentsException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughPlayersException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Main.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/BoardTest.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Deck.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Color.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Shape.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TilesDontShareAttributeException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughTilesGivenException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidTilePlacementException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/TestPlayer.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/PlayerTest.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
       </list>
     </option>
@@ -332,6 +343,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -437,8 +450,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -465,7 +476,7 @@
     <option name="referencePos" value="0" />
     <option name="showLabels" value="true" />
   </component>
-  <component name="RunManager" selected="Application.Qwirkle">
+  <component name="RunManager" selected="JUnit.PlayerTest">
     <configuration default="false" name="Qwirkle" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -505,6 +516,32 @@
       <option name="VM_PARAMETERS" value="" />
       <option name="PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="PlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="nl.tiesdavid.ssproject.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="SS-Project-41" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="nl.tiesdavid.ssproject.test" />
+      <option name="MAIN_CLASS_NAME" value="nl.tiesdavid.ssproject.test.PlayerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -677,14 +714,16 @@
       <listeners />
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Qwirkle" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.BoardTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.PlayerTest" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.Qwirkle" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.BoardTest" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.PlayerTest" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Qwirkle" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BoardTest" />
       </list>
     </recent_temporary>
   </component>
@@ -699,27 +738,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="BoardTest - 2015.12.20 at 20h 17m 27s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 20h 17m 44s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 22h 31m 34s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 22h 33m 15s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 22h 36m 54s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 22h 37m 33s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="BoardTest - 2015.12.20 at 22h 39m 50s.xml">
-      <configuration name="BoardTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="BoardTest - 2015.12.21 at 00h 41m 09s.xml">
       <configuration name="BoardTest" configurationId="JUnit" />
     </history-entry>
@@ -728,6 +746,27 @@
     </history-entry>
     <history-entry file="BoardTest - 2015.12.21 at 00h 43m 41s.xml">
       <configuration name="BoardTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 23m 11s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 23m 34s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 23m 50s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 25m 42s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 31m 58s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 32m 30s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="PlayerTest - 2015.12.26 at 00h 36m 46s.xml">
+      <configuration name="PlayerTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -744,20 +783,18 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.49582464" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29882604" sideWeight="0.51043844" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3991462" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24418604" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2410148" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2410148" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.234375" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.48189417" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.49791232" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -768,6 +805,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.48189417" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -793,10 +832,155 @@
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
           <folding>
-            <element signature="e#168#169#0" expanded="false" />
+            <element signature="method#Tile#1;class#Tile#0" expanded="true" />
+            <element signature="e#906#907#0" expanded="true" />
+            <element signature="e#932#933#0" expanded="true" />
+            <element signature="e#963#964#0" expanded="true" />
+            <element signature="e#989#990#0" expanded="true" />
+            <element signature="e#1260#1261#0" expanded="true" />
+            <element signature="e#1351#1352#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#determineMove#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#handleException#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#getTileFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#addToGridAndDraw#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="e#2894#2895#0" expanded="true" />
+            <element signature="e#2986#2987#0" expanded="true" />
+            <element signature="e#3019#3020#0" expanded="true" />
+            <element signature="e#3105#3106#0" expanded="true" />
+            <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#readTile#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#parseTileString#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#readInt#0;class#HumanPlayer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Shape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#start#0;class#Game#0" expanded="true" />
+            <element signature="method#finish#0;class#Game#0" expanded="true" />
+            <element signature="method#gameOver#0;class#Game#0" expanded="true" />
+            <element signature="method#fillBag#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#addPlayer#0;class#Game#0" expanded="true" />
+            <element signature="method#addPlayer#0;class#Game#0" expanded="true" />
+            <element signature="method#removePlayer#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#getBag#0;class#Game#0" expanded="true" />
+            <element signature="method#getTileFromBag#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#printScores#0;class#Game#0" expanded="true" />
+            <element signature="method#printScores#0;class#Game#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Move#0;class#Move#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Player#0;class#Player#0" expanded="true" />
+            <element signature="method#makeMove#0;class#Player#0" expanded="true" />
+            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
+            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
+            <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
+            <element signature="method#win#0;class#Player#0" expanded="true" />
+            <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
+            <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
+            <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
+            <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="true" />
+            <element signature="method#findTile#0;class#Player#0" expanded="true" />
+            <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+            <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TilesDontShareAttributeException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="78" selection-start-line="8" selection-start-column="78" selection-end-line="8" selection-end-column="78" />
+          <folding>
+            <element signature="e#201#202#0" expanded="true" />
+            <element signature="e#286#287#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Deck.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Board#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#tileExists#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#getTile#0;class#Board#0" expanded="true" />
+            <element signature="method#getTile#0;class#Board#0" expanded="true" />
+            <element signature="method#getScore#0;class#Board#0" expanded="true" />
+            <element signature="method#calculateMinMax#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#reset#0;class#Board#0" expanded="true" />
+            <element signature="method#toString#0;class#Board#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -804,7 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -812,7 +995,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -820,7 +1002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -831,10 +1012,7 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Board#0;class#Board#0" expanded="true" />
-            <element signature="method#placeTile#0;class#Board#0" expanded="true" />
-            <element signature="e#2617#2618#0" expanded="true" />
-            <element signature="e#2649#2650#0" expanded="true" />
-            <element signature="e#2687#2688#0" expanded="true" />
+            <element signature="docComment;method#tileExists#0;class#Board#0" expanded="true" />
             <element signature="docComment;method#getTile#0;class#Board#0" expanded="true" />
             <element signature="method#getTile#0;class#Board#0" expanded="true" />
             <element signature="method#getScore#0;class#Board#0" expanded="true" />
@@ -851,24 +1029,17 @@
           <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#Game#0;class#Game#0" expanded="true" />
+            <element signature="method#start#0;class#Game#0" expanded="true" />
             <element signature="method#finish#0;class#Game#0" expanded="true" />
             <element signature="method#gameOver#0;class#Game#0" expanded="true" />
             <element signature="method#fillBag#0;class#Game#0" expanded="true" />
             <element signature="docComment;method#addPlayer#0;class#Game#0" expanded="true" />
             <element signature="method#addPlayer#0;class#Game#0" expanded="true" />
             <element signature="method#removePlayer#0;class#Game#0" expanded="true" />
-            <element signature="method#makeMove#0;class#Game#0" expanded="true" />
             <element signature="docComment;method#getBag#0;class#Game#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3601#3602#0" expanded="true" />
             <element signature="method#getTileFromBag#0;class#Game#0" expanded="true" />
-            <element signature="e#3887#3888#0" expanded="true" />
-            <element signature="e#3916#3917#0" expanded="true" />
             <element signature="docComment;method#printScores#0;class#Game#0" expanded="true" />
             <element signature="method#printScores#0;class#Game#0" expanded="true" />
-            <element signature="e#4806#4807#0" expanded="true" />
-            <element signature="e#4839#4840#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -878,14 +1049,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#Move#0;class#Move#0" expanded="true" />
-            <element signature="method#Move#1;class#Move#0" expanded="true" />
-            <element signature="e#548#549#0" expanded="true" />
-            <element signature="e#584#585#0" expanded="true" />
-            <element signature="e#613#614#0" expanded="true" />
-            <element signature="e#645#646#0" expanded="true" />
-            <element signature="e#689#690#0" expanded="true" />
-            <element signature="e#725#726#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -898,14 +1063,10 @@
             <element signature="imports" expanded="true" />
             <element signature="method#Player#0;class#Player#0" expanded="true" />
             <element signature="method#makeMove#0;class#Player#0" expanded="true" />
+            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
+            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
             <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
             <element signature="method#win#0;class#Player#0" expanded="true" />
-            <element signature="e#3055#3056#0" expanded="true" />
-            <element signature="e#3082#3083#0" expanded="true" />
-            <element signature="e#3111#3112#0" expanded="true" />
-            <element signature="e#3139#3140#0" expanded="true" />
-            <element signature="e#3187#3188#0" expanded="true" />
-            <element signature="e#3221#3222#0" expanded="true" />
             <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
             <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
             <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
@@ -913,8 +1074,6 @@
             <element signature="method#findTile#0;class#Player#0" expanded="true" />
             <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
             <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5573#5574#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -923,9 +1082,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding>
-            <element signature="e#168#169#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -933,7 +1090,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -941,7 +1097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -949,7 +1104,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -957,7 +1111,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -965,7 +1118,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.576923">
           <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1002,17 +1154,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="69" selection-start-line="8" selection-start-column="69" selection-end-line="8" selection-end-column="69" />
-          <folding>
-            <element signature="e#202#203#0" expanded="false" />
-            <element signature="e#280#281#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughPlayersException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1024,51 +1165,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding>
-            <element signature="method#getMessage#0;class#TooLongLineException#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidMoveTypeWithArgumentsException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="e#206#207#0" expanded="false" />
-            <element signature="e#287#288#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="62" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
-          <folding>
-            <element signature="e#189#190#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/BoardTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="56" selection-start-line="71" selection-start-column="56" selection-end-line="71" selection-end-column="56" />
-          <folding>
-            <element signature="e#590#591#0" expanded="true" />
-            <element signature="e#625#626#0" expanded="true" />
-            <element signature="e#669#670#0" expanded="true" />
-            <element signature="e#719#720#0" expanded="true" />
-            <element signature="method#resetTest#0;class#BoardTest#0" expanded="true" />
-            <element signature="method#addTileTest#0;class#BoardTest#0" expanded="true" />
-            <element signature="method#addAlreadyExistentTile#0;class#BoardTest#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1076,7 +1176,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1107,127 +1206,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Game#0;class#Game#0" expanded="true" />
-            <element signature="method#finish#0;class#Game#0" expanded="true" />
-            <element signature="method#gameOver#0;class#Game#0" expanded="true" />
-            <element signature="method#fillBag#0;class#Game#0" expanded="true" />
-            <element signature="docComment;method#addPlayer#0;class#Game#0" expanded="true" />
-            <element signature="method#addPlayer#0;class#Game#0" expanded="true" />
-            <element signature="method#removePlayer#0;class#Game#0" expanded="true" />
-            <element signature="method#makeMove#0;class#Game#0" expanded="true" />
-            <element signature="docComment;method#getBag#0;class#Game#0" expanded="true" />
-            <element signature="e#3568#3569#0" expanded="true" />
-            <element signature="e#3601#3602#0" expanded="true" />
-            <element signature="method#getTileFromBag#0;class#Game#0" expanded="true" />
-            <element signature="e#3887#3888#0" expanded="true" />
-            <element signature="e#3916#3917#0" expanded="true" />
-            <element signature="docComment;method#printScores#0;class#Game#0" expanded="true" />
-            <element signature="method#printScores#0;class#Game#0" expanded="true" />
-            <element signature="e#4806#4807#0" expanded="true" />
-            <element signature="e#4839#4840#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
-          <folding>
-            <element signature="method#Tile#1;class#Tile#0" expanded="true" />
-            <element signature="e#793#794#0" expanded="true" />
-            <element signature="e#819#820#0" expanded="true" />
-            <element signature="e#850#851#0" expanded="true" />
-            <element signature="e#876#877#0" expanded="true" />
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1153#1154#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#352#353#0" expanded="true" />
-            <element signature="e#385#386#0" expanded="true" />
-            <element signature="method#determineMove#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#handleException#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#addToGridAndDraw#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#tradeTiles#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#readTile#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="e#3287#3316#1" expanded="true" />
-            <element signature="method#parseTileString#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="method#readInt#0;class#HumanPlayer#0" expanded="true" />
-            <element signature="e#5365#5394#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Deck.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Board#0;class#Board#0" expanded="true" />
-            <element signature="method#placeTile#0;class#Board#0" expanded="true" />
-            <element signature="e#2617#2618#0" expanded="true" />
-            <element signature="e#2649#2650#0" expanded="true" />
-            <element signature="e#2687#2688#0" expanded="true" />
-            <element signature="docComment;method#getTile#0;class#Board#0" expanded="true" />
-            <element signature="method#getTile#0;class#Board#0" expanded="true" />
-            <element signature="method#getScore#0;class#Board#0" expanded="true" />
-            <element signature="method#calculateMinMax#0;class#Board#0" expanded="true" />
-            <element signature="docComment;method#reset#0;class#Board#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Player#0;class#Player#0" expanded="true" />
-            <element signature="method#makeMove#0;class#Player#0" expanded="true" />
-            <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
-            <element signature="method#win#0;class#Player#0" expanded="true" />
-            <element signature="e#3055#3056#0" expanded="true" />
-            <element signature="e#3082#3083#0" expanded="true" />
-            <element signature="e#3111#3112#0" expanded="true" />
-            <element signature="e#3139#3140#0" expanded="true" />
-            <element signature="e#3187#3188#0" expanded="true" />
-            <element signature="e#3221#3222#0" expanded="true" />
-            <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
-            <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
-            <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
-            <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="true" />
-            <element signature="method#findTile#0;class#Player#0" expanded="true" />
-            <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
-            <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
-            <element signature="e#5513#5514#0" expanded="true" />
-            <element signature="e#5573#5574#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1244,9 +1227,213 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28412256">
+        <state vertical-scroll-proportion="0.0">
           <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughTilesGivenException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+          <folding>
+            <element signature="e#197#198#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidTilePlacementException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="e#198#199#0" expanded="true" />
+            <element signature="e#249#250#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="75" selection-start-line="8" selection-start-column="75" selection-end-line="8" selection-end-column="75" />
+          <folding>
+            <element signature="e#211#212#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="84" selection-start-line="5" selection-start-column="84" selection-end-line="5" selection-end-column="84" />
+          <folding>
+            <element signature="e#218#219#0" expanded="true" />
+            <element signature="e#296#297#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
+          <folding>
+            <element signature="e#205#206#0" expanded="true" />
+            <element signature="e#274#275#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/TestPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#addTileToDeck#0;class#TestPlayer#0" expanded="true" />
+            <element signature="e#505#506#0" expanded="true" />
+            <element signature="e#532#533#0" expanded="true" />
+            <element signature="method#handleException#0;class#TestPlayer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#start#0;class#Game#0" expanded="true" />
+            <element signature="method#finish#0;class#Game#0" expanded="true" />
+            <element signature="method#gameOver#0;class#Game#0" expanded="true" />
+            <element signature="method#fillBag#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#addPlayer#0;class#Game#0" expanded="true" />
+            <element signature="method#addPlayer#0;class#Game#0" expanded="true" />
+            <element signature="method#removePlayer#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#getBag#0;class#Game#0" expanded="true" />
+            <element signature="method#getTileFromBag#0;class#Game#0" expanded="true" />
+            <element signature="docComment;method#printScores#0;class#Game#0" expanded="true" />
+            <element signature="method#printScores#0;class#Game#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="5" selection-start-line="101" selection-start-column="5" selection-end-line="101" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#determineMove#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#handleException#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#getTileFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#addToGridAndDraw#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="e#2894#2895#0" expanded="true" />
+            <element signature="e#2986#2987#0" expanded="true" />
+            <element signature="e#3019#3020#0" expanded="true" />
+            <element signature="e#3105#3106#0" expanded="true" />
+            <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#readTile#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#parseTileString#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#readInt#0;class#HumanPlayer#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="26" column="21" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Board#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#tileExists#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#getTile#0;class#Board#0" expanded="true" />
+            <element signature="method#getTile#0;class#Board#0" expanded="true" />
+            <element signature="method#getScore#0;class#Board#0" expanded="true" />
+            <element signature="method#calculateMinMax#0;class#Board#0" expanded="true" />
+            <element signature="docComment;method#reset#0;class#Board#0" expanded="true" />
+            <element signature="method#toString#0;class#Board#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/BoardTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#resetTest#0;class#BoardTest#0" expanded="true" />
+            <element signature="method#addTileTest#0;class#BoardTest#0" expanded="true" />
+            <element signature="method#addAlreadyExistentTile#0;class#BoardTest#0" expanded="true" />
+            <element signature="method#scoreTest#0;class#BoardTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/PlayerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#343#344#0" expanded="true" />
+            <element signature="e#384#385#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+          <folding>
+            <element signature="method#Tile#1;class#Tile#0" expanded="true" />
+            <element signature="e#722#723#0" expanded="true" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#963#964#0" expanded="true" />
+            <element signature="e#989#990#0" expanded="true" />
+            <element signature="e#1036#1037#0" expanded="true" />
+            <element signature="e#1074#1075#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18245125">
+          <caret line="181" column="0" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Player#0;class#Player#0" expanded="true" />
+            <element signature="method#makeMove#0;class#Player#0" expanded="true" />
+            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
+            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
+            <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
+            <element signature="method#win#0;class#Player#0" expanded="true" />
+            <element signature="method#tradeTile#0;class#Player#0" expanded="true" />
+            <element signature="method#drawTileFromBag#0;class#Player#0" expanded="true" />
+            <element signature="method#fillDeck#0;class#Player#0" expanded="true" />
+            <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="true" />
+            <element signature="method#findTile#0;class#Player#0" expanded="true" />
+            <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+            <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

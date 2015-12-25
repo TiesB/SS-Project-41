@@ -3,7 +3,7 @@
  */
 package nl.tiesdavid.ssproject.exceptions;
 
-public class CoordinatesAlreadyFilledException extends MoveException {
+public class CoordinatesAlreadyFilledException extends InvalidTilePlacementException {
     @Override
     public String getMessage() {
         return "There already is a tile on the specified coordinates.";

@@ -5,8 +5,6 @@ package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.Shape;
-import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
-import nl.tiesdavid.ssproject.exceptions.MoveException;
 import nl.tiesdavid.ssproject.exceptions.NotEnoughPlayersException;
 
 import java.util.ArrayList;
@@ -102,16 +100,6 @@ public class Game {
     public void removePlayer(Player player) {
         int index = players.indexOf(player);
         players.remove(index);
-    }
-
-    public int makeMove(Move move) throws MoveException {
-        //TODO: Implement. Return whether move was successful (probably want to use exceptions).
-        Tile tile = move.getTile();
-        if (board.tileExists(tile.getX(), tile.getY())) {
-            throw new CoordinatesAlreadyFilledException();
-        }
-
-        return 0; //TODO: Return score.
     }
 
     /**

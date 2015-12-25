@@ -4,6 +4,7 @@ import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.MoveType;
 import nl.tiesdavid.ssproject.enums.Shape;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
+import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
 import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ public abstract class Player implements Comparable {
 
         fillDeck();
 
-        //TODO
         System.out.println(getName() + ": " + getNoOfTilesSharingACharacteristic());
     }
 
@@ -39,45 +39,77 @@ public abstract class Player implements Comparable {
     public void makeMove() {
         Board board = game.getBoard();
         Move move = determineMove();
+
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
             for (Tile tile : tilesToBeTraded) {
                 tradeTile(tile);
             }
             System.out.println(deck);
+
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
             placeAndDrawTile(move.getTile(), board);
+
         } else {
             ArrayList<Tile> tiles = move.getTileList();
-            if (!checkIfCorrectTileSet(tiles)) {
-                TilesDontShareAttributeException e = new TilesDontShareAttributeException();
+
+            try {
+                if (!checkCorrectTileSet(tiles)) {
+                    throw new TilesDontShareAttributeException();
+                }
+                for (Tile tile : tiles) {
+                    placeAndDrawTile(tile, board);
+                }
+
+            } catch (MoveException e) {
                 System.out.println(e.getMessage());
                 handleException(e);
-                return;
-            }
-            for (Tile tile : tiles) {
-                placeAndDrawTile(tile, board);
             }
         }
     }
 
-    private boolean checkIfCorrectTileSet(ArrayList<Tile> tiles) {
-        boolean checkForColor;
-        Color color;
-        Shape shape;
-        if (tiles.get(0).getColor().equals(tiles.get(1).getColor())
-                && !tiles.get(0).getShape().equals(tiles.get(1).getShape())) {
-            checkForColor = true;
-        } else if (!tiles.get(0).getColor().equals(tiles.get(1).getColor())
-                && tiles.get(0).getShape().equals(tiles.get(1).getShape())) {
-            checkForColor = false;
-        } else {
-
+    private Boolean decideCheckForColor(ArrayList<Tile> tiles, int i) {
+        try {
+            if (tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
+                    && !tiles.get(0).getShape().equals(tiles.get(i).getShape())) {
+                return true;
+            } else if (!tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
+                    && tiles.get(i).getShape().equals(tiles.get(i + 1).getShape())) {
+                return false;
+            } else {
+                return decideCheckForColor(tiles, i + 1);
+            }
+        } catch (NullPointerException e) {
+            return null;
         }
+    }
+
+    private boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException {
+
+        if (tiles.size() < 1) {
+            throw new NotEnoughTilesGivenException();
+        }
+
+        Boolean checkForColor = decideCheckForColor(tiles, 0);
+        Color color = tiles.get(0).getColor();
+        Shape shape = tiles.get(0).getShape();
+
+        boolean goodOnColor = true, goodOnShape = true;
         for (int i = 1; i < tiles.size(); i++) {
-
+            if (!tiles.get(i - 1).getColor().equals(color)) {
+                goodOnColor = false;
+            }
+            if (!tiles.get(i - 1).getShape().equals(shape)) {
+                goodOnShape = false;
+            }
         }
-        return true;
+        if (checkForColor == null) {
+            return goodOnColor || goodOnShape;
+        } else if (checkForColor) {
+            return goodOnColor;
+        } else {
+            return goodOnShape;
+        }
     }
 
     private void placeAndDrawTile(Tile tile, Board board) {
@@ -140,33 +172,13 @@ public abstract class Player implements Comparable {
 
     protected Tile findTile(Tile tile) {
         for (Tile tile1 : deck) {
-            if (tile.getColor().equals(tile1.getColor()) && tile.getShape().equals(tile1.getShape())) {
+            if (tile.getColor().equals(tile1.getColor())
+                    && tile.getShape().equals(tile1.getShape())) {
                 return tile1;
             }
         }
         return null;
     }
-
-    /**
-     * Reorders the list so that Non-Empty deck are at the front of the array.
-     *//* TODO: Probably not needed.
-    public void reorderTiles() {
-        ArrayList<Tile> tempList = new ArrayList<Tile>();
-
-        for (Tile tile : deck) {
-            if (!tile.getColor().equals(Color.EMPTY)) {
-                tempList.add(tile);
-            }
-        }
-
-        for (int i = tempList.size(); i < deck.length; i++) {
-            tempList.add(new Tile());
-        }
-
-        for (int i = 0; i < deck.length; i++) {
-            deck[i] = tempList.get(i);
-        }
-    } */
 
     /**
      * Gives the number of deck sharing a characteristic.
@@ -177,14 +189,19 @@ public abstract class Player implements Comparable {
         //TODO: Fix this one. Now counts everything double.
         int count = 0;
 
-        for (Tile tile1 : deck) {
-            for (Tile tile2 : deck) {
-                if (tile1 != tile2) {
-                    if (tile1.getColor().equals(tile2.getColor())
-                            || tile1.getShape().equals(tile2.getShape())) {
-                        count++;
-                    }
+        for (int i = 0; i < deck.size(); i++) {
+            Tile tile1 = deck.get(i);
+            for (int j = i + 1; j < deck.size(); j++) {
+                Tile tile2 = deck.get(j);
+                if (tile1.getColor().equals(tile2.getColor())
+                        || tile1.getShape().equals(tile2.getShape())) {
+                    count++;
+                    tile1.setChecked(true);
+                    tile2.setChecked(true);
                 }
+            }
+            if (!tile1.getChecked()) {
+                count++;
             }
         }
 

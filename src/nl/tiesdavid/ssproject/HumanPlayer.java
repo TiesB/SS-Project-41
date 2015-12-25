@@ -36,44 +36,41 @@ public class HumanPlayer extends Player {
 
     }
 
-    private Move addToGridAndDraw() {
-        Tile tile = readTile("Choose a tile. Use the format shown: ");
+    private Tile getTileFromUser(String string, boolean readXY) {
+        Tile tile = readTile(string);
+
         if (tile == null) {
-            return addToGridAndDraw();
+            //TODO: Communicate with user.
+            return null;
         }
         tile = findTile(tile);
 
-        int x, y;
-        if (game.getBoard().isEmpty()) {
-            x = 0; y = 0;
-        } else {
-            x = readInt("Choose a X coordinate: ");
-            y = readInt("Choose a Y coordinate: ");
+        if (readXY) {
+            int x, y;
+            if (game.getBoard().isEmpty()) {
+                x = 0;
+                y = 0;
+            } else {
+                x = readInt("Choose a X coordinate: ");
+                y = readInt("Choose a Y coordinate: ");
+            }
+
+            tile.setX(x);
+            tile.setY(y);
         }
 
-        tile.setX(x);
-        tile.setY(y);
-
-        return new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile);
+        return tile;
     }
 
-    private Move addMultipleToGrid() {
-        //TODO: Must place multiple tiles.
-        return null;
-    }
-
-    private Move tradeTiles() {
+    private ArrayList<Tile> getMultipleTilesFromUser( boolean readXY) {
         ArrayList<Tile> chosenTiles = new ArrayList<>();
 
         do {
-            Tile tile = readTile("Choose a tile. Use the format shown. Type '-' to stop entering.");
+            Tile tile = getTileFromUser("Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
             if (tile == null) {
                 break;
             }
             tile = findTile(tile);
-            if (tile == null) {
-                break;
-            }
 
             if (!deck.contains(tile)) {
                 System.out.println("You don't have this tile in your deck.");
@@ -82,9 +79,26 @@ public class HumanPlayer extends Player {
             } else {
                 chosenTiles.add(tile);
             }
-        } while (chosenTiles.size() + 1 <= DECK_SIZE && chosenTiles.size() + 1 <= game.amountOfTilesLeft());
+        } while (chosenTiles.size() + 1 <= DECK_SIZE);
 
-        return new Move(MoveType.TRADE_TILES, chosenTiles);
+        return chosenTiles;
+    }
+
+    private Move addToGridAndDraw() {
+        Tile tile = getTileFromUser("Choose a tile. Use the format shown: ", true);
+        if (tile == null) {
+            //TODO: Communicate with user.
+            return addToGridAndDraw();
+        }
+        return new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile);
+    }
+
+    private Move addMultipleToGrid() {
+        return new Move(MoveType.ADD_MULTIPLE_TILES, getMultipleTilesFromUser(true));
+    }
+
+    private Move tradeTiles() {
+        return new Move(MoveType.TRADE_TILES, getMultipleTilesFromUser(false));
     }
 
     public Move parseChoice(int choice) {
@@ -95,6 +109,7 @@ public class HumanPlayer extends Player {
                 return addMultipleToGrid();
             case 3:
                 if (game.hasTilesLeft()) {
+                    //TODO: Communicate with user.
                     return tradeTiles();
                 } else {
                     return determineMove();

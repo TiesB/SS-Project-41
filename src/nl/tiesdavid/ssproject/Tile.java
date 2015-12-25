@@ -7,8 +7,8 @@ import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.Shape;
 
 public class Tile {
-    private int x;
-    private int y;
+    private int x, y;
+    private boolean checked;
     private Color color;
     private Shape shape;
 
@@ -22,6 +22,7 @@ public class Tile {
     public Tile(Color color, Shape shape) {
         this.color = color;
         this.shape = shape;
+        this.checked = false;
     }
 
     public int getX() {
@@ -30,6 +31,10 @@ public class Tile {
 
     public int getY() {
         return this.y;
+    }
+
+    public boolean getChecked() {
+        return this.checked;
     }
 
     public Color getColor() {
@@ -46,6 +51,10 @@ public class Tile {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public void setColor(Color color) {
