@@ -42,6 +42,7 @@ public class HumanPlayer extends Player {
             return addToGridAndDraw();
         }
         tile = findTile(tile);
+
         int x, y;
         if (game.getBoard().isEmpty()) {
             x = 0; y = 0;
@@ -50,10 +51,14 @@ public class HumanPlayer extends Player {
             y = readInt("Choose a Y coordinate: ");
         }
 
+        tile.setX(x);
+        tile.setY(y);
+
         return new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile);
     }
 
     private Move addMultipleToGrid() {
+        //TODO: Must place multiple tiles.
         return null;
     }
 
@@ -107,7 +112,7 @@ public class HumanPlayer extends Player {
         Scanner line = new Scanner(System.in);
         do {
             System.out.print(prompt);
-            try (Scanner scannerLine = new Scanner(line.nextLine());) {
+            try (Scanner scannerLine = new Scanner(line.nextLine())) {
                 if (scannerLine.hasNext()) {
                     input = scannerLine.next();
                     if (input.matches("[BGOPRY][O#+*@X]") || input.equals("-")) {
@@ -181,7 +186,7 @@ public class HumanPlayer extends Player {
         Scanner line = new Scanner(System.in);
         do {
             System.out.print(prompt);
-            try (Scanner scannerLine = new Scanner(line.nextLine());) {
+            try (Scanner scannerLine = new Scanner(line.nextLine())) {
                 if (scannerLine.hasNextInt()) {
                     intRead = true;
                     value = scannerLine.nextInt();

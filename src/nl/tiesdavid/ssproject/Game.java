@@ -36,12 +36,23 @@ public class Game {
     public void start() throws NotEnoughPlayersException {
         if (players.size() >= 2) {
             board.reset();
-            int player = 0;
-            Player currentPlayer;
+
+            Player currentPlayer = players.get(0);
+            int currentPlayerI = 0;
+            int highestCount = 0;
+            for (int i = 0; i < players.size(); i++) {
+                Player player = players.get(i);
+                int n = player.getNoOfTilesSharingACharacteristic();
+                if (n > highestCount) {
+                    highestCount = n;
+                    currentPlayer = player;
+                    currentPlayerI = i;
+                }
+            }
             while (!gameOver()) {
-                currentPlayer = players.get(player);
                 currentPlayer.makeMove();
-                player = (player + 1) % players.size();
+                currentPlayerI = (currentPlayerI + 1) % players.size();
+                currentPlayer = players.get(currentPlayerI);
             }
 
             finish();

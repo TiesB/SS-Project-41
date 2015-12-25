@@ -20,9 +20,9 @@ public class Board {
         minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
-    public int placeTile(Tile mTile) throws MoveException {
-        int x = mTile.getX();
-        int y = mTile.getY();
+    public int placeTile(Tile tile) throws MoveException {
+        int x = tile.getX();
+        int y = tile.getY();
         if (tileExists(x, y)) {
             throw new CoordinatesAlreadyFilledException();
         }
@@ -76,9 +76,9 @@ public class Board {
             throw new TooLongLineException();
         }
 
-        tiles.add(mTile);
+        tiles.add(tile);
         calculateMinMax(x, y);
-        return getScore(mTile);
+        return getScore(tile);
     }
 
     /**
@@ -116,7 +116,6 @@ public class Board {
      * @return The score a player gets for putting the given tile.
      */
     public int getScore(Tile tile) {
-        //TODO: Check if this works.
         int score = 0;
         int x = tile.getX();
         int y = tile.getY();
@@ -247,6 +246,36 @@ public class Board {
     @Override
     public String toString() {
         String string = "";
+
+        for (int i = minY - 2; i <= maxY + 2; i++) {
+            if (i == minY - 2) {
+                string += String.format("%5s", "");
+            } else if (i <= maxY + 1) {
+                string += String.format("%5s", Integer.toString(i)) + "|";
+            } else {
+                string += String.format("%5s", "y");
+            }
+
+            for (int j = minX - 2; j <= maxX + 1; j++) {
+                if (i == minY - 2) {
+                    string += String.format("%4s", Integer.toString(j));
+                } else {
+                    Tile tile = getTile(j, i);
+                    if (tile == null) {
+                        string += String.format("%4s", "");
+                    } else {
+                        string += String.format("%4s", tile);
+                    }
+                }
+            }
+
+            if (i == minY - 2) {
+                string += String.format("%4s", "x");
+            }
+
+            System.out.println(string);
+            string = "";
+        }
 
         for (int i = 0; i < tiles.size() - 1; i++) {
             string += tiles.get(i) + " | ";

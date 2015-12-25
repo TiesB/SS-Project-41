@@ -1,7 +1,10 @@
 package nl.tiesdavid.ssproject;
 
+import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.MoveType;
+import nl.tiesdavid.ssproject.enums.Shape;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
+import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,9 @@ public abstract class Player implements Comparable {
         score = 0;
 
         fillDeck();
+
+        //TODO
+        System.out.println(getName() + ": " + getNoOfTilesSharingACharacteristic());
     }
 
     public abstract Move determineMove();
@@ -40,16 +46,50 @@ public abstract class Player implements Comparable {
             }
             System.out.println(deck);
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
-            try {
-                Tile tile = move.getTile();
-                board.placeTile(tile);
-                addToScore(board.getScore(tile));
-
-                deck.remove(tile);
-                drawTileFromBag();
-            } catch (MoveException e) {
+            placeAndDrawTile(move.getTile(), board);
+        } else {
+            ArrayList<Tile> tiles = move.getTileList();
+            if (!checkIfCorrectTileSet(tiles)) {
+                TilesDontShareAttributeException e = new TilesDontShareAttributeException();
+                System.out.println(e.getMessage());
                 handleException(e);
+                return;
             }
+            for (Tile tile : tiles) {
+                placeAndDrawTile(tile, board);
+            }
+        }
+    }
+
+    private boolean checkIfCorrectTileSet(ArrayList<Tile> tiles) {
+        boolean checkForColor;
+        Color color;
+        Shape shape;
+        if (tiles.get(0).getColor().equals(tiles.get(1).getColor())
+                && !tiles.get(0).getShape().equals(tiles.get(1).getShape())) {
+            checkForColor = true;
+        } else if (!tiles.get(0).getColor().equals(tiles.get(1).getColor())
+                && tiles.get(0).getShape().equals(tiles.get(1).getShape())) {
+            checkForColor = false;
+        } else {
+
+        }
+        for (int i = 1; i < tiles.size(); i++) {
+
+        }
+        return true;
+    }
+
+    private void placeAndDrawTile(Tile tile, Board board) {
+        try {
+            board.placeTile(tile);
+            addToScore(board.getScore(tile));
+
+            deck.remove(tile);
+            drawTileFromBag();
+        } catch (MoveException e) {
+            System.out.println(e.getMessage());
+            handleException(e);
         }
     }
 

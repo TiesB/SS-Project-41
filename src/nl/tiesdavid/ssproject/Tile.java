@@ -40,12 +40,24 @@ public class Tile {
         return shape;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
 
     public void setShape(Shape shape) {
         this.shape = shape;
+    }
+
+    public String toLongString() {
+        return color.toString() + shape.toString() + " @ " + getX() + ", " + getY();
     }
 
     @Override
