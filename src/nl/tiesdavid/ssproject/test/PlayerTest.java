@@ -3,15 +3,13 @@ package nl.tiesdavid.ssproject.test; /**
  */
 
 import nl.tiesdavid.ssproject.Tile;
-import nl.tiesdavid.ssproject.enums.Color;
-import nl.tiesdavid.ssproject.enums.Shape;
 import org.junit.Before;
 import org.junit.Test;
 
 
 
 public class PlayerTest {
-    TestPlayer player;
+    private TestPlayer player;
     
     @Before
     public void setUp() {
@@ -20,11 +18,11 @@ public class PlayerTest {
     
     @Test
     public void test() {
-        player.addTileToDeck(new Tile(Color.BLUE, Shape.CIRCLE));
-        player.addTileToDeck(new Tile(Color.BLUE, Shape.PLUS));
-        player.addTileToDeck(new Tile(Color.RED, Shape.CIRCLE));
-        player.addTileToDeck(new Tile(Color.GREEN, Shape.DIAMOND));
-        player.addTileToDeck(new Tile(Color.ORANGE, Shape.PLUS));
+        player.addTileToDeck(new Tile(Tile.Color.BLUE, Tile.Shape.CIRCLE));
+        player.addTileToDeck(new Tile(Tile.Color.BLUE, Tile.Shape.PLUS));
+        player.addTileToDeck(new Tile(Tile.Color.RED, Tile.Shape.CIRCLE));
+        player.addTileToDeck(new Tile(Tile.Color.GREEN, Tile.Shape.DIAMOND));
+        player.addTileToDeck(new Tile(Tile.Color.ORANGE, Tile.Shape.PLUS));
 
         org.junit.Assert.assertEquals(4, player.getNoOfTilesSharingACharacteristic());
     }

@@ -5,8 +5,6 @@ package nl.tiesdavid.ssproject.test;
 
 import nl.tiesdavid.ssproject.Board;
 import nl.tiesdavid.ssproject.Tile;
-import nl.tiesdavid.ssproject.enums.Color;
-import nl.tiesdavid.ssproject.enums.Shape;
 import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
 import org.junit.Before;
@@ -32,7 +30,7 @@ public class BoardTest {
     public void resetTest() {
         assertEquals("", board.toString());
         try {
-            board.placeTile(new Tile(0, 0, Color.RED, Shape.PLUS));
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
         } catch (MoveException e) {
             fail(e.getMessage());
         }
@@ -42,7 +40,7 @@ public class BoardTest {
 
     @Test
     public void addTileTest() {
-        Tile tile = new Tile(0, 0, Color.RED, Shape.PLUS);
+        Tile tile = new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS);
         try {
             board.placeTile(tile);
         } catch (MoveException e) {
@@ -55,8 +53,8 @@ public class BoardTest {
     @Test(expected = CoordinatesAlreadyFilledException.class)
     public void addAlreadyExistentTile() throws MoveException {
         try {
-            board.placeTile(new Tile(0, 0, Color.RED, Shape.PLUS));
-            board.placeTile(new Tile(0, 0, Color.GREEN, Shape.STAR));
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
+            board.placeTile(new Tile(0, 0, Tile.Color.GREEN, Tile.Shape.STAR));
         } catch (CoordinatesAlreadyFilledException e) {
             throw new CoordinatesAlreadyFilledException();
         }
@@ -65,11 +63,11 @@ public class BoardTest {
     @Test
     public void scoreTest() {
         try {
-            assertEquals(0, board.placeTile(new Tile(0, 0, Color.RED, Shape.STAR)));
-            assertEquals(2, board.placeTile(new Tile(0, 1, Color.BLUE, Shape.STAR)));
+            assertEquals(0, board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.STAR)));
+            assertEquals(2, board.placeTile(new Tile(0, 1, Tile.Color.BLUE, Tile.Shape.STAR)));
 
-            assertEquals(2, board.placeTile(new Tile(-1, 0, Color.RED, Shape.DIAMOND)));
-            assertEquals(4, board.placeTile(new Tile(-1, 1, Color.BLUE, Shape.DIAMOND)));
+            assertEquals(2, board.placeTile(new Tile(-1, 0, Tile.Color.RED, Tile.Shape.DIAMOND)));
+            assertEquals(4, board.placeTile(new Tile(-1, 1, Tile.Color.BLUE, Tile.Shape.DIAMOND)));
 
 
         } catch (MoveException e) {

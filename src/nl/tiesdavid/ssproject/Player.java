@@ -1,8 +1,6 @@
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.enums.Shape;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
 import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
 import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
@@ -15,15 +13,15 @@ import java.util.ArrayList;
 public abstract class Player implements Comparable {
     protected static final int DECK_SIZE = 6;
 
-    protected String name;
-    protected ArrayList<Tile> deck;
-    protected Game game;
+    private final String name;
+    protected final Deck deck;
+    protected final Game game;
 
     protected int score;
 
     public Player(String name, Game game) {
         this.name = name;
-        this.deck = new ArrayList<>();
+        this.deck = new Deck(DECK_SIZE);
         this.game = game;
 
         score = 0;
@@ -34,7 +32,16 @@ public abstract class Player implements Comparable {
     }
 
     public abstract Move determineMove();
-    public abstract void handleException(Exception e);
+
+    /**
+     * You probably want to override this.
+     * @param e the exception thrown.
+     * @return a newly generated move.
+     */
+    public Move handleMoveException(Exception e) {
+        System.out.println(e.getMessage());
+        return determineMove();
+    }
 
     public void makeMove() {
         Board board = game.getBoard();
@@ -42,12 +49,11 @@ public abstract class Player implements Comparable {
 
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
-            for (Tile tile : tilesToBeTraded) {
-                tradeTile(tile);
-            }
+            tilesToBeTraded.forEach(this::tradeTile);
             System.out.println(deck);
 
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
+            System.out.println(move.getTile());
             placeAndDrawTile(move.getTile(), board);
 
         } else {
@@ -62,8 +68,7 @@ public abstract class Player implements Comparable {
                 }
 
             } catch (MoveException e) {
-                System.out.println(e.getMessage());
-                handleException(e);
+                handleMoveException(e);
             }
         }
     }
@@ -91,8 +96,8 @@ public abstract class Player implements Comparable {
         }
 
         Boolean checkForColor = decideCheckForColor(tiles, 0);
-        Color color = tiles.get(0).getColor();
-        Shape shape = tiles.get(0).getShape();
+        Tile.Color color = tiles.get(0).getColor();
+        Tile.Shape shape = tiles.get(0).getShape();
 
         boolean goodOnColor = true, goodOnShape = true;
         for (int i = 1; i < tiles.size(); i++) {
@@ -116,12 +121,10 @@ public abstract class Player implements Comparable {
         try {
             board.placeTile(tile);
             addToScore(board.getScore(tile));
-
             deck.remove(tile);
             drawTileFromBag();
         } catch (MoveException e) {
-            System.out.println(e.getMessage());
-            handleException(e);
+            handleMoveException(e);
         }
     }
 
@@ -142,20 +145,20 @@ public abstract class Player implements Comparable {
         score += increment;
     }
 
-    protected void tradeTile(Tile tile) {
+    private void tradeTile(Tile tile) {
         deck.remove(tile);
         drawTileFromBag();
         game.addTileToBag(tile);
     }
 
-    protected void drawTileFromBag() {
+    private void drawTileFromBag() {
         Tile tile = game.getTileFromBag();
         if (tile != null) {
             deck.add(tile);
         }
     }
 
-    protected void fillDeck() {
+    private void fillDeck() {
         while (deck.size() <= DECK_SIZE) {
             drawTileFromBag();
         }
@@ -182,7 +185,7 @@ public abstract class Player implements Comparable {
 
     /**
      * Gives the number of deck sharing a characteristic.
-     * To be used at the start of a game.
+     * To be used at the play of a game.
      * @return The number of deck sharing a characteristic.
      */
     public int getNoOfTilesSharingACharacteristic() {
@@ -196,8 +199,8 @@ public abstract class Player implements Comparable {
                 if (tile1.getColor().equals(tile2.getColor())
                         || tile1.getShape().equals(tile2.getShape())) {
                     count++;
-                    tile1.setChecked(true);
-                    tile2.setChecked(true);
+                    tile1.setChecked();
+                    tile2.setChecked();
                 }
             }
             if (!tile1.getChecked()) {

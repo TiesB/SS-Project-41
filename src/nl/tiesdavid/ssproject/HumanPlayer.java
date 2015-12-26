@@ -3,9 +3,8 @@
  */
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.enums.Color;
 import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.enums.Shape;
+import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,7 +18,8 @@ public class HumanPlayer extends Player {
     public Move determineMove() {
         Board board = game.getBoard();
         System.out.println(board);
-        System.out.println(name + ", what kind of move do you want to make? (Type the corresponding number)");
+        System.out.println(getName() +
+                ", what kind of move do you want to make? (Type the corresponding number)");
         System.out.println("1 - Add a tile to the grid and draw one.");
         System.out.println("2 - Add multiple tiles to the grid.");
         if (game.hasTilesLeft()) {
@@ -29,11 +29,6 @@ public class HumanPlayer extends Player {
         }
         int choice = readInt("Choice: ");
         return parseChoice(choice);
-    }
-
-    @Override
-    public void handleException(Exception e) {
-
     }
 
     private Tile getTileFromUser(String string, boolean readXY) {
@@ -62,11 +57,13 @@ public class HumanPlayer extends Player {
         return tile;
     }
 
-    private ArrayList<Tile> getMultipleTilesFromUser( boolean readXY) {
+    private ArrayList<Tile> getMultipleTilesFromUser(boolean readXY) {
         ArrayList<Tile> chosenTiles = new ArrayList<>();
 
         do {
-            Tile tile = getTileFromUser("Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
+            //I hate the >100 character line CheckStyle check. I think it's stupid.
+            Tile tile = getTileFromUser(
+                    "Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
             if (tile == null) {
                 break;
             }
@@ -94,14 +91,22 @@ public class HumanPlayer extends Player {
     }
 
     private Move addMultipleToGrid() {
-        return new Move(MoveType.ADD_MULTIPLE_TILES, getMultipleTilesFromUser(true));
+        try {
+            return new Move(MoveType.ADD_MULTIPLE_TILES, getMultipleTilesFromUser(true));
+        } catch (InvalidMoveTypeWithArgumentsException e) {
+            return handleMoveException(e);
+        }
     }
 
     private Move tradeTiles() {
-        return new Move(MoveType.TRADE_TILES, getMultipleTilesFromUser(false));
+        try {
+            return new Move(MoveType.TRADE_TILES, getMultipleTilesFromUser(false));
+        } catch (InvalidMoveTypeWithArgumentsException e) {
+            return handleMoveException(e);
+        }
     }
 
-    public Move parseChoice(int choice) {
+    private Move parseChoice(int choice) {
         switch (choice) {
             case 1:
                 return addToGridAndDraw();
@@ -141,28 +146,28 @@ public class HumanPlayer extends Player {
         return parseTileString(input);
     }
 
-    public Tile parseTileString(String input) {
+    private Tile parseTileString(String input) {
         char[] chars = input.toCharArray();
-        Color color;
-        Shape shape;
+        Tile.Color color;
+        Tile.Shape shape;
         switch (chars[0]) {
             case 'B':
-                color = Color.BLUE;
+                color = Tile.Color.BLUE;
                 break;
             case 'G':
-                color = Color.GREEN;
+                color = Tile.Color.GREEN;
                 break;
             case 'O':
-                color = Color.ORANGE;
+                color = Tile.Color.ORANGE;
                 break;
             case 'P':
-                color = Color.PURPLE;
+                color = Tile.Color.PURPLE;
                 break;
             case 'R':
-                color = Color.RED;
+                color = Tile.Color.RED;
                 break;
             case 'Y':
-                color = Color.YELLOW;
+                color = Tile.Color.YELLOW;
                 break;
             default:
                 return null;
@@ -170,22 +175,22 @@ public class HumanPlayer extends Player {
 
         switch (chars[1]) {
             case 'O':
-                shape = Shape.CIRCLE;
+                shape = Tile.Shape.CIRCLE;
                 break;
             case '#':
-                shape = Shape.DIAMOND;
+                shape = Tile.Shape.DIAMOND;
                 break;
             case '+':
-                shape = Shape.PLUS;
+                shape = Tile.Shape.PLUS;
                 break;
             case '*':
-                shape = Shape.STAR;
+                shape = Tile.Shape.STAR;
                 break;
             case '@':
-                shape = Shape.SQUARE;
+                shape = Tile.Shape.SQUARE;
                 break;
             case 'X':
-                shape = Shape.X;
+                shape = Tile.Shape.X;
                 break;
             default:
                 return null;

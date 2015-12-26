@@ -3,14 +3,69 @@
  */
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.enums.Color;
-import nl.tiesdavid.ssproject.enums.Shape;
-
 public class Tile {
+    public enum Color {
+        BLUE,
+        GREEN,
+        ORANGE,
+        PURPLE,
+        RED,
+        YELLOW;
+
+        @Override
+        public String toString() {
+            switch (this)  {
+                case BLUE:
+                    return "B";
+                case GREEN:
+                    return "G";
+                case ORANGE:
+                    return "O";
+                case PURPLE:
+                    return "P";
+                case RED:
+                    return "R";
+                case YELLOW:
+                    return "Y";
+                default:
+                    return ".";
+            }
+        }
+    }
+
+    public enum Shape {
+        CIRCLE,
+        DIAMOND,
+        PLUS,
+        STAR,
+        SQUARE,
+        X;
+
+        @Override
+        public String toString() {
+            switch (this) {
+                case CIRCLE:
+                    return "O";
+                case DIAMOND:
+                    return "#";
+                case PLUS:
+                    return "+";
+                case STAR:
+                    return "*";
+                case SQUARE:
+                    return "@";
+                case X:
+                    return "X";
+                default:
+                    return ".";
+            }
+        }
+    }
+
     private int x, y;
     private boolean checked;
-    private Color color;
-    private Shape shape;
+    private final Color color;
+    private final Shape shape;
 
     public Tile(int x, int y, Color color, Shape shape) {
         this.x = x;
@@ -53,16 +108,8 @@ public class Tile {
         this.y = y;
     }
 
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public void setShape(Shape shape) {
-        this.shape = shape;
+    public void setChecked() {
+        this.checked = true;
     }
 
     public String toLongString() {

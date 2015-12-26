@@ -3,8 +3,6 @@
  */
 package nl.tiesdavid.ssproject;
 
-import nl.tiesdavid.ssproject.enums.Color;
-import nl.tiesdavid.ssproject.enums.Shape;
 import nl.tiesdavid.ssproject.exceptions.NotEnoughPlayersException;
 
 import java.util.ArrayList;
@@ -14,11 +12,11 @@ import java.util.Random;
 public class Game {
     private static final int MAX_AMOUNT_OF_PLAYERS = 4;
 
-    private Board board;
-    private ArrayList<Tile> bag;
-    private ArrayList<Player> players;
+    private final Board board;
+    private final ArrayList<Tile> bag;
+    private final ArrayList<Player> players;
 
-    private Random randomGenerator;
+    private final Random randomGenerator;
 
     public Game() {
         board = new Board();
@@ -31,7 +29,7 @@ public class Game {
         randomGenerator.setSeed(System.currentTimeMillis());
     }
 
-    public void start() throws NotEnoughPlayersException {
+    public void play() throws NotEnoughPlayersException {
         if (players.size() >= 2) {
             board.reset();
 
@@ -60,10 +58,8 @@ public class Game {
     }
 
     private void finish() {
-        Collections.sort(players);
-        for (Player player : players) {
-            System.out.println(player);
-        }
+        printScores();
+        players.get(0).win();
     }
 
     private boolean gameOver() {
@@ -76,11 +72,11 @@ public class Game {
     }
 
     private void fillBag() {
-        Color[] colors = Color.values();
-        Shape[] shapes = Shape.values();
+        Tile.Color[] colors = Tile.Color.values();
+        Tile.Shape[] shapes = Tile.Shape.values();
         for (int i = 0; i < 3; i++) {
-            for (Color color : colors) {
-                for (Shape shape : shapes) {
+            for (Tile.Color color : colors) {
+                for (Tile.Shape shape : shapes) {
                     bag.add(new Tile(color, shape));
                 }
             }
@@ -100,18 +96,6 @@ public class Game {
     public void removePlayer(Player player) {
         int index = players.indexOf(player);
         players.remove(index);
-    }
-
-    /**
-     * Gives the bag containing the remaining not given tiles.
-     * @return The bag containing the remaining not given tiles.
-     */
-    public ArrayList<Tile> getBag() {
-        return bag;
-    }
-
-    public int amountOfTilesLeft() {
-        return bag.size();
     }
 
     public boolean hasTilesLeft() {
@@ -134,6 +118,8 @@ public class Game {
      */
     public void printScores() {
         //TODO: Format line3 nicely (same spacing as line1).
+
+        Collections.sort(players);
 
         String line1 = "";
 

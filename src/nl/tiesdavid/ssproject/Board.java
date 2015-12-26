@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private ArrayList<Tile> tiles;
+    private final ArrayList<Tile> tiles;
     private int minX, maxX, minY, maxY;
 
     public Board() {
@@ -18,69 +18,70 @@ public class Board {
     }
 
     public int placeTile(Tile tile) throws InvalidTilePlacementException {
+        System.out.println(tile);
         int x = tile.getX();
         int y = tile.getY();
 
         if (tileExists(x, y)) {
             throw new CoordinatesAlreadyFilledException();
-        } else if (x == 0 && y == 0) {
-            return 1;
         }
 
-        if (x < minX - 1 || x > maxX + 1 || y < minY - 1 || y > maxY + 1) {
-            throw new OutOfBoundsException();
-        }
+        if (tile.getX() != 0 || tile.getY() != 0) {
+            if (x < minX - 1 || x > maxX + 1 || y < minY - 1 || y > maxY + 1) {
+                throw new OutOfBoundsException();
+            }
 
-        if (isEmpty()) {
-            throw new OutOfBoundsException();
-        }
+            if (isEmpty()) {
+                throw new OutOfBoundsException();
+            }
 
-        int horizontalLine = 0;
-        int verticalLine = 0;
-        boolean neighboringTile = false;
+            int horizontalLine = 0;
+            int verticalLine = 0;
+            boolean neighboringTile = false;
 
-        //To the left
-        int tempX = x - 1;
-        Tile nextTile = getTile(tempX, y);
-        while (nextTile != null) {
-            neighboringTile = true;
-            horizontalLine += 1;
-            nextTile = getTile(--tempX, y);
-        }
+            //To the left
+            int tempX = x - 1;
+            Tile nextTile = getTile(tempX, y);
+            while (nextTile != null) {
+                neighboringTile = true;
+                horizontalLine += 1;
+                nextTile = getTile(--tempX, y);
+            }
 
-        //To the right
-        tempX = x + 1;
-        nextTile = getTile(tempX, y);
-        while (nextTile != null) {
-            neighboringTile = true;
-            horizontalLine += 1;
-            nextTile = getTile(++tempX, y);
-        }
+            //To the right
+            tempX = x + 1;
+            nextTile = getTile(tempX, y);
+            while (nextTile != null) {
+                neighboringTile = true;
+                horizontalLine += 1;
+                nextTile = getTile(++tempX, y);
+            }
 
-        //Upwards
-        int tempY = y - 1;
-        nextTile = getTile(x, tempY);
-        while (nextTile != null) {
-            neighboringTile = true;
-            verticalLine += 1;
-            nextTile = getTile(x, --tempY);
-        }
+            //Upwards
+            int tempY = y - 1;
+            nextTile = getTile(x, tempY);
+            while (nextTile != null) {
+                neighboringTile = true;
+                verticalLine += 1;
+                nextTile = getTile(x, --tempY);
+            }
 
-        //Downwards
-        tempY = y + 1;
-        nextTile = getTile(tempX, y);
-        while (nextTile != null) {
-            neighboringTile = true;
-            verticalLine += 1;
-            nextTile = getTile(x, ++tempY);
-        }
+            //Downwards
+            tempY = y + 1;
+            nextTile = getTile(tempX, y);
+            while (nextTile != null) {
+                neighboringTile = true;
+                verticalLine += 1;
+                nextTile = getTile(x, ++tempY);
+            }
 
-        if (!neighboringTile) {
-            throw new NoNeighboringTileException();
-        }
+            if (!neighboringTile) {
+                throw new NoNeighboringTileException();
+            }
 
-        if (horizontalLine > 6 || verticalLine > 6) {
-            throw new TooLongLineException();
+            if (horizontalLine > 6 || verticalLine > 6) {
+                throw new TooLongLineException();
+            }
         }
 
         tiles.add(tile);

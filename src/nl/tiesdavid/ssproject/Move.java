@@ -4,11 +4,12 @@
 package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.MoveType;
+import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
 
 import java.util.ArrayList;
 
 public class Move {
-    private MoveType moveType;
+    private final MoveType moveType;
 
     private Tile tile;
     private ArrayList<Tile> tileList;
@@ -18,7 +19,11 @@ public class Move {
         this.tile = mTile;
     }
 
-    public Move(MoveType moveType, ArrayList<Tile> tiles) {
+    public Move(MoveType moveType, ArrayList<Tile> tiles)
+            throws InvalidMoveTypeWithArgumentsException {
+        if (tiles.size() < 2) {
+            throw new InvalidMoveTypeWithArgumentsException();
+        }
         this.moveType = moveType;
         this.tileList = tiles;
     }

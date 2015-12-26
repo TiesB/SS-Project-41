@@ -23,9 +23,4 @@ public class TestPlayer extends Player {
     public Move determineMove() {
         return null;
     }
-
-    @Override
-    public void handleException(Exception e) {
-
-    }
 }

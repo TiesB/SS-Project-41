@@ -6,6 +6,10 @@ package nl.tiesdavid.ssproject;
 import java.util.ArrayList;
 
 public class Deck extends ArrayList<Tile> {
+    public Deck(int deckSize){
+        super(deckSize);
+    }
+
     @Override
     public String toString() {
         String line = "";
