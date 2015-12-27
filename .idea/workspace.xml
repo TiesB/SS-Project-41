@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/build.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/module_ss-project-41.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ss-project-41.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/ss-project-41.xml" afterPath="" />
     </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -354,7 +354,7 @@
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="build" />
-    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
