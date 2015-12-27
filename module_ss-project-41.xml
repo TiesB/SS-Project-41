@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_ss-project-41" default="compile.module.ss-project-41">
+  <dirname property="module.ss-project-41.basedir" file="${ant.file.module_ss-project-41}"/>
+  
+  <property name="module.jdk.home.ss-project-41" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.ss-project-41" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.ss-project-41" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.ss-project-41" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="ss-project-41.output.dir" value="${module.ss-project-41.basedir}/out/production/SS-Project-41"/>
+  <property name="ss-project-41.testoutput.dir" value="${module.ss-project-41.basedir}/out/test/SS-Project-41"/>
+  
+  <path id="ss-project-41.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ss-project-41.module.production.classpath">
+    <path refid="${module.jdk.classpath.ss-project-41}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="ss-project-41.runtime.production.module.classpath">
+    <pathelement location="${ss-project-41.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="ss-project-41.module.classpath">
+    <path refid="${module.jdk.classpath.ss-project-41}"/>
+    <pathelement location="${ss-project-41.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  <path id="ss-project-41.runtime.module.classpath">
+    <pathelement location="${ss-project-41.testoutput.dir}"/>
+    <pathelement location="${ss-project-41.output.dir}"/>
+    <pathelement location="${idea.home}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${idea.home}/lib/junit-4.12.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ss-project-41">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ss-project-41">
+    <patternset refid="excluded.from.module.ss-project-41"/>
+  </patternset>
+  
+  <path id="ss-project-41.module.sourcepath">
+    <dirset dir="${module.ss-project-41.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ss-project-41" depends="compile.module.ss-project-41.production,compile.module.ss-project-41.tests" description="Compile module SS-Project-41"/>
+  
+  <target name="compile.module.ss-project-41.production" depends="register.custom.compilers" description="Compile module SS-Project-41; production classes">
+    <mkdir dir="${ss-project-41.output.dir}"/>
+    <javac2 destdir="${ss-project-41.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ss-project-41}/javac">
+      <compilerarg line="${compiler.args.ss-project-41}"/>
+      <bootclasspath refid="ss-project-41.module.bootclasspath"/>
+      <classpath refid="ss-project-41.module.production.classpath"/>
+      <src refid="ss-project-41.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ss-project-41"/>
+    </javac2>
+    
+    <copy todir="${ss-project-41.output.dir}">
+      <fileset dir="${module.ss-project-41.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ss-project-41.tests" depends="register.custom.compilers,compile.module.ss-project-41.production" description="compile module SS-Project-41; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ss-project-41" description="cleanup module">
+    <delete dir="${ss-project-41.output.dir}"/>
+    <delete dir="${ss-project-41.testoutput.dir}"/>
+  </target>
+</project>

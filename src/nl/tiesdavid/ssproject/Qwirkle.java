@@ -9,6 +9,7 @@ class Qwirkle {
         game.addPlayer(new HumanPlayer("Freek", game));
         try {
             game.play();
+            System.out.println(game);
         } catch (NotEnoughPlayersException e) {
             System.out.println(e.getMessage());
         }
