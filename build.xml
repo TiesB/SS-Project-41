@@ -78,9 +78,7 @@
     <pathelement location="lib/" />
   </path>
 
-  <javac srcdir="src/" classpathref="javac.classpath">
-
-  </javac>
+  <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false" />
   
   <!-- Modules -->
   

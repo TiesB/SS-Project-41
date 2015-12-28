@@ -10,27 +10,27 @@
   </path>
   
   <path id="ss-project-41.module.production.classpath">
-    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/junit-4.12.jar"/>
   </path>
   
   <path id="ss-project-41.runtime.production.module.classpath">
     <pathelement location="${ss-project-41.output.dir}"/>
-    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/junit-4.12.jar"/>
   </path>
   
   <path id="ss-project-41.module.classpath">
     <pathelement location="${ss-project-41.output.dir}"/>
-    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/junit-4.12.jar"/>
   </path>
   
   <path id="ss-project-41.runtime.module.classpath">
     <pathelement location="${ss-project-41.testoutput.dir}"/>
     <pathelement location="${ss-project-41.output.dir}"/>
-    <pathelement location="${basedir}/lib/hamcrest-core-1.3.jar"/>
-    <pathelement location="${basedir}/lib/junit-4.12.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/hamcrest-core-1.3.jar"/>
+    <pathelement location="${module.ss-project-41.basedir}/lib/junit-4.12.jar"/>
   </path>
   
   <path id="ss-project-41.module.sourcepath">
@@ -44,11 +44,7 @@
   
   <target name="compile.module.ss-project-41.production" description="Compile module SS-Project-41; production classes">
     <mkdir dir="${ss-project-41.output.dir}"/>
-    <javac destdir="${ss-project-41.output.dir}" srcdir="ss-project-41.module.sourcepath" classpathref="ss-project-41.module.classpath" fork="true">
-      <bootclasspath refid="ss-project-41.module.bootclasspath"/>
-      <classpath refid="ss-project-41.module.production.classpath"/>
-      <src refid="ss-project-41.module.sourcepath"/>
-    </javac>
+    <javac destdir="${ss-project-41.output.dir}" srcdir="ss-project-41.module.sourcepath" classpathref="ss-project-41.module.classpath" fork="true" />
     
     <copy todir="${ss-project-41.output.dir}">
       <fileset dir="${module.ss-project-41.basedir}/src">
