@@ -70,8 +70,6 @@ public class HumanPlayer extends Player {
             tile = findTile(tile);
 
             if (!deck.contains(tile)) {
-                //TODO
-                System.out.println("sample print");
                 System.out.println("You don't have this tile in your deck.");
             } else if (chosenTiles.contains(tile)) {
                 System.out.println("You have already chosen this tile.");
