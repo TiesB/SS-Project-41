@@ -47,7 +47,7 @@ public class BoardTest {
             fail(e.getMessage());
         }
 
-        assertEquals("R+ @ 0, 0 | ", board.toString());
+        assertEquals("R+", board.toString());
     }
 
     @Test(expected = CoordinatesAlreadyFilledException.class)
