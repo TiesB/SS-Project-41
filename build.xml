@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ss-project-41" default="build">
+<project name="ss-project-41" default="all">
   
   
   <property file="build.properties"/>
@@ -44,7 +44,7 @@
     </junit>
   </target>
 
-  <target name="all" depends="build">
+  <target name="all" depends="build, test">
 
   </target>
   <!-- Modules -->
