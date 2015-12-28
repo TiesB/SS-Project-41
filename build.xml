@@ -4,12 +4,9 @@
   
   <property file="build.properties"/>
 
-  <path id="javac.classpath">
-    <pathelement location="lib/junit.jar" />
-  </path>
-
   <property name="output.dir" value="${basedir}/out/production/SS-Project-41"/>
   <property name="testoutput.dir" value="${basedir}/out/test/SS-Project-41"/>
+  <property name="lib.dir" value="${basedir}/lib" />
 
   <target name="clean">
     <delete dir="${output.dir}"/>
@@ -33,7 +30,9 @@
   <target name="test">
     <junit printsummary="yes" haltonfailure="no">
 
-      <classpath refid="javac.classpath" />
+      <classpath>
+        <pathelement location="${lib.dir}/junit.jar" />
+      </classpath>
 
       <batchtest fork="yes" todir="${testoutput.dir}">
         <fileset dir="src/test">
