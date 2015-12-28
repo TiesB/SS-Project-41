@@ -5,7 +5,7 @@
   <property file="build.properties"/>
 
   <path id="javac.classpath">
-    <pathelement location="lib/" />
+    <pathelement location="lib/junit.jar" />
   </path>
 
   <property name="output.dir" value="${basedir}/out/production/SS-Project-41"/>
