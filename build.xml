@@ -54,25 +54,6 @@
     <exclude name="**/?*.clj"/>
     <exclude name="**/?*.aj"/>
   </patternset>
-  <!-- Register Custom Compiler Taskdefs -->
-  <!--
-  <property name="javac2.home" value="${basedir}/lib"/>
-  <path id="javac2.classpath">
-    <pathelement location="${javac2.home}/javac2.jar"/>
-    <pathelement location="${javac2.home}/jdom.jar"/>
-    <pathelement location="${javac2.home}/asm-all.jar"/>
-    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
-    <pathelement location="${javac2.home}/junit-4.12.jar"/>
-  </path>
-
-  <target name="register.custom.compilers">
-    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
-    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
-  </target>
-
-  <javac>
-    <classpath
-  </javac> -->
 
   <path id="javac.classpath">
     <pathelement location="lib/" />
@@ -84,11 +65,10 @@
   </javac>
   
   <!-- Modules -->
-  
+  <!--
   <import file="${basedir}/module_ss-project-41.xml"/>
   
   <target name="init" description="Build initialization">
-    <!-- Perform any build initialization in this target -->
   </target>
   
   <target name="clean" depends="clean.module.ss-project-41" description="cleanup all"/>
@@ -96,4 +76,5 @@
   <target name="build.modules" depends="init, clean, compile.module.ss-project-41.production" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+-->
 </project>
