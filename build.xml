@@ -33,7 +33,7 @@
       </classpath>
 
       <batchtest fork="yes" todir="${testoutput.dir}">
-        <fileset dir="src/test">
+        <fileset dir="src/nl/tiesdavid/ssproject/test">
           <include name="**/*Test*.java" />
         </fileset>
       </batchtest>
