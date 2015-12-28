@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.xml" afterPath="$PROJECT_DIR$/build.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/module_ss-project-41.xml" afterPath="$PROJECT_DIR$/module_ss-project-41.xml" />
     </list>
     <ignored path="Nieuwe map.iws" />
@@ -117,8 +116,8 @@
       <file leaf-file-name="module_ss-project-41.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/module_ss-project-41.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60022396">
-              <caret line="46" column="150" selection-start-line="46" selection-start-column="150" selection-end-line="46" selection-end-column="150" />
+            <state vertical-scroll-proportion="0.63829786">
+              <caret line="44" column="150" selection-start-line="44" selection-start-column="150" selection-end-line="44" selection-end-column="150" />
               <folding />
             </state>
           </provider>
@@ -1386,8 +1385,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/module_ss-project-41.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60022396">
-          <caret line="46" column="150" selection-start-line="46" selection-start-column="150" selection-end-line="46" selection-end-column="150" />
+        <state vertical-scroll-proportion="0.63829786">
+          <caret line="44" column="150" selection-start-line="44" selection-start-column="150" selection-end-line="44" selection-end-column="150" />
           <folding />
         </state>
       </provider>
