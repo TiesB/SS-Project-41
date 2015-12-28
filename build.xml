@@ -78,7 +78,12 @@
     <pathelement location="lib/" />
   </path>
 
-  <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false" />
+  <fileset id="javac.src">
+    <include name="src/" />
+    <exclude name="**/test/**" />
+  </fileset>
+
+  <javac sourcepathref="javac.src" classpathref="javac.classpath" includeantruntime="false" />
   
   <!-- Modules -->
   
@@ -90,7 +95,7 @@
   
   <target name="clean" depends="clean.module.ss-project-41" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.ss-project-41" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.ss-project-41.production" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
 </project>
