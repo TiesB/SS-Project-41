@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ss-project-41" default="all">
+<project name="ss-project-41" default="build">
   
   
   <property file="build.properties"/>
@@ -59,11 +59,24 @@
     <pathelement location="lib/" />
   </path>
 
-  <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
-    <include name="**/*.java" />
-    <exclude name="**/test/**" />
-  </javac>
-  
+  <property name="ss-project-41.output.dir" value="${basedir}/out/production/SS-Project-41"/>
+  <property name="ss-project-41.testoutput.dir" value="${basedir}/out/test/SS-Project-41"/>
+
+  <target name="clean">
+    <delete dir="${ss-project-41.output.dir}"/>
+    <delete dir="${ss-project-41.testoutput.dir}"/>
+  </target>
+
+  <target name="build" description="Build">
+    <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
+      <include name="**/*.java" />
+      <exclude name="**/test/**" />
+    </javac>
+  </target>
+
+  <target name="all" depends="clean, build">
+
+  </target>
   <!-- Modules -->
   <!--
   <import file="${basedir}/module_ss-project-41.xml"/>
