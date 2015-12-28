@@ -18,14 +18,14 @@
     <mkdir dir="${testoutput.dir}" />
   </target>
 
-  <target name="build" depends="clean, init" description="Build">
+  <target name="build" depends="init" description="Build">
     <javac destdir="${output.dir}" srcdir="src/" includeantruntime="false">
       <include name="**/*.java" />
       <exclude name="**/test/**" />
     </javac>
   </target>
 
-  <target name="test" depends="clean, init">
+  <target name="test" depends="init">
     <junit printsummary="yes" haltonfailure="no">
 
       <classpath>
