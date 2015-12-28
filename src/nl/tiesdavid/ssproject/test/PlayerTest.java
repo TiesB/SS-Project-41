@@ -6,7 +6,7 @@ import nl.tiesdavid.ssproject.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
     private TestPlayer player;
@@ -24,7 +24,7 @@ public class PlayerTest {
         player.addTileToDeck(new Tile(Tile.Color.GREEN, Tile.Shape.DIAMOND));
         player.addTileToDeck(new Tile(Tile.Color.ORANGE, Tile.Shape.PLUS));
 
-        org.junit.Assert.assertEquals(4, player.getNoOfTilesSharingACharacteristic());
+        assertEquals(4, player.getNoOfTilesSharingACharacteristic());
     }
     
 }
