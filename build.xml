@@ -55,6 +55,7 @@
     <exclude name="**/?*.aj"/>
   </patternset>
   <!-- Register Custom Compiler Taskdefs -->
+  <!--
   <property name="javac2.home" value="${basedir}/lib"/>
   <path id="javac2.classpath">
     <pathelement location="${javac2.home}/javac2.jar"/>
@@ -63,10 +64,23 @@
     <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
     <pathelement location="${javac2.home}/junit-4.12.jar"/>
   </path>
+
   <target name="register.custom.compilers">
     <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
     <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
   </target>
+
+  <javac>
+    <classpath
+  </javac> -->
+
+  <path id="javac.classpath">
+    <pathelement location="lib/" />
+  </path>
+
+  <javac classpathref="javac.classpath">
+
+  </javac>
   
   <!-- Modules -->
   
