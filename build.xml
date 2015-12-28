@@ -4,8 +4,8 @@
   
   <property file="build.properties"/>
 
-  <property name="output.dir" value="${basedir}/out/production/SS-Project-41"/>
-  <property name="testoutput.dir" value="${basedir}/out/test/SS-Project-41"/>
+  <property name="output.dir" value="${basedir}/out/production"/>
+  <property name="testoutput.dir" value="${basedir}/out/test/" />
   <property name="lib.dir" value="${basedir}/lib" />
 
   <target name="clean">
