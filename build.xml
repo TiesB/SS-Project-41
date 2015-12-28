@@ -78,12 +78,10 @@
     <pathelement location="lib/" />
   </path>
 
-  <fileset id="javac.src">
-    <include name="src/" />
+  <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
+    <include name="**/*.java" />
     <exclude name="**/test/**" />
-  </fileset>
-
-  <javac sourcepathref="javac.src" classpathref="javac.classpath" includeantruntime="false" />
+  </javac>
   
   <!-- Modules -->
   
