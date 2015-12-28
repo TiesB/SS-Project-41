@@ -41,7 +41,7 @@
     </junit>
   </target>
 
-  <target name="all" depends="build, test">
+  <target name="all" depends="build">
 
   </target>
   <!-- Modules -->
