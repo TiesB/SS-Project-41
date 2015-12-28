@@ -1,4 +1,4 @@
-package nl.tiesdavid.ssproject.test;
+package test;
 /**
  * Created by Ties on 20-12-2015.
  */

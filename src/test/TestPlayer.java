@@ -1,7 +1,7 @@
 /**
  * Created by Ties on 26-12-2015.
  */
-package nl.tiesdavid.ssproject.test;
+package test;
 
 import nl.tiesdavid.ssproject.Game;
 import nl.tiesdavid.ssproject.Move;
