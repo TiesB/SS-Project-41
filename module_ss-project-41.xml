@@ -44,7 +44,7 @@
   
   <target name="compile.module.ss-project-41.production" description="Compile module SS-Project-41; production classes">
     <mkdir dir="${ss-project-41.output.dir}"/>
-    <javac destdir="${ss-project-41.output.dir}" srcdir="ss-project-41.module.sourcepath" fork="true">
+    <javac destdir="${ss-project-41.output.dir}" srcdir="ss-project-41.module.sourcepath" classpathref="ss-project-41.module.classpath" fork="true">
       <bootclasspath refid="ss-project-41.module.bootclasspath"/>
       <classpath refid="ss-project-41.module.production.classpath"/>
       <src refid="ss-project-41.module.sourcepath"/>
