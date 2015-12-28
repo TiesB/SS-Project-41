@@ -86,6 +86,9 @@ public abstract class Player implements Comparable {
             }
         } catch (NullPointerException e) {
             return null;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+            //TODO: Wrong set entered.
         }
     }
 
