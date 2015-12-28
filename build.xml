@@ -75,10 +75,10 @@
   </javac> -->
 
   <path id="javac.classpath">
-    <pathelement location="lib/" />
+    <pathelement location="lib" />
   </path>
 
-  <javac classpathref="javac.classpath">
+  <javac srcdir="src" classpathref="javac.classpath">
 
   </javac>
   
