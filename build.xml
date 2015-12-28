@@ -3,78 +3,48 @@
   
   
   <property file="build.properties"/>
-  <!-- Uncomment the following property if no tests compilation is needed -->
-  <!-- 
-  <property name="skip.tests" value="true"/>
-   -->
-  
-  <!-- Compiler options -->
-  
-  <property name="compiler.debug" value="on"/>
-  <property name="compiler.generate.no.warnings" value="off"/>
-  <property name="compiler.args" value=""/>
-  <property name="compiler.max.memory" value="700m"/>
-  <patternset id="ignored.files">
-    <exclude name="**/*.hprof/**"/>
-    <exclude name="**/*.pyc/**"/>
-    <exclude name="**/*.pyo/**"/>
-    <exclude name="**/*.rbc/**"/>
-    <exclude name="**/*~/**"/>
-    <exclude name="**/.DS_Store/**"/>
-    <exclude name="**/.git/**"/>
-    <exclude name="**/.hg/**"/>
-    <exclude name="**/.svn/**"/>
-    <exclude name="**/CVS/**"/>
-    <exclude name="**/RCS/**"/>
-    <exclude name="**/SCCS/**"/>
-    <exclude name="**/__pycache__/**"/>
-    <exclude name="**/_svn/**"/>
-    <exclude name="**/rcs/**"/>
-    <exclude name="**/vssver.scc/**"/>
-    <exclude name="**/vssver2.scc/**"/>
-  </patternset>
-  <patternset id="library.patterns">
-    <include name="*.war"/>
-    <include name="*.swc"/>
-    <include name="*.apk"/>
-    <include name="*.zip"/>
-    <include name="*.egg"/>
-    <include name="*.ane"/>
-    <include name="*.jar"/>
-    <include name="*.ear"/>
-  </patternset>
-  <patternset id="compiler.resources">
-    <exclude name="**/?*.java"/>
-    <exclude name="**/?*.form"/>
-    <exclude name="**/?*.class"/>
-    <exclude name="**/?*.groovy"/>
-    <exclude name="**/?*.scala"/>
-    <exclude name="**/?*.flex"/>
-    <exclude name="**/?*.kt"/>
-    <exclude name="**/?*.clj"/>
-    <exclude name="**/?*.aj"/>
-  </patternset>
 
   <path id="javac.classpath">
     <pathelement location="lib/" />
   </path>
 
-  <property name="ss-project-41.output.dir" value="${basedir}/out/production/SS-Project-41"/>
-  <property name="ss-project-41.testoutput.dir" value="${basedir}/out/test/SS-Project-41"/>
+  <property name="output.dir" value="${basedir}/out/production/SS-Project-41"/>
+  <property name="testoutput.dir" value="${basedir}/out/test/SS-Project-41"/>
 
   <target name="clean">
-    <delete dir="${ss-project-41.output.dir}"/>
-    <delete dir="${ss-project-41.testoutput.dir}"/>
+    <delete dir="${output.dir}"/>
+    <delete dir="${testoutput.dir}"/>
   </target>
 
-  <target name="build" description="Build">
-    <javac srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
+  <target name="init">
+    <mkdir dir="${output.dir}" />
+    <mkdir dir="${testoutput.dir}" />
+  </target>
+
+  <target name="build" depends="clean, init" description="Build">
+    <javac destdir="${output.dir}" srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
       <include name="**/*.java" />
       <exclude name="**/test/**" />
     </javac>
   </target>
 
-  <target name="all" depends="clean, build">
+
+
+  <target name="test">
+    <junit printsummary="yes" haltonfailure="no">
+
+      <classpath refid="javac.classpath" />
+
+      <batchtest fork="yes" todir="${testoutput.dir}">
+        <fileset dir="src/test">
+          <include name="**/*Test*.java" />
+        </fileset>
+      </batchtest>
+
+    </junit>
+  </target>
+
+  <target name="all" depends="build">
 
   </target>
   <!-- Modules -->
