@@ -19,7 +19,7 @@
   </target>
 
   <target name="build" depends="clean, init" description="Build">
-    <javac destdir="${output.dir}" srcdir="src/" classpathref="javac.classpath" includeantruntime="false">
+    <javac destdir="${output.dir}" srcdir="src/" includeantruntime="false">
       <include name="**/*.java" />
       <exclude name="**/test/**" />
     </javac>
