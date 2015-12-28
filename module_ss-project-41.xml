@@ -36,6 +36,7 @@
   <path id="ss-project-41.module.sourcepath">
     <dirset dir="${module.ss-project-41.basedir}">
       <include name="src"/>
+      <exclude name="**/test/**" />
     </dirset>
   </path>
   
