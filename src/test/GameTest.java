@@ -2,15 +2,18 @@ package test; /**
  * Created by tiesb on 30-12-2015.
  */
 
-import static org.junit.Assert.*;
-
+import nl.tiesdavid.ssproject.Game;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 public class GameTest {
-    
+    Game game;
+
     @Before
     public void setUp() {
-        fail("Not yet implemented");
+        game = new Game();
     }
     
     @Test
