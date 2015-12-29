@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
     </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -808,7 +807,7 @@
       <updated>1450559948844</updated>
       <workItem from="1451426685861" duration="62000" />
       <workItem from="1451426757811" duration="611000" />
-      <workItem from="1451427379242" duration="2044000" />
+      <workItem from="1451427379242" duration="2118000" />
     </task>
     <servers />
   </component>
@@ -845,7 +844,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2717000" />
+    <option name="totallyTimeSpent" value="2791000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
