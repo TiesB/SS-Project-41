@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SS-Project-41.iml" afterPath="$PROJECT_DIR$/SS-Project-41.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
-    </list>
+    <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="" />
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -40,12 +31,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Qwirkle.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
+      <file leaf-file-name="HumanPlayer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21470396">
-              <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-              <folding />
+            <state vertical-scroll-proportion="1.3596168">
+              <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+              <folding>
+                <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
+                <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
+                <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
+                <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,12 +103,12 @@
         <option value="$PROJECT_DIR$/src/test/TestPlayer.java" />
         <option value="$PROJECT_DIR$/src/test/BoardTest.java" />
         <option value="$PROJECT_DIR$/build.xml" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/MoveType.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
       </list>
     </option>
   </component>
@@ -289,7 +285,7 @@
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="placetile&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Board#placeTile&#10;nonei&#9;FILE&#9;file://E:/Projecten/SS-Project-41/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java&#10;file&#9;ACTION&#9;NewFile&#10;makemove&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Player#makeMove&#10;qwirkle&#9;RUN_CONFIGURATION&#9;Qwirkle&#10;printscore&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Game#printScores&#10;parsechoi&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.HumanPlayer#parseChoice&#10;qwirk&#9;RUN_CONFIGURATION&#9;Qwirkle" />
+    <property name="SearchEverywhereHistoryKey" value="parsech&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.HumanPlayer#parseChoice&#10;placetile&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Board#placeTile&#10;nonei&#9;FILE&#9;file://E:/Projecten/SS-Project-41/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java&#10;file&#9;ACTION&#9;NewFile&#10;makemove&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Player#makeMove&#10;qwirkle&#9;RUN_CONFIGURATION&#9;Qwirkle&#10;printscore&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Game#printScores&#10;parsechoi&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.HumanPlayer#parseChoice&#10;qwirk&#9;RUN_CONFIGURATION&#9;Qwirkle" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -810,7 +806,7 @@
       <updated>1450559948844</updated>
       <workItem from="1451426685861" duration="62000" />
       <workItem from="1451426757811" duration="611000" />
-      <workItem from="1451427379242" duration="1487000" />
+      <workItem from="1451427379242" duration="1766000" />
     </task>
     <servers />
   </component>
@@ -847,7 +843,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2160000" />
+    <option name="totallyTimeSpent" value="2439000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -860,7 +856,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="3856" height="2136" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872656" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -869,10 +865,10 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29882604" sideWeight="0.51043844" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27147087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2408687" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2408687" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11536458" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -972,22 +968,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
           <folding>
-            <marker date="1451427083286" expanded="false" signature="0:41" placeholder="/**...*/" />
-            <marker date="1451427083286" expanded="false" signature="82:255" placeholder="..." />
-            <marker date="1451427083286" expanded="false" signature="345:356" placeholder=" { " />
-            <marker date="1451427083286" expanded="false" signature="374:380" placeholder=" }" />
-            <marker date="1451427083286" expanded="false" signature="428:1098" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="1164:1715" placeholder="{...}" />
-            <marker date="1451427083286" expanded="true" signature="1786:2655" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="2693:2967" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="3006:3230" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="3262:3480" placeholder="{...}" />
-            <marker date="1451427083286" expanded="true" signature="3523:4021" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="4064:4800" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="4169:4198" placeholder="/resource/" />
-            <marker date="1451427083286" expanded="false" signature="4849:6211" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="6252:6739" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="6318:6347" placeholder="/resource/" />
+            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
+            <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
+            <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
           </folding>
         </state>
       </provider>
@@ -1380,31 +1364,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88288873">
-          <caret line="123" column="35" selection-start-line="123" selection-start-column="35" selection-end-line="123" selection-end-column="35" />
-          <folding>
-            <marker date="1451427083286" expanded="false" signature="0:41" placeholder="/**...*/" />
-            <marker date="1451427083286" expanded="false" signature="82:255" placeholder="..." />
-            <marker date="1451427083286" expanded="false" signature="345:356" placeholder=" { " />
-            <marker date="1451427083286" expanded="false" signature="374:380" placeholder=" }" />
-            <marker date="1451427083286" expanded="false" signature="428:1098" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="1164:1715" placeholder="{...}" />
-            <marker date="1451427083286" expanded="true" signature="1786:2655" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="2693:2967" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="3006:3230" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="3262:3480" placeholder="{...}" />
-            <marker date="1451427083286" expanded="true" signature="3523:4021" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="4064:4800" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="4169:4198" placeholder="/resource/" />
-            <marker date="1451427083286" expanded="false" signature="4849:6211" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="6252:6739" placeholder="{...}" />
-            <marker date="1451427083286" expanded="false" signature="6318:6347" placeholder="/resource/" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37215355">
@@ -1568,9 +1527,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21470396">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-          <folding />
+        <state vertical-scroll-proportion="0.3318152">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <marker date="1451338354544" expanded="true" signature="161:494" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3596168">
+          <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+          <folding>
+            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
+            <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
+            <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
+            <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
+          </folding>
         </state>
       </provider>
     </entry>
