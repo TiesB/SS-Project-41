@@ -93,11 +93,6 @@ public class Game {
         }
     }
 
-    public void removePlayer(Player player) {
-        int index = players.indexOf(player);
-        players.remove(index);
-    }
-
     public boolean hasTilesLeft() {
         return bag.size() > 0;
     }

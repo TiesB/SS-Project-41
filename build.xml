@@ -14,9 +14,9 @@
     <path refid="classpath.base" />
   </path>
 
-  <target name="test" depends="run, clean" />
+  <target name="test" depends="runtest, clean" />
 
-  <target name="compile">
+  <target name="buildmain">
     <mkdir dir="${main.build.dir}"/>
     <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false">
       <exclude name="**/test/**" />
@@ -24,7 +24,7 @@
     </javac>
   </target>
 
-  <target name="build" depends="compile">
+  <target name="buildtest">
     <mkdir dir="${test.build.dir}"/>
     <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
       <classpath refid="classpath.test"/>
@@ -34,7 +34,7 @@
 
   <!-- Test and build all files  -->
   <!-- To run this: use "ant" (default) or "ant run" -->
-  <target name="run" depends="build">
+  <target name="runtest" depends="buildtest">
     <junit printsummary="on" haltonfailure="yes">
       <classpath>
         <path refid="classpath.test" />

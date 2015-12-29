@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Created by Ties on 19-12-2015.
  */
-public abstract class Player implements Comparable {
+public abstract class Player implements Comparable<Player> {
     protected static final int DECK_SIZE = 6;
 
     private final String name;
@@ -222,7 +222,7 @@ public abstract class Player implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Player o) {
         return Integer.compare(score, ((Player) o).getScore());
     }
 }
