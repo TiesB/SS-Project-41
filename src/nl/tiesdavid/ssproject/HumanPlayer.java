@@ -120,7 +120,11 @@ public class HumanPlayer extends Player {
                 } else {
                     return determineMove();
                 }
+            case 99:
+                deck.clear();
+                return null;
             default:
+                game.printScores();
                 return null;
         }
     }

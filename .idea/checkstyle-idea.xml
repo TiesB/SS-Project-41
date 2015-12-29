@@ -3,10 +3,10 @@
   <component name="CheckStyle-IDEA">
     <option name="configuration">
       <map>
-        <entry key="active-configuration" value="LOCAL_FILE:C:/Users/Ties/Downloads/checkstyle-softwaresystems.xml:SS" />
+        <entry key="active-configuration" value="PROJECT_RELATIVE:C:/Users/tiesb/Downloads/checkstyle-softwaresystems.xml:SS-Checkstyle" />
         <entry key="check-nonjava-files" value="false" />
         <entry key="check-test-classes" value="false" />
-        <entry key="location-0" value="LOCAL_FILE:C:/Users/Ties/Downloads/checkstyle-softwaresystems.xml:SS" />
+        <entry key="location-0" value="PROJECT_RELATIVE:C:/Users/tiesb/Downloads/checkstyle-softwaresystems.xml:SS-Checkstyle" />
         <entry key="location-1" value="CLASSPATH:/sun_checks.xml:The default Checkstyle rules" />
         <entry key="suppress-errors" value="true" />
         <entry key="thirdparty-classpath" value="" />

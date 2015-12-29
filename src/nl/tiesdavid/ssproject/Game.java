@@ -124,10 +124,10 @@ public class Game {
         String line1 = "";
 
         for (int i = 0; i < players.size() - 1; i++) {
-            line1 += players.get(i).getName();
+            line1 += String.format("%12s", players.get(i).getName());
             line1 += " | ";
         }
-        line1 += players.get(players.size() - 1).getName();
+        line1 += String.format("%12s", players.get(players.size() - 1).getName());
         System.out.println(line1);
 
         String line2 = "";
@@ -139,9 +139,9 @@ public class Game {
         String line3 = "";
 
         for (int i = 0; i < players.size() - 1; i++) {
-            line3 += players.get(i).getScore() + " | ";
+            line3 += String.format("%12s", players.get(i).getScore() + " | ");
         }
-        line3 += players.get(players.size() - 1).getScore();
+        line3 += String.format("%12s", players.get(players.size() - 1).getScore());
 
         System.out.println(line3);
 

@@ -39,6 +39,10 @@ public class Board {
             int verticalLine = 0;
             boolean neighboringTile = false;
 
+            if (!checkNeighboringTiles(tile)) {
+                throw new NoNeighboringTileException();
+            }
+
             //To the left
             int tempX = x - 1;
             Tile nextTile = getTile(tempX, y);
@@ -87,6 +91,33 @@ public class Board {
         tiles.add(tile);
         calculateMinMax(x, y);
         return getScore(tile);
+    }
+
+    private boolean checkNeighboringTiles(Tile tile) {
+        int x = tile.getX();
+        int y = tile.getY();
+        Tile.Color color = tile.getColor();
+        Tile.Shape shape = tile.getShape();
+
+        int[] xValues = {x - 1, x + 1};
+        int[] yValues = {y - 1, y + 1};
+
+        for (int xValue : xValues) {
+            for (int yValue : yValues) {
+                Tile testTile = getTile(xValue, yValue);
+                if (testTile != null && !checkTile(testTile, color, shape)) {
+                    System.out.println(tile);
+                    System.out.println(testTile);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
+        return !(!tile.getColor().equals(color) && !tile.getShape().equals(shape));
     }
 
     /**

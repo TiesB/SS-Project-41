@@ -2,11 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SS-Project-41.iml" afterPath="$PROJECT_DIR$/SS-Project-41.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
     </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path=".idea/dataSources.local.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +24,11 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/SS-Project-41$Qwirkle.coverage" NAME="Qwirkle Coverage Results" MODIFIED="1451428775734" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>nl.tiesdavid.ssproject.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/SS-Project-41$BoardTest.coverage" NAME="BoardTest Coverage Results" MODIFIED="1450655021107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>nl.tiesdavid.ssproject.Board</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/SS-Project-41$Qwirkle.coverage" NAME="Qwirkle Coverage Results" MODIFIED="1450864002193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>nl.tiesdavid.ssproject.*</FILTER>
     </SUITE>
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -31,127 +39,13 @@
     <favorites_list name="SS-Project-41" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="123">
-      <file leaf-file-name="HumanPlayer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
+    <leaf>
+      <file leaf-file-name="Qwirkle.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5">
-              <caret line="71" column="39" selection-start-line="71" selection-start-column="39" selection-end-line="71" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.21470396">
+              <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".travis.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.travis.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/PlayerTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#test#0;class#PlayerTest#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="249" column="29" selection-start-line="249" selection-start-column="29" selection-end-line="249" selection-end-column="29" />
-              <folding>
-                <element signature="method#placeTile#0;class#Board#0" expanded="true" />
-                <element signature="method#toString#0;class#Board#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BoardTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/BoardTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#560#561#0" expanded="true" />
-                <element signature="e#610#611#0" expanded="true" />
-                <element signature="method#resetTest#0;class#BoardTest#0" expanded="true" />
-                <element signature="method#addAlreadyExistentTile#0;class#BoardTest#0" expanded="true" />
-                <element signature="method#scoreTest#0;class#BoardTest#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Tile.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="118" column="13" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
-              <folding>
-                <element signature="e#2302#2303#0" expanded="true" />
-                <element signature="e#2393#2394#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestPlayer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/TestPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding>
-                <element signature="method#addTileToDeck#0;class#TestPlayer#0" expanded="true" />
-                <element signature="e#482#483#0" expanded="true" />
-                <element signature="e#509#510#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.192307">
-              <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.properties" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-              <folding>
-                <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
-                <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
-                <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -192,19 +86,16 @@
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Color.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/Shape.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NotEnoughTilesGivenException.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/CoordinatesAlreadyFilledException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/OutOfBoundsException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TooLongLineException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/TilesDontShareAttributeException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidMoveTypeWithArgumentsException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/InvalidTilePlacementException.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Deck.java" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/TestPlayer.java" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$USER_HOME$/Desktop/m.txt" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java" />
@@ -212,20 +103,36 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/test/PlayerTest.java" />
         <option value="$PROJECT_DIR$/module_ss-project-41.xml" />
-        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/src/test/TestPlayer.java" />
         <option value="$PROJECT_DIR$/src/test/BoardTest.java" />
         <option value="$PROJECT_DIR$/build.xml" />
         <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/MoveType.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java" />
+        <option value="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java" />
       </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" />
+  <component name="JsBuildToolPackageJson" detection-done="true" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="3856" />
+    <option name="height" value="2136" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -271,6 +178,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -336,14 +245,34 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ssproject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="enums" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SS-Project-41" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SS-Project-41" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -351,13 +280,16 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="m" />
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="true" />
     <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="SearchEverywhereHistoryKey" value="placetile&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Board#placeTile&#10;nonei&#9;FILE&#9;file://E:/Projecten/SS-Project-41/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java&#10;file&#9;ACTION&#9;NewFile&#10;makemove&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Player#makeMove&#10;qwirkle&#9;RUN_CONFIGURATION&#9;Qwirkle&#10;printscore&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.Game#printScores&#10;parsechoi&#9;PSI&#9;JAVA://nl.tiesdavid.ssproject.HumanPlayer#parseChoice&#10;qwirk&#9;RUN_CONFIGURATION&#9;Qwirkle" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -379,7 +311,7 @@
   <component name="RunManager" selected="Application.Qwirkle">
     <configuration default="false" name="Qwirkle" type="Application" factoryName="Application" temporary="true">
       <output_file path="$USER_HOME$/Desktop/m.txt" />
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" track_test_folders="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="nl.tiesdavid.ssproject.*" />
           <option name="ENABLED" value="true" />
@@ -452,6 +384,65 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="SELECTED_CLOUD_DEVICE_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_DEVICE_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_MATRIX_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_MATRIX_SELECTION_ERROR" value="" />
+      <option name="IS_VALID_CLOUD_DEVICE_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_DEVICE_SELECTION_ERROR" value="" />
+      <option name="CLOUD_DEVICE_SERIAL_NUMBER" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -467,7 +458,134 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
     <configuration default="true" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
@@ -484,6 +602,16 @@
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -549,6 +677,9 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -559,6 +690,15 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="SS-Project-41" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node.js" working-dir="">
+      <method />
+    </configuration>
+    <configuration default="true" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
       <envs />
       <method />
     </configuration>
@@ -618,6 +758,33 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-options />
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <envs />
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>DIRECTORY</test-kind>
+      <test-directory />
+      <recursive>false</recursive>
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Run Launcher">
+      <method />
+    </configuration>
+    <configuration default="true" type="osgi.bnd.run" factoryName="Test Launcher (JUnit)">
+      <method />
+    </configuration>
     <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Qwirkle" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.BoardTest" />
@@ -632,12 +799,18 @@
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="" />
       <created>1450559948844</created>
       <option name="number" value="Default" />
       <updated>1450559948844</updated>
+      <workItem from="1451426685861" duration="62000" />
+      <workItem from="1451426757811" duration="611000" />
+      <workItem from="1451427379242" duration="1487000" />
     </task>
     <servers />
   </component>
@@ -673,6 +846,9 @@
       <configuration name="PlayerTest" configurationId="JUnit" />
     </history-entry>
   </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2160000" />
+  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -683,23 +859,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="3856" height="2136" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872656" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32875264" sideWeight="0.49582464" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29882604" sideWeight="0.51043844" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2410148" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27147087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2408687" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17916666" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11536458" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10147992" sideWeight="0.49791232" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1011846" sideWeight="0.49791232" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -710,7 +888,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.48189417" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24418604" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="UnknownFeatures">
@@ -738,14 +915,79 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <marker date="1451427158673" expanded="false" signature="40:309" placeholder="..." />
+            <marker date="1451427158673" expanded="false" signature="311:352" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="615:842" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="891:1022" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="1072:1155" placeholder="{...}" />
+            <marker date="1451427158673" expanded="true" signature="1184:2174" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="2246:2943" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3044:3869" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3929:4175" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4202:4303" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4332:4343" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4355:4361" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4388:4399" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4412:4418" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4464:4475" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4494:4500" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4540:4634" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4671:4787" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4817:4908" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4914:5128" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5162:5173" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="5196:5202" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="5243:5483" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="5489:5659" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5712:6373" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="6417:6428" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6473:6479" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="6529:6540" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6595:6601" placeholder=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#346#347#0" expanded="false" />
-            <element signature="e#379#380#0" expanded="false" />
+            <marker date="1451427083286" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451427083286" expanded="false" signature="82:255" placeholder="..." />
+            <marker date="1451427083286" expanded="false" signature="345:356" placeholder=" { " />
+            <marker date="1451427083286" expanded="false" signature="374:380" placeholder=" }" />
+            <marker date="1451427083286" expanded="false" signature="428:1098" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="1164:1715" placeholder="{...}" />
+            <marker date="1451427083286" expanded="true" signature="1786:2655" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="2693:2967" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="3006:3230" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="3262:3480" placeholder="{...}" />
+            <marker date="1451427083286" expanded="true" signature="3523:4021" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="4064:4800" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="4169:4198" placeholder="/resource/" />
+            <marker date="1451427083286" expanded="false" signature="4849:6211" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="6252:6739" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="6318:6347" placeholder="/resource/" />
           </folding>
         </state>
       </provider>
@@ -754,15 +996,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#2755#2756#0" expanded="false" />
-            <element signature="e#2792#2793#0" expanded="false" />
-            <element signature="e#3004#3005#0" expanded="false" />
-            <element signature="e#3033#3034#0" expanded="false" />
-            <element signature="e#3959#3960#0" expanded="false" />
-            <element signature="e#3992#3993#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -770,7 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -779,34 +1011,35 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="19" selection-start-line="79" selection-start-column="19" selection-end-line="79" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="docComment;class#Player#0" expanded="false" />
-            <element signature="method#Player#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#handleMoveException#0;class#Player#0" expanded="false" />
-            <element signature="method#handleMoveException#0;class#Player#0" expanded="false" />
-            <element signature="method#makeMove#0;class#Player#0" expanded="false" />
-            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
-            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
-            <element signature="method#win#0;class#Player#0" expanded="false" />
-            <element signature="e#4274#4275#0" expanded="false" />
-            <element signature="e#4301#4302#0" expanded="false" />
-            <element signature="e#4330#4331#0" expanded="false" />
-            <element signature="e#4358#4359#0" expanded="false" />
-            <element signature="e#4406#4407#0" expanded="false" />
-            <element signature="e#4440#4441#0" expanded="false" />
-            <element signature="method#tradeTile#0;class#Player#0" expanded="false" />
-            <element signature="method#drawTileFromBag#0;class#Player#0" expanded="false" />
-            <element signature="method#fillDeck#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="false" />
-            <element signature="e#5104#5105#0" expanded="false" />
-            <element signature="e#5142#5143#0" expanded="false" />
-            <element signature="method#findTile#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="false" />
-            <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="false" />
-            <element signature="e#6359#6360#0" expanded="false" />
-            <element signature="e#6419#6420#0" expanded="false" />
-            <element signature="e#6471#6472#0" expanded="false" />
-            <element signature="e#6541#6542#0" expanded="false" />
+            <marker date="1451427158673" expanded="false" signature="40:309" placeholder="..." />
+            <marker date="1451427158673" expanded="false" signature="311:352" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="615:842" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="891:1022" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="1072:1155" placeholder="{...}" />
+            <marker date="1451427158673" expanded="true" signature="1184:2174" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="2246:2943" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3044:3869" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3929:4175" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4202:4303" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4332:4343" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4355:4361" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4388:4399" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4412:4418" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4464:4475" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4494:4500" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4540:4634" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4671:4787" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4817:4908" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4914:5128" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5162:5173" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="5196:5202" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="5243:5483" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="5489:5659" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5712:6373" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="6417:6428" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6473:6479" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="6529:6540" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6595:6601" placeholder=" }" />
           </folding>
         </state>
       </provider>
@@ -815,10 +1048,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="78" selection-start-line="8" selection-start-column="78" selection-end-line="8" selection-end-column="78" />
-          <folding>
-            <element signature="e#201#202#0" expanded="true" />
-            <element signature="e#286#287#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -826,12 +1055,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#177#178#0" expanded="false" />
-            <element signature="e#208#209#0" expanded="false" />
-            <element signature="method#toString#0;class#Deck#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -840,23 +1063,26 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="89" column="45" selection-start-line="89" selection-start-column="45" selection-end-line="89" selection-end-column="45" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="method#Board#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#tileExists#0;class#Board#0" expanded="false" />
-            <element signature="e#2765#2766#0" expanded="false" />
-            <element signature="e#2809#2810#0" expanded="false" />
-            <element signature="e#2841#2842#0" expanded="false" />
-            <element signature="e#2879#2880#0" expanded="false" />
-            <element signature="docComment;method#getTile#0;class#Board#0" expanded="false" />
-            <element signature="method#getTile#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#getScore#0;class#Board#0" expanded="false" />
-            <element signature="method#getScore#0;class#Board#0" expanded="false" />
-            <element signature="method#calculateMinMax#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#reset#0;class#Board#0" expanded="false" />
-            <element signature="e#7033#7034#0" expanded="false" />
-            <element signature="e#7062#7063#0" expanded="false" />
-            <element signature="method#toString#0;class#Board#0" expanded="true" />
+            <marker date="1451428775118" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="82:147" placeholder="..." />
+            <marker date="1451428775118" expanded="false" signature="272:362" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="437:2592" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="2647:3289" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3368:3459" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3465:3706" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="3750:3761" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3790:3796" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3826:3837" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3860:3866" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3872:4123" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4163:4334" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="4340:4546" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4582:7632" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7681:7907" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7913:7994" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="8018:8029" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="8043:8049" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="8094:9358" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -865,7 +1091,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -895,23 +1120,26 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="method#Board#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#tileExists#0;class#Board#0" expanded="false" />
-            <element signature="e#2765#2766#0" expanded="false" />
-            <element signature="e#2809#2810#0" expanded="false" />
-            <element signature="e#2841#2842#0" expanded="false" />
-            <element signature="e#2879#2880#0" expanded="false" />
-            <element signature="docComment;method#getTile#0;class#Board#0" expanded="false" />
-            <element signature="method#getTile#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#getScore#0;class#Board#0" expanded="false" />
-            <element signature="method#getScore#0;class#Board#0" expanded="false" />
-            <element signature="method#calculateMinMax#0;class#Board#0" expanded="false" />
-            <element signature="docComment;method#reset#0;class#Board#0" expanded="false" />
-            <element signature="e#7033#7034#0" expanded="false" />
-            <element signature="e#7062#7063#0" expanded="false" />
-            <element signature="method#toString#0;class#Board#0" expanded="true" />
+            <marker date="1451428775118" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="82:147" placeholder="..." />
+            <marker date="1451428775118" expanded="false" signature="272:362" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="437:2592" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="2647:3289" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3368:3459" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3465:3706" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="3750:3761" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3790:3796" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3826:3837" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3860:3866" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3872:4123" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4163:4334" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="4340:4546" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4582:7632" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7681:7907" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7913:7994" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="8018:8029" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="8043:8049" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="8094:9358" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -920,15 +1148,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#2755#2756#0" expanded="false" />
-            <element signature="e#2792#2793#0" expanded="false" />
-            <element signature="e#3004#3005#0" expanded="false" />
-            <element signature="e#3033#3034#0" expanded="false" />
-            <element signature="e#3959#3960#0" expanded="false" />
-            <element signature="e#3992#3993#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -936,7 +1155,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -945,34 +1163,35 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="docComment;class#Player#0" expanded="false" />
-            <element signature="method#Player#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#handleMoveException#0;class#Player#0" expanded="false" />
-            <element signature="method#handleMoveException#0;class#Player#0" expanded="false" />
-            <element signature="method#makeMove#0;class#Player#0" expanded="false" />
-            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
-            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
-            <element signature="method#win#0;class#Player#0" expanded="false" />
-            <element signature="e#4274#4275#0" expanded="false" />
-            <element signature="e#4301#4302#0" expanded="false" />
-            <element signature="e#4330#4331#0" expanded="false" />
-            <element signature="e#4358#4359#0" expanded="false" />
-            <element signature="e#4406#4407#0" expanded="false" />
-            <element signature="e#4440#4441#0" expanded="false" />
-            <element signature="method#tradeTile#0;class#Player#0" expanded="false" />
-            <element signature="method#drawTileFromBag#0;class#Player#0" expanded="false" />
-            <element signature="method#fillDeck#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#hasTilesLeft#0;class#Player#0" expanded="false" />
-            <element signature="e#5104#5105#0" expanded="false" />
-            <element signature="e#5142#5143#0" expanded="false" />
-            <element signature="method#findTile#0;class#Player#0" expanded="false" />
-            <element signature="docComment;method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="false" />
-            <element signature="method#getNoOfTilesSharingACharacteristic#0;class#Player#0" expanded="false" />
-            <element signature="e#6359#6360#0" expanded="false" />
-            <element signature="e#6419#6420#0" expanded="false" />
-            <element signature="e#6471#6472#0" expanded="false" />
-            <element signature="e#6541#6542#0" expanded="false" />
+            <marker date="1451427158673" expanded="false" signature="40:309" placeholder="..." />
+            <marker date="1451427158673" expanded="false" signature="311:352" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="615:842" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="891:1022" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="1072:1155" placeholder="{...}" />
+            <marker date="1451427158673" expanded="true" signature="1184:2174" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="2246:2943" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3044:3869" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3929:4175" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4202:4303" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4332:4343" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4355:4361" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4388:4399" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4412:4418" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4464:4475" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4494:4500" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4540:4634" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4671:4787" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4817:4908" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4914:5128" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5162:5173" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="5196:5202" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="5243:5483" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="5489:5659" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5712:6373" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="6417:6428" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6473:6479" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="6529:6540" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6595:6601" placeholder=" }" />
           </folding>
         </state>
       </provider>
@@ -981,7 +1200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="14" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1017,18 +1235,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="64" selection-start-line="8" selection-start-column="64" selection-end-line="8" selection-end-column="64" />
-          <folding>
-            <element signature="e#190#191#0" expanded="false" />
-            <element signature="e#260#261#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/MoveType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1036,10 +1242,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding>
-            <element signature="e#197#198#0" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,10 +1249,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="84" selection-start-line="5" selection-start-column="84" selection-end-line="5" selection-end-column="84" />
-          <folding>
-            <element signature="e#218#219#0" expanded="false" />
-            <element signature="e#296#297#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1058,10 +1256,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
-          <folding>
-            <element signature="e#205#206#0" expanded="false" />
-            <element signature="e#274#275#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1069,7 +1263,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1077,10 +1270,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding>
-            <element signature="e#201#202#0" expanded="true" />
-            <element signature="e#286#287#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1088,11 +1277,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#206#207#0" expanded="false" />
-            <element signature="e#287#288#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1100,15 +1284,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1116,28 +1291,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#177#178#0" expanded="false" />
-            <element signature="e#208#209#0" expanded="false" />
-            <element signature="method#toString#0;class#Deck#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <element signature="e#2755#2756#0" expanded="false" />
-            <element signature="e#2792#2793#0" expanded="false" />
-            <element signature="e#3004#3005#0" expanded="false" />
-            <element signature="e#3033#3034#0" expanded="false" />
-            <element signature="e#3959#3960#0" expanded="false" />
-            <element signature="e#3992#3993#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1149,35 +1302,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/m.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/MoveException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="46" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1185,7 +1313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5454545">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1193,7 +1320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="74" selection-start-line="14" selection-start-column="74" selection-end-line="14" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1201,19 +1327,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding>
-            <element signature="method#decideCheckForColor#0;class#Player#0" expanded="true" />
-            <element signature="method#checkCorrectTileSet#0;class#Player#0" expanded="true" />
-            <element signature="method#placeAndDrawTile#0;class#Player#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1221,41 +1334,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="14" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/TestPlayer.java">
+    <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="method#addTileToDeck#0;class#TestPlayer#0" expanded="true" />
-            <element signature="e#482#483#0" expanded="true" />
-            <element signature="e#509#510#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.51586205">
+          <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/test/BoardTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="249" column="29" selection-start-line="249" selection-start-column="29" selection-end-line="249" selection-end-column="29" />
-          <folding>
-            <element signature="method#placeTile#0;class#Board#0" expanded="true" />
-            <element signature="method#toString#0;class#Board#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="13" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
-          <folding>
-            <element signature="e#2302#2303#0" expanded="true" />
-            <element signature="e#2393#2394#0" expanded="true" />
-          </folding>
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1263,40 +1355,221 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/TestPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3122967">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#test#0;class#PlayerTest#0" expanded="true" />
+            <marker date="1451338354653" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451338354653" expanded="false" signature="64:202" placeholder="..." />
+            <marker date="1451338354653" expanded="true" signature="262:326" placeholder="{...}" />
+            <marker date="1451338354653" expanded="false" signature="369:434" placeholder="{...}" />
+            <marker date="1451338354653" expanded="false" signature="481:492" placeholder=" { " />
+            <marker date="1451338354653" expanded="false" signature="504:510" placeholder=" }" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/BoardTest.java">
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/enums/MoveType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#560#561#0" expanded="true" />
-            <element signature="e#610#611#0" expanded="true" />
-            <element signature="method#resetTest#0;class#BoardTest#0" expanded="true" />
-            <element signature="method#addAlreadyExistentTile#0;class#BoardTest#0" expanded="true" />
-            <element signature="method#scoreTest#0;class#BoardTest#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.192307">
-          <caret line="44" column="57" selection-start-line="44" selection-start-column="57" selection-end-line="44" selection-end-column="57" />
-          <folding />
+        <state vertical-scroll-proportion="0.11711126">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5">
-          <caret line="71" column="39" selection-start-line="71" selection-start-column="39" selection-end-line="71" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.88288873">
+          <caret line="123" column="35" selection-start-line="123" selection-start-column="35" selection-end-line="123" selection-end-column="35" />
+          <folding>
+            <marker date="1451427083286" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451427083286" expanded="false" signature="82:255" placeholder="..." />
+            <marker date="1451427083286" expanded="false" signature="345:356" placeholder=" { " />
+            <marker date="1451427083286" expanded="false" signature="374:380" placeholder=" }" />
+            <marker date="1451427083286" expanded="false" signature="428:1098" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="1164:1715" placeholder="{...}" />
+            <marker date="1451427083286" expanded="true" signature="1786:2655" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="2693:2967" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="3006:3230" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="3262:3480" placeholder="{...}" />
+            <marker date="1451427083286" expanded="true" signature="3523:4021" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="4064:4800" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="4169:4198" placeholder="/resource/" />
+            <marker date="1451427083286" expanded="false" signature="4849:6211" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="6252:6739" placeholder="{...}" />
+            <marker date="1451427083286" expanded="false" signature="6318:6347" placeholder="/resource/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37215355">
+          <caret line="128" column="19" selection-start-line="128" selection-start-column="19" selection-end-line="128" selection-end-column="19" />
+          <folding>
+            <marker date="1451427158673" expanded="false" signature="40:309" placeholder="..." />
+            <marker date="1451427158673" expanded="false" signature="311:352" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="615:842" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="891:1022" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="1072:1155" placeholder="{...}" />
+            <marker date="1451427158673" expanded="true" signature="1184:2174" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="2246:2943" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3044:3869" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="3929:4175" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4202:4303" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4332:4343" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4355:4361" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4388:4399" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4412:4418" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4464:4475" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="4494:4500" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="4540:4634" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4671:4787" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4817:4908" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="4914:5128" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5162:5173" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="5196:5202" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="5243:5483" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="5489:5659" placeholder="/**...*/" />
+            <marker date="1451427158673" expanded="false" signature="5712:6373" placeholder="{...}" />
+            <marker date="1451427158673" expanded="false" signature="6417:6428" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6473:6479" placeholder=" }" />
+            <marker date="1451427158673" expanded="false" signature="6529:6540" placeholder=" { " />
+            <marker date="1451427158673" expanded="false" signature="6595:6601" placeholder=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/exceptions/NoNeighboringTileException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1366298">
+          <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+          <folding>
+            <marker date="1451427654377" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451427654377" expanded="true" signature="211:320" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Move.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3318152">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding>
+            <marker date="1451338354514" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451338354514" expanded="false" signature="82:229" placeholder="..." />
+            <marker date="1451338354514" expanded="false" signature="398:466" placeholder="{...}" />
+            <marker date="1451338354514" expanded="false" signature="583:760" placeholder="{...}" />
+            <marker date="1451338354514" expanded="false" signature="795:806" placeholder=" { " />
+            <marker date="1451338354514" expanded="false" signature="827:833" placeholder=" }" />
+            <marker date="1451338354514" expanded="false" signature="860:871" placeholder=" { " />
+            <marker date="1451338354514" expanded="false" signature="888:894" placeholder=" }" />
+            <marker date="1451338354514" expanded="false" signature="936:947" placeholder=" { " />
+            <marker date="1451338354514" expanded="false" signature="968:974" placeholder=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7221861">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding>
+            <marker date="1451428775118" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="82:147" placeholder="..." />
+            <marker date="1451428775118" expanded="false" signature="272:362" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="437:2592" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="2647:3289" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3368:3459" placeholder="{...}" />
+            <marker date="1451428775118" expanded="true" signature="3465:3706" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="3750:3761" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3790:3796" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3826:3837" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="3860:3866" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="3872:4123" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4163:4334" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="4340:4546" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="4582:7632" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7681:7907" placeholder="{...}" />
+            <marker date="1451428775118" expanded="false" signature="7913:7994" placeholder="/**...*/" />
+            <marker date="1451428775118" expanded="false" signature="8018:8029" placeholder=" { " />
+            <marker date="1451428775118" expanded="false" signature="8043:8049" placeholder=" }" />
+            <marker date="1451428775118" expanded="false" signature="8094:9358" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52700067">
+          <caret line="42" column="25" selection-start-line="42" selection-start-column="25" selection-end-line="42" selection-end-column="25" />
+          <folding>
+            <marker date="1451427294779" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451427294779" expanded="false" signature="82:226" placeholder="..." />
+            <marker date="1451427294779" expanded="false" signature="482:710" placeholder="{...}" />
+            <marker date="1451427294779" expanded="true" signature="768:1649" placeholder="{...}" />
+            <marker date="1451427294779" expanded="true" signature="1677:1737" placeholder="{...}" />
+            <marker date="1451427294779" expanded="true" signature="1770:1934" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="1963:2301" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="2307:2443" placeholder="/**...*/" />
+            <marker date="1451427294779" expanded="false" signature="2485:2590" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="2636:2719" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="2754:2765" placeholder=" { " />
+            <marker date="1451427294779" expanded="false" signature="2787:2793" placeholder=" }" />
+            <marker date="1451427294779" expanded="false" signature="2828:2962" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="3003:3014" placeholder=" { " />
+            <marker date="1451427294779" expanded="false" signature="3028:3034" placeholder=" }" />
+            <marker date="1451427294779" expanded="false" signature="3040:3102" placeholder="/**...*/" />
+            <marker date="1451427294779" expanded="true" signature="3133:4021" placeholder="{...}" />
+            <marker date="1451427294779" expanded="false" signature="4050:4061" placeholder=" { " />
+            <marker date="1451427294779" expanded="false" signature="4079:4085" placeholder=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82433313">
+          <caret line="118" column="13" selection-start-line="118" selection-start-column="13" selection-end-line="118" selection-end-column="13" />
+          <folding>
+            <marker date="1451338354550" expanded="false" signature="0:41" placeholder="/**...*/" />
+            <marker date="1451338354550" expanded="true" signature="117:738" placeholder="{...}" />
+            <marker date="1451338354550" expanded="false" signature="261:732" placeholder="{...}" />
+            <marker date="1451338354550" expanded="true" signature="762:1378" placeholder="{...}" />
+            <marker date="1451338354550" expanded="false" signature="904:1372" placeholder="{...}" />
+            <marker date="1451338354550" expanded="false" signature="1550:1653" placeholder="{...}" />
+            <marker date="1451338354550" expanded="false" signature="1697:1790" placeholder="{...}" />
+            <marker date="1451338354550" expanded="false" signature="1813:1824" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="1838:1844" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="1867:1878" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="1892:1898" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="1931:1942" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="1962:1968" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="1997:2008" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2021:2027" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2056:2067" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2080:2086" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2115:2126" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2137:2143" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2172:2183" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2194:2200" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2230:2241" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2261:2267" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2301:2312" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2388:2394" placeholder=" }" />
+            <marker date="1451338354550" expanded="false" signature="2438:2449" placeholder=" { " />
+            <marker date="1451338354550" expanded="false" signature="2492:2498" placeholder=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/Qwirkle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21470396">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1307,6 +1580,18 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
