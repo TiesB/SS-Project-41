@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" afterPath="$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java" />
     </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,12 +37,12 @@
       <file leaf-file-name="HumanPlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4753132">
-              <caret line="81" column="27" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.38688284">
+              <caret line="77" column="49" selection-start-line="77" selection-start-column="49" selection-end-line="77" selection-end-column="49" />
               <folding>
                 <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-                <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
-                <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
+                <marker date="1451429398368" expanded="false" signature="4249:4278" placeholder="/resource/" />
+                <marker date="1451429398368" expanded="false" signature="6398:6427" placeholder="/resource/" />
               </folding>
             </state>
           </provider>
@@ -807,7 +808,7 @@
       <updated>1450559948844</updated>
       <workItem from="1451426685861" duration="62000" />
       <workItem from="1451426757811" duration="611000" />
-      <workItem from="1451427379242" duration="1995000" />
+      <workItem from="1451427379242" duration="2044000" />
     </task>
     <servers />
   </component>
@@ -844,7 +845,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2668000" />
+    <option name="totallyTimeSpent" value="2717000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -970,8 +971,8 @@
           <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
           <folding>
             <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-            <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
-            <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
+            <marker date="1451429398368" expanded="false" signature="4249:4278" placeholder="/resource/" />
+            <marker date="1451429398368" expanded="false" signature="6398:6427" placeholder="/resource/" />
           </folding>
         </state>
       </provider>
@@ -1537,12 +1538,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4753132">
-          <caret line="81" column="27" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.38688284">
+          <caret line="77" column="49" selection-start-line="77" selection-start-column="49" selection-end-line="77" selection-end-column="49" />
           <folding>
             <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-            <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
-            <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
+            <marker date="1451429398368" expanded="false" signature="4249:4278" placeholder="/resource/" />
+            <marker date="1451429398368" expanded="false" signature="6398:6427" placeholder="/resource/" />
           </folding>
         </state>
       </provider>
