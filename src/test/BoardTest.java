@@ -85,8 +85,6 @@ public class BoardTest {
             fail(e.getMessage());
         }
 
-        System.out.println(board);
-
         try {
             assertEquals(2, board.placeTile(new Tile(-1, 0, Tile.Color.RED, Tile.Shape.DIAMOND)));
         } catch (MoveException e) {

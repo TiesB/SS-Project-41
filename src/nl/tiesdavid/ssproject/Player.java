@@ -27,8 +27,6 @@ public abstract class Player implements Comparable {
         score = 0;
 
         fillDeck();
-
-        System.out.println(getName() + ": " + getNoOfTilesSharingACharacteristic());
     }
 
     public abstract Move determineMove();

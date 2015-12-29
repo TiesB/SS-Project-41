@@ -16,7 +16,6 @@ public class TestPlayer extends Player {
 
     public void addTileToDeck(Tile tile) {
         deck.add(tile);
-        System.out.println(deck);
     }
 
     @Override

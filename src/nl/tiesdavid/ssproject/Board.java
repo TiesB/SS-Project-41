@@ -18,7 +18,6 @@ public class Board {
     }
 
     public int placeTile(Tile tile) throws InvalidTilePlacementException {
-        System.out.println(tile);
         int x = tile.getX();
         int y = tile.getY();
 
@@ -104,8 +103,6 @@ public class Board {
         for (int[] value : values) {
             Tile testTile = getTile(value[0], value[1]);
             if (testTile != null && !checkTile(testTile, color, shape)) {
-                System.out.println(tile);
-                System.out.println(testTile);
                 return false;
             }
         }
@@ -114,11 +111,6 @@ public class Board {
     }
 
     private boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
-        System.out.println("###");
-        System.out.println(tile);
-        System.out.println(color);
-        System.out.println(shape);
-        System.out.println("###");
         return !(!tile.getColor().equals(color) && !tile.getShape().equals(shape));
     }
 
@@ -279,8 +271,7 @@ public class Board {
         tiles.clear();
     }
 
-    @Override
-    public String toString() {
+    public void printBoard() {
         String string = "";
 
         for (int i = minY - 2; i <= maxY + 2; i++) {
@@ -312,6 +303,11 @@ public class Board {
             System.out.println(string);
             string = "";
         }
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
 
         for (int i = 0; i < tiles.size() - 1; i++) {
             string += tiles.get(i) + " | ";
