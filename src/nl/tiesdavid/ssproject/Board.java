@@ -99,17 +99,14 @@ public class Board {
         Tile.Color color = tile.getColor();
         Tile.Shape shape = tile.getShape();
 
-        int[] xValues = {x - 1, x + 1};
-        int[] yValues = {y - 1, y + 1};
+        int[][] values = {{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}};
 
-        for (int xValue : xValues) {
-            for (int yValue : yValues) {
-                Tile testTile = getTile(xValue, yValue);
-                if (testTile != null && !checkTile(testTile, color, shape)) {
-                    System.out.println(tile);
-                    System.out.println(testTile);
-                    return false;
-                }
+        for (int[] value : values) {
+            Tile testTile = getTile(value[0], value[1]);
+            if (testTile != null && !checkTile(testTile, color, shape)) {
+                System.out.println(tile);
+                System.out.println(testTile);
+                return false;
             }
         }
 
@@ -117,6 +114,11 @@ public class Board {
     }
 
     private boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
+        System.out.println("###");
+        System.out.println(tile);
+        System.out.println(color);
+        System.out.println(shape);
+        System.out.println("###");
         return !(!tile.getColor().equals(color) && !tile.getShape().equals(shape));
     }
 
