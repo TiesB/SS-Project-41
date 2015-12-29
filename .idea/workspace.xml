@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="" />
+    <list default="true" id="00a90ee7-de55-4e05-b3fa-0caaf04da30f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="Nieuwe map.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -34,13 +36,12 @@
       <file leaf-file-name="HumanPlayer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3596168">
-              <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4753132">
+              <caret line="81" column="27" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="27" />
               <folding>
-                <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
                 <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-                <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
-                <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
+                <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
+                <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
               </folding>
             </state>
           </provider>
@@ -806,7 +807,7 @@
       <updated>1450559948844</updated>
       <workItem from="1451426685861" duration="62000" />
       <workItem from="1451426757811" duration="611000" />
-      <workItem from="1451427379242" duration="1766000" />
+      <workItem from="1451427379242" duration="1995000" />
     </task>
     <servers />
   </component>
@@ -843,7 +844,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2439000" />
+    <option name="totallyTimeSpent" value="2668000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -868,9 +869,9 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2408687" sideWeight="0.4895616" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197917" sideWeight="0.51810586" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32971373" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11536458" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11536458" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1011846" sideWeight="0.49791232" order="5" side_tool="false" content_ui="tabs" />
@@ -968,10 +969,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="42" selection-start-line="60" selection-start-column="42" selection-end-line="60" selection-end-column="42" />
           <folding>
-            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
             <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-            <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
-            <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
+            <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
+            <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
           </folding>
         </state>
       </provider>
@@ -1537,13 +1537,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/nl/tiesdavid/ssproject/HumanPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3596168">
-          <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4753132">
+          <caret line="81" column="27" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="27" />
           <folding>
-            <element signature="method#getMultipleTilesFromUser#0;class#HumanPlayer#0" expanded="true" />
             <element signature="method#parseChoice#0;class#HumanPlayer#0" expanded="true" />
-            <marker date="1451428995535" expanded="false" signature="4249:4278" placeholder="/resource/" />
-            <marker date="1451428995535" expanded="false" signature="6398:6427" placeholder="/resource/" />
+            <marker date="1451429233553" expanded="false" signature="4248:4277" placeholder="/resource/" />
+            <marker date="1451429233553" expanded="false" signature="6397:6426" placeholder="/resource/" />
           </folding>
         </state>
       </provider>

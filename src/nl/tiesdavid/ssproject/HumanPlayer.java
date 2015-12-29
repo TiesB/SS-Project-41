@@ -75,7 +75,7 @@ public class HumanPlayer extends Player {
                 System.out.println("You have already chosen this tile.");
             } else {
                 chosenTiles.add(tile);
-                //TODO: Remove tile (temporarily) from deck.
+                //TODO: Remove tile (temporarily?) from deck.
             }
         } while (chosenTiles.size() + 1 <= DECK_SIZE);
 
