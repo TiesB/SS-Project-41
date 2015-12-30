@@ -58,11 +58,15 @@ public class Game {
     }
 
     private void finish() {
+        Collections.sort(players);
         printScores();
         players.get(0).win();
     }
 
-    private boolean gameOver() {
+    protected boolean gameOver() {
+        if (players.size() == 0) {
+            return true;
+        }
         for (Player player : players) {
             if (!player.hasTilesLeft()) {
                 return true;
@@ -113,9 +117,6 @@ public class Game {
      */
     public void printScores() {
         //TODO: Format line3 nicely (same spacing as line1).
-
-        Collections.sort(players);
-
         String line1 = "";
 
         for (int i = 0; i < players.size() - 1; i++) {
@@ -145,5 +146,21 @@ public class Game {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public String toString() {
+        if (players.size() == 0) {
+            return "";
+        }
+
+        String string = "";
+
+        for (int i = 0; i < players.size() - 1; i++) {
+            string += players.get(i) + System.lineSeparator();
+        }
+        string += players.get(players.size() - 1);
+
+        return string;
     }
 }
