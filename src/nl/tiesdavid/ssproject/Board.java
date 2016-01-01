@@ -18,7 +18,6 @@ public class Board {
     }
 
     public int placeTile(Tile tile) throws InvalidTilePlacementException {
-        System.out.println(tile);
         int x = tile.getX();
         int y = tile.getY();
 
@@ -38,6 +37,10 @@ public class Board {
             int horizontalLine = 0;
             int verticalLine = 0;
             boolean neighboringTile = false;
+
+            if (!checkNeighboringTiles(tile)) {
+                throw new NoNeighboringTileException();
+            }
 
             //To the left
             int tempX = x - 1;
@@ -89,6 +92,28 @@ public class Board {
         return getScore(tile);
     }
 
+    private boolean checkNeighboringTiles(Tile tile) {
+        int x = tile.getX();
+        int y = tile.getY();
+        Tile.Color color = tile.getColor();
+        Tile.Shape shape = tile.getShape();
+
+        int[][] values = {{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}};
+
+        for (int[] value : values) {
+            Tile testTile = getTile(value[0], value[1]);
+            if (testTile != null && !checkTile(testTile, color, shape)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
+        return !(!tile.getColor().equals(color) && !tile.getShape().equals(shape));
+    }
+
     /**
      * Gives whether a tile exists at a given coordinate.
      * @param x The X coordinate of the requested tile.
@@ -131,6 +156,8 @@ public class Board {
 
         int tempX, tempY, horizontalLine = 0, verticalLine = 0;
         boolean setToColor, setToShape;
+
+        //TODO: Find a nicer way to do this. Maybe just like I did in neighboring stuff.
 
         //Check to the left
         tempX = x;
@@ -246,8 +273,7 @@ public class Board {
         tiles.clear();
     }
 
-    @Override
-    public String toString() {
+    public void printBoard() {
         String string = "";
 
         for (int i = minY - 2; i <= maxY + 2; i++) {
@@ -279,6 +305,11 @@ public class Board {
             System.out.println(string);
             string = "";
         }
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
 
         for (int i = 0; i < tiles.size() - 1; i++) {
             string += tiles.get(i) + " | ";

@@ -7,6 +7,7 @@ import nl.tiesdavid.ssproject.Board;
 import nl.tiesdavid.ssproject.Tile;
 import nl.tiesdavid.ssproject.exceptions.CoordinatesAlreadyFilledException;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
+import nl.tiesdavid.ssproject.exceptions.NoNeighboringTileException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +20,7 @@ public class BoardTest {
     @Before
     public void setUp() {
         board = new Board();
+        board.printBoard();
     }
 
     @Test
@@ -60,16 +62,37 @@ public class BoardTest {
         }
     }
 
+    @Test(expected = NoNeighboringTileException.class)
+    public void addUnsocialTile() throws MoveException {
+        try {
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
+            board.placeTile(new Tile(0, 1, Tile.Color.RED, Tile.Shape.DIAMOND));
+            board.placeTile(new Tile(1, 0, Tile.Color.GREEN, Tile.Shape.STAR));
+        } catch (NoNeighboringTileException e) {
+            throw new NoNeighboringTileException();
+        }
+    }
+
     @Test
     public void scoreTest() {
         try {
             assertEquals(0, board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.STAR)));
+        } catch (MoveException e) {
+            fail(e.getMessage());
+        }
+        try {
             assertEquals(2, board.placeTile(new Tile(0, 1, Tile.Color.BLUE, Tile.Shape.STAR)));
+        } catch (MoveException e) {
+            fail(e.getMessage());
+        }
 
+        try {
             assertEquals(2, board.placeTile(new Tile(-1, 0, Tile.Color.RED, Tile.Shape.DIAMOND)));
+        } catch (MoveException e) {
+            fail(e.getMessage());
+        }
+        try {
             assertEquals(4, board.placeTile(new Tile(-1, 1, Tile.Color.BLUE, Tile.Shape.DIAMOND)));
-
-
         } catch (MoveException e) {
             fail(e.getMessage());
         }

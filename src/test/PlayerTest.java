@@ -2,6 +2,7 @@ package test; /**
  * Created by Ties on 26-12-2015.
  */
 
+import nl.tiesdavid.ssproject.Game;
 import nl.tiesdavid.ssproject.Tile;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ public class PlayerTest {
     
     @Before
     public void setUp() {
-        player = new TestPlayer();
+        player = new TestPlayer(new Game());
     }
     
     @Test

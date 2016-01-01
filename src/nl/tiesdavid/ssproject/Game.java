@@ -66,6 +66,7 @@ public class Game {
      * Rounds up the game by printing the final scores and calling the win() function on the victorious player.
      */
     private void finish() {
+        Collections.sort(players);
         printScores();
         players.get(0).win();
     }
@@ -74,7 +75,10 @@ public class Game {
      * Checks whether the game is over.
      * @return true when game is over.
      */
-    private boolean gameOver() {
+    protected boolean gameOver() {
+        if (players.size() == 0) {
+            return true;
+        }
         for (Player player : players) {
             if (!player.hasTilesLeft()) {
                 return true;
@@ -108,19 +112,6 @@ public class Game {
         }
     }
 
-    /**
-     * Removes a player from the game.
-     * @param player the player to be removed.
-     */
-    public void removePlayer(Player player) {
-        int index = players.indexOf(player);
-        players.remove(index);
-    }
-
-    /**
-     * Checks whether the game has tiles left in the bag.
-     * @return true when there are tiles left in the bag.
-     */
     public boolean hasTilesLeft() {
         return bag.size() > 0;
     }
@@ -149,16 +140,13 @@ public class Game {
      */
     public void printScores() {
         //TODO: Format line3 nicely (same spacing as line1).
-
-        Collections.sort(players);
-
         String line1 = "";
 
         for (int i = 0; i < players.size() - 1; i++) {
-            line1 += players.get(i).getName();
+            line1 += String.format("%12s", players.get(i).getName());
             line1 += " | ";
         }
-        line1 += players.get(players.size() - 1).getName();
+        line1 += String.format("%12s", players.get(players.size() - 1).getName());
         System.out.println(line1);
 
         String line2 = "";
@@ -170,9 +158,9 @@ public class Game {
         String line3 = "";
 
         for (int i = 0; i < players.size() - 1; i++) {
-            line3 += players.get(i).getScore() + " | ";
+            line3 += String.format("%12s", players.get(i).getScore() + " | ");
         }
-        line3 += players.get(players.size() - 1).getScore();
+        line3 += String.format("%12s", players.get(players.size() - 1).getScore());
 
         System.out.println(line3);
 
@@ -181,5 +169,21 @@ public class Game {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    @Override
+    public String toString() {
+        if (players.size() == 0) {
+            return "";
+        }
+
+        String string = "";
+
+        for (int i = 0; i < players.size() - 1; i++) {
+            string += players.get(i) + System.lineSeparator();
+        }
+        string += players.get(players.size() - 1);
+
+        return string;
     }
 }

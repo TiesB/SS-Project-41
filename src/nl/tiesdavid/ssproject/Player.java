@@ -3,6 +3,7 @@ package nl.tiesdavid.ssproject;
 import nl.tiesdavid.ssproject.enums.MoveType;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
 import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
+import nl.tiesdavid.ssproject.exceptions.NotInDeckException;
 import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Ties on 19-12-2015.
  */
-public abstract class Player implements Comparable {
+public abstract class Player implements Comparable<Player> {
     protected static final int DECK_SIZE = 6;
 
     private final String name;
@@ -27,8 +28,6 @@ public abstract class Player implements Comparable {
         score = 0;
 
         fillDeck();
-
-        System.out.println(getName() + ": " + getNoOfTilesSharingACharacteristic());
     }
 
     public abstract Move determineMove();
@@ -49,6 +48,10 @@ public abstract class Player implements Comparable {
     public void makeMove() {
         Board board = game.getBoard();
         Move move = determineMove();
+
+        if (move == null) {
+            return;
+        }
 
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
@@ -179,14 +182,27 @@ public abstract class Player implements Comparable {
         return deck.size() > 0;
     }
 
-    protected Tile findTile(Tile tile) {
+    protected boolean hasDuplicate (Tile tile) {
+        int count = 0;
+        for (Tile tile1 : deck) {
+            if (tile1.getShape().equals(tile.getShape()) && tile1.getColor().equals(tile.getColor())) {
+                count++;
+            }
+        }
+        return count > 1;
+    }
+
+    protected Tile findTile(Tile tile) throws NotInDeckException {
+        if (tile == null) {
+            return null;
+        }
         for (Tile tile1 : deck) {
             if (tile.getColor().equals(tile1.getColor())
                     && tile.getShape().equals(tile1.getShape())) {
                 return tile1;
             }
         }
-        return null;
+        throw new NotInDeckException();
     }
 
     /**
@@ -223,7 +239,7 @@ public abstract class Player implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Player o) {
         return Integer.compare(score, ((Player) o).getScore());
     }
 }
