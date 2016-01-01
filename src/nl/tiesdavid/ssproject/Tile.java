@@ -6,60 +6,46 @@ package nl.tiesdavid.ssproject;
 
 public class Tile {
     public enum Color {
-        BLUE,
-        GREEN,
-        ORANGE,
-        PURPLE,
-        RED,
-        YELLOW;
+        BLUE('B', 0x0000FF),
+        GREEN('G', 0x00FF00),
+        ORANGE('O', 0xFFA500),
+        PURPLE('P', 0x551A8B),
+        RED('R', 0xFF0000),
+        YELLOW('Y', 0xFFFF00);
+
+        public final char user;
+        public final int hex;
+
+        Color(char user, int hex) {
+            this.user = user;
+            this.hex = hex;
+        }
 
         @Override
         public String toString() {
-            switch (this)  {
-                case BLUE:
-                    return "B";
-                case GREEN:
-                    return "G";
-                case ORANGE:
-                    return "O";
-                case PURPLE:
-                    return "P";
-                case RED:
-                    return "R";
-                case YELLOW:
-                    return "Y";
-                default:
-                    return ".";
-            }
+            return "" + this.user;
         }
     }
 
     public enum Shape {
-        CIRCLE,
-        DIAMOND,
-        PLUS,
-        STAR,
-        SQUARE,
-        X;
+        CIRCLE('A', "\u25cb"),
+        DIAMOND('B', "\u25c7"),
+        CLOVER('C', "\uD83C\uDF40"),
+        STARBURST('D', "\u273A"),
+        SQUARE('E', "\u25A0"),
+        CRISSCROSS('F', "\u2716");
+
+        public final char user;
+        public final String printable;
+
+        Shape(char user, String printable) {
+            this.user = user;
+            this.printable = printable;
+        }
 
         @Override
         public String toString() {
-            switch (this) {
-                case CIRCLE:
-                    return "O";
-                case DIAMOND:
-                    return "#";
-                case PLUS:
-                    return "+";
-                case STAR:
-                    return "*";
-                case SQUARE:
-                    return "@";
-                case X:
-                    return "X";
-                default:
-                    return ".";
-            }
+            return this.printable;
         }
     }
 

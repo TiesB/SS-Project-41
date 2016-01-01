@@ -156,52 +156,22 @@ public class HumanPlayer extends Player {
 
     private Tile parseTileString(String input) {
         char[] chars = input.toCharArray();
-        Tile.Color color;
-        Tile.Shape shape;
-        switch (chars[0]) {
-            case 'B':
-                color = Tile.Color.BLUE;
-                break;
-            case 'G':
-                color = Tile.Color.GREEN;
-                break;
-            case 'O':
-                color = Tile.Color.ORANGE;
-                break;
-            case 'P':
-                color = Tile.Color.PURPLE;
-                break;
-            case 'R':
-                color = Tile.Color.RED;
-                break;
-            case 'Y':
-                color = Tile.Color.YELLOW;
-                break;
-            default:
-                return null;
+        Tile.Color color = null;
+        Tile.Shape shape = null;
+        for (Tile.Color color1 : Tile.Color.values()) {
+            if (chars[0] == color1.user) {
+                color = color1;
+            }
         }
 
-        switch (chars[1]) {
-            case 'O':
-                shape = Tile.Shape.CIRCLE;
-                break;
-            case '#':
-                shape = Tile.Shape.DIAMOND;
-                break;
-            case '+':
-                shape = Tile.Shape.PLUS;
-                break;
-            case '*':
-                shape = Tile.Shape.STAR;
-                break;
-            case '@':
-                shape = Tile.Shape.SQUARE;
-                break;
-            case 'X':
-                shape = Tile.Shape.X;
-                break;
-            default:
-                return null;
+        for (Tile.Shape shape1 : Tile.Shape.values()) {
+            if (chars[1] == shape1.user) {
+                shape = shape1;
+            }
+        }
+
+        if (color == null || shape == null) {
+            return null;
         }
 
         return new Tile(color, shape);

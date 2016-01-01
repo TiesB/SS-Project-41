@@ -33,7 +33,7 @@ public class BoardTest {
     public void resetTest() {
         assertEquals("", board.toString());
         try {
-            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.CLOVER));
         } catch (MoveException e) {
             fail(e.getMessage());
         }
@@ -43,7 +43,7 @@ public class BoardTest {
 
     @Test
     public void addTileTest() {
-        Tile tile = new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS);
+        Tile tile = new Tile(0, 0, Tile.Color.RED, Tile.Shape.CLOVER);
         try {
             board.placeTile(tile);
         } catch (MoveException e) {
@@ -56,8 +56,8 @@ public class BoardTest {
     @Test(expected = CoordinatesAlreadyFilledException.class)
     public void addAlreadyExistentTile() throws MoveException {
         try {
-            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
-            board.placeTile(new Tile(0, 0, Tile.Color.GREEN, Tile.Shape.STAR));
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.CLOVER));
+            board.placeTile(new Tile(0, 0, Tile.Color.GREEN, Tile.Shape.STARBURST));
         } catch (CoordinatesAlreadyFilledException e) {
             throw new CoordinatesAlreadyFilledException();
         }
@@ -66,9 +66,9 @@ public class BoardTest {
     @Test(expected = NoNeighboringTileException.class)
     public void addUnsocialTile() throws MoveException {
         try {
-            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.PLUS));
+            board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.CLOVER));
             board.placeTile(new Tile(0, 1, Tile.Color.RED, Tile.Shape.DIAMOND));
-            board.placeTile(new Tile(1, 0, Tile.Color.GREEN, Tile.Shape.STAR));
+            board.placeTile(new Tile(1, 0, Tile.Color.GREEN, Tile.Shape.STARBURST));
         } catch (NoNeighboringTileException e) {
             throw new NoNeighboringTileException();
         }
@@ -77,12 +77,12 @@ public class BoardTest {
     @Test
     public void scoreTest() {
         try {
-            assertEquals(0, board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.STAR)));
+            assertEquals(0, board.placeTile(new Tile(0, 0, Tile.Color.RED, Tile.Shape.STARBURST)));
         } catch (MoveException e) {
             fail(e.getMessage());
         }
         try {
-            assertEquals(2, board.placeTile(new Tile(0, 1, Tile.Color.BLUE, Tile.Shape.STAR)));
+            assertEquals(2, board.placeTile(new Tile(0, 1, Tile.Color.BLUE, Tile.Shape.STARBURST)));
         } catch (MoveException e) {
             fail(e.getMessage());
         }

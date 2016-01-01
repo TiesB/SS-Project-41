@@ -21,10 +21,10 @@ public class PlayerTest {
     @Test
     public void test() {
         player.addTileToDeck(new Tile(Tile.Color.BLUE, Tile.Shape.CIRCLE));
-        player.addTileToDeck(new Tile(Tile.Color.BLUE, Tile.Shape.PLUS));
+        player.addTileToDeck(new Tile(Tile.Color.BLUE, Tile.Shape.CLOVER));
         player.addTileToDeck(new Tile(Tile.Color.RED, Tile.Shape.CIRCLE));
         player.addTileToDeck(new Tile(Tile.Color.GREEN, Tile.Shape.DIAMOND));
-        player.addTileToDeck(new Tile(Tile.Color.ORANGE, Tile.Shape.PLUS));
+        player.addTileToDeck(new Tile(Tile.Color.ORANGE, Tile.Shape.CLOVER));
 
         assertEquals(4, player.getNoOfTilesSharingACharacteristic());
     }
