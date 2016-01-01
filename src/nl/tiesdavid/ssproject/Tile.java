@@ -1,5 +1,6 @@
 /**
  * Created by Ties on 19-12-2015.
+ * @author Ties
  */
 package nl.tiesdavid.ssproject;
 
@@ -112,6 +113,10 @@ public class Tile {
         this.checked = true;
     }
 
+    /**
+     * Returns a long string describing the tile.
+     * @return a long string describing the tile, include coordinates.
+     */
     public String toLongString() {
         return color.toString() + shape.toString() + " @ " + getX() + ", " + getY();
     }
