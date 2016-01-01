@@ -5,6 +5,7 @@ package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.MoveType;
 import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
+import nl.tiesdavid.ssproject.exceptions.NotInDeckException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -33,49 +34,47 @@ public class HumanPlayer extends Player {
 
     private Tile getTileFromUser(String string, boolean readXY) {
         Tile tile = readTile(string);
+        try {
+            tile = findTile(tile);
 
-        if (tile == null) {
-            //TODO: Communicate with user.
-            return null;
-        }
-        tile = findTile(tile);
+            if (readXY) {
+                int x, y;
+                if (game.getBoard().isEmpty()) {
+                    x = 0;
+                    y = 0;
+                } else {
+                    x = readInt("Choose a X coordinate: ");
+                    y = readInt("Choose a Y coordinate: ");
+                }
 
-        if (readXY) {
-            int x, y;
-            if (game.getBoard().isEmpty()) {
-                x = 0;
-                y = 0;
-            } else {
-                x = readInt("Choose a X coordinate: ");
-                y = readInt("Choose a Y coordinate: ");
+                tile.setX(x);
+                tile.setY(y);
             }
 
-            tile.setX(x);
-            tile.setY(y);
+            return tile;
+        } catch (NotInDeckException e) {
+            handleMoveException(e);
+            return null;
         }
-
-        return tile;
     }
 
     private ArrayList<Tile> getMultipleTilesFromUser(boolean readXY) {
         ArrayList<Tile> chosenTiles = new ArrayList<>();
 
         do {
-            //I hate the >100 character line CheckStyle check. I think it's stupid.
+            //I hate the >100 character line CheckStyle rule. I think it's stupid.
             Tile tile = getTileFromUser(
                     "Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
-            if (tile == null) {
-                break;
-            }
-            tile = findTile(tile);
-
-            if (!deck.contains(tile)) {
-                System.out.println("You don't have this tile in your deck.");
-            } else if (chosenTiles.contains(tile)) {
-                System.out.println("You have already chosen this tile.");
-            } else {
-                chosenTiles.add(tile);
-                //TODO: Remove tile (temporarily?) from deck.
+            try {
+                tile = findTile(tile);
+                if (chosenTiles.contains(tile) && !hasDuplicate(tile)) {
+                    System.out.println("You have already chosen this tile.");
+                } else {
+                    chosenTiles.add(tile);
+                    //TODO: Remove tile (temporarily?) from deck.
+                }
+            } catch (NotInDeckException e) {
+                handleMoveException(e);
             }
         } while (chosenTiles.size() + 1 <= DECK_SIZE);
 
@@ -120,6 +119,9 @@ public class HumanPlayer extends Player {
                 } else {
                     return determineMove();
                 }
+            case 4:
+                System.out.println(game.getBoard());
+                return null;
             case 99:
                 deck.clear();
                 return null;

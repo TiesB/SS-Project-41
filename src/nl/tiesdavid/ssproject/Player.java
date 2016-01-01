@@ -3,6 +3,7 @@ package nl.tiesdavid.ssproject;
 import nl.tiesdavid.ssproject.enums.MoveType;
 import nl.tiesdavid.ssproject.exceptions.MoveException;
 import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
+import nl.tiesdavid.ssproject.exceptions.NotInDeckException;
 import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
 
 import java.util.ArrayList;
@@ -178,14 +179,27 @@ public abstract class Player implements Comparable<Player> {
         return deck.size() > 0;
     }
 
-    protected Tile findTile(Tile tile) {
+    protected boolean hasDuplicate (Tile tile) {
+        int count = 0;
+        for (Tile tile1 : deck) {
+            if (tile1.getShape().equals(tile.getShape()) && tile1.getColor().equals(tile.getColor())) {
+                count++;
+            }
+        }
+        return count > 1;
+    }
+
+    protected Tile findTile(Tile tile) throws NotInDeckException {
+        if (tile == null) {
+            return null;
+        }
         for (Tile tile1 : deck) {
             if (tile.getColor().equals(tile1.getColor())
                     && tile.getShape().equals(tile1.getShape())) {
                 return tile1;
             }
         }
-        return null;
+        throw new NotInDeckException();
     }
 
     /**

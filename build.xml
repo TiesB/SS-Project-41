@@ -14,7 +14,9 @@
     <path refid="classpath.base" />
   </path>
 
-  <target name="test" depends="runtest, clean" />
+  <target name="test" depends="runtest, clean">
+    <echo message="Test done." />
+  </target>
 
   <target name="buildmain">
     <mkdir dir="${main.build.dir}"/>
@@ -29,7 +31,7 @@
     <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
       <classpath refid="classpath.test"/>
     </javac>
-    <echo message="Build done" />
+    <echo message="Build done." />
   </target>
 
   <!-- Test and build all files  -->
@@ -53,6 +55,6 @@
     <delete>
       <fileset dir="${basedir}" includes="**/*.class" />
     </delete>
-    <echo message="clean done" />
+    <echo message="Clean done." />
   </target>
 </project>

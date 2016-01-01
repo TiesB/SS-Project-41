@@ -157,6 +157,8 @@ public class Board {
         int tempX, tempY, horizontalLine = 0, verticalLine = 0;
         boolean setToColor, setToShape;
 
+        //TODO: Find a nicer way to do this. Maybe just like I did in neighboring stuff.
+
         //Check to the left
         tempX = x;
         setToColor = true;

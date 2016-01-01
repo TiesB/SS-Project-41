@@ -20,6 +20,7 @@ public class BoardTest {
     @Before
     public void setUp() {
         board = new Board();
+        board.printBoard();
     }
 
     @Test
