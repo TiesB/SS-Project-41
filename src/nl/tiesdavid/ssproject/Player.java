@@ -43,6 +43,9 @@ public abstract class Player implements Comparable {
         return determineMove();
     }
 
+    /**
+     * Makes the move
+     */
     public void makeMove() {
         Board board = game.getBoard();
         Move move = determineMove();

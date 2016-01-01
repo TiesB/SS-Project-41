@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class Game {
     private static final int MAX_AMOUNT_OF_PLAYERS = 4;
+    private static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
 
     private final Board board;
     private final ArrayList<Tile> bag;
@@ -29,6 +30,10 @@ public class Game {
         randomGenerator.setSeed(System.currentTimeMillis());
     }
 
+    /**
+     * Starts a game.
+     * @throws NotEnoughPlayersException when not enough players (<2) have been added to the game.
+     */
     public void play() throws NotEnoughPlayersException {
         if (players.size() >= 2) {
             board.reset();
@@ -57,11 +62,18 @@ public class Game {
         }
     }
 
+    /**
+     * Rounds up the game by printing the final scores and calling the win() function on the victorious player.
+     */
     private void finish() {
         printScores();
         players.get(0).win();
     }
 
+    /**
+     * Checks whether the game is over.
+     * @return true when game is over.
+     */
     private boolean gameOver() {
         for (Player player : players) {
             if (!player.hasTilesLeft()) {
@@ -71,10 +83,13 @@ public class Game {
         return false;
     }
 
+    /**
+     * Fills the bag with #shapes * #colors * AMOUNT_OF_DUPLICATES_IN_BAG.
+     */
     private void fillBag() {
         Tile.Color[] colors = Tile.Color.values();
         Tile.Shape[] shapes = Tile.Shape.values();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < AMOUNT_OF_DUPLICATES_IN_BAG; i++) {
             for (Tile.Color color : colors) {
                 for (Tile.Shape shape : shapes) {
                     bag.add(new Tile(color, shape));
@@ -93,15 +108,27 @@ public class Game {
         }
     }
 
+    /**
+     * Removes a player from the game.
+     * @param player the player to be removed.
+     */
     public void removePlayer(Player player) {
         int index = players.indexOf(player);
         players.remove(index);
     }
 
+    /**
+     * Checks whether the game has tiles left in the bag.
+     * @return true when there are tiles left in the bag.
+     */
     public boolean hasTilesLeft() {
         return bag.size() > 0;
     }
 
+    /**
+     * Gives a random tile from the bag, when there are tiles left.
+     * @return a tile from the bag.
+     */
     public Tile getTileFromBag() {
         if (!hasTilesLeft()) {
             return null;
@@ -109,6 +136,10 @@ public class Game {
         return bag.get(randomGenerator.nextInt(bag.size()));
     }
 
+    /**
+     * Adds the given tile to the bag.
+     * @param tile the tile to be added to the bag.
+     */
     public void addTileToBag(Tile tile) {
         bag.add(tile);
     }
