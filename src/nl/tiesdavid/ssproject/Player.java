@@ -30,6 +30,10 @@ public abstract class Player implements Comparable<Player> {
         fillDeck();
     }
 
+    /**
+     * The function to determine the player's move. Will be called in makeMove().
+     * @return the move player wants to make.
+     */
     public abstract Move determineMove();
 
     /**
