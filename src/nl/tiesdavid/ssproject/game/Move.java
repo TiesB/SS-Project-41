@@ -2,10 +2,10 @@
  * Created by Ties on 19-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
+import nl.tiesdavid.ssproject.game.enums.MoveType;
+import nl.tiesdavid.ssproject.game.exceptions.InvalidMoveTypeWithArgumentsException;
 
 import java.util.ArrayList;
 

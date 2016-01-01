@@ -2,9 +2,9 @@
  * Created by Ties on 19-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.exceptions.NotEnoughPlayersException;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -167,6 +167,10 @@ public class Game {
         System.out.println(line3);
 
         System.out.println();
+    }
+
+    public void printBoard() {
+        System.out.println(board);
     }
 
     public Board getBoard() {

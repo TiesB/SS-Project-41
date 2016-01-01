@@ -1,4 +1,4 @@
-package nl.tiesdavid.ssproject.exceptions;
+package nl.tiesdavid.ssproject.game.exceptions;
 
 /**
  * Created by Ties on 20-12-2015.

@@ -2,7 +2,7 @@
  * Created by tiesb on 1-1-2016.
  * @author tiesb
  */
-package nl.tiesdavid.ssproject.exceptions;
+package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NotInDeckException extends MoveException {
     @Override

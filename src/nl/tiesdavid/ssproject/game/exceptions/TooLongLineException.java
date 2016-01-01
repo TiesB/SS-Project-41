@@ -2,7 +2,7 @@
  * Created by Ties on 20-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject.exceptions;
+package nl.tiesdavid.ssproject.game.exceptions;
 
 public class TooLongLineException extends InvalidTilePlacementException {
     @Override

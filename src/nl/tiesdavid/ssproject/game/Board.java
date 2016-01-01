@@ -2,10 +2,12 @@
  * Created by Ties on 19-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.exceptions.*;
+import nl.tiesdavid.ssproject.game.exceptions.*;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 
 public class Board {
@@ -274,10 +276,12 @@ public class Board {
         tiles.clear();
     }
 
-    public void printBoard() {
-        String string = "";
+    public void printBoard(Writer out) {
+        String string;
 
         for (int i = minY - 2; i <= maxY + 2; i++) {
+            string = "";
+
             if (i == minY - 2) {
                 string += String.format("%5s", "");
             } else if (i <= maxY + 1) {
@@ -303,8 +307,11 @@ public class Board {
                 string += String.format("%4s", "x");
             }
 
-            System.out.println(string);
-            string = "";
+            try {
+                out.write(string + System.lineSeparator());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -1,6 +1,6 @@
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.exceptions.NotEnoughPlayersException;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 
 class Qwirkle {
     public static void main(String[] args) {

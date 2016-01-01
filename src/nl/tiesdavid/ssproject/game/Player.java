@@ -1,7 +1,11 @@
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.exceptions.*;
+import nl.tiesdavid.ssproject.game.enums.MoveType;
+import nl.tiesdavid.ssproject.game.exceptions.MoveException;
+import nl.tiesdavid.ssproject.game.exceptions.NonMatchingAttributesException;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughTilesGivenException;
+import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
+import nl.tiesdavid.ssproject.game.exceptions.NotTouchingException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,8 +63,6 @@ public abstract class Player implements Comparable<Player> {
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
             tilesToBeTraded.forEach(this::tradeTile);
-            System.out.println(deck);
-
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
             System.out.println(move.getTile());
             placeAndDrawTile(move.getTile(), board);
@@ -158,7 +160,7 @@ public abstract class Player implements Comparable<Player> {
         }
     }
 
-    private void placeAndDrawTile(Tile tile, Board board) {
+    protected void placeAndDrawTile(Tile tile, Board board) {
         try {
             board.placeTile(tile);
             addToScore(board.getScore(tile));
@@ -191,11 +193,11 @@ public abstract class Player implements Comparable<Player> {
 
     private void tradeTile(Tile tile) {
         deck.remove(tile);
-        drawTileFromBag();
         game.addTileToBag(tile);
+        drawTileFromBag();
     }
 
-    private void drawTileFromBag() {
+    protected void drawTileFromBag() {
         Tile tile = game.getTileFromBag();
         if (tile != null) {
             deck.add(tile);
@@ -229,7 +231,7 @@ public abstract class Player implements Comparable<Player> {
 
     protected Tile findTile(Tile tile) throws NotInDeckException {
         if (tile == null) {
-            return null;
+            throw new NotInDeckException();
         }
         for (Tile tile1 : deck) {
             if (tile.getColor().equals(tile1.getColor())

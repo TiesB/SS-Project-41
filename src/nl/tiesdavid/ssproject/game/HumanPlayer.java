@@ -2,11 +2,11 @@
  * Created by Ties on 21-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.exceptions.InvalidMoveTypeWithArgumentsException;
-import nl.tiesdavid.ssproject.exceptions.NotInDeckException;
+import nl.tiesdavid.ssproject.game.enums.MoveType;
+import nl.tiesdavid.ssproject.game.exceptions.InvalidMoveTypeWithArgumentsException;
+import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,22 +18,17 @@ public class HumanPlayer extends Player {
 
     @Override
     public Move determineMove() {
-        Board board = game.getBoard();
-        System.out.println(board);
+        game.printBoard();
         System.out.println(getName() +
                 ", what kind of move do you want to make? (Type the corresponding number)");
         System.out.println("1 - Add a tile to the grid and draw one.");
         System.out.println("2 - Add multiple tiles to the grid.");
-        if (game.hasTilesLeft()) {
-            System.out.println("3 - Trade one or more tiles from your deck.");
-        } else {
-            System.out.println("It is no longer possible to trade tiles since the bag is empty.");
-        }
+        System.out.println("3 - Trade one or more tiles from your deck.");
         int choice = readInt("Choice: ");
         return parseChoice(choice);
     }
 
-    private Tile getTileFromUser(String string, boolean readXY) {
+    protected Tile getTileFromUser(String string, boolean readXY) {
         Tile tile = readTile(string);
         try {
             tile = findTile(tile);
@@ -114,14 +109,9 @@ public class HumanPlayer extends Player {
             case 2:
                 return addMultipleToGrid();
             case 3:
-                if (game.hasTilesLeft()) {
-                    //TODO: Communicate with user.
-                    return tradeTiles();
-                } else {
-                    return determineMove();
-                }
+                return tradeTiles();
             case 4:
-                System.out.println(game.getBoard());
+                game.printBoard();
                 return null;
             case 99:
                 deck.clear();
@@ -132,8 +122,13 @@ public class HumanPlayer extends Player {
         }
     }
 
-    private Tile readTile(String prompt) {
+    protected Tile readTile(String prompt) {
         System.out.println(deck);
+
+        for (Tile.Shape shape : Tile.Shape.values()) {
+            System.out.println(shape.printable + ": " + shape.user);
+        }
+
         String input = "";
         boolean tileRead = false;
         @SuppressWarnings("resource")
@@ -143,7 +138,7 @@ public class HumanPlayer extends Player {
             try (Scanner scannerLine = new Scanner(line.nextLine())) {
                 if (scannerLine.hasNext()) {
                     input = scannerLine.next();
-                    if (input.matches("[BGOPRY][O#+*@X]") || input.equals("-")) {
+                    if (input.matches("[BGOPRY][ABCDEF]")) {
                         tileRead = true;
                     } else if (input.equals("-")) {
                         return null;
@@ -177,7 +172,7 @@ public class HumanPlayer extends Player {
         return new Tile(color, shape);
     }
 
-    private int readInt(String prompt) {
+    protected int readInt(String prompt) {
         int value = 0;
         boolean intRead = false;
         @SuppressWarnings("resource")

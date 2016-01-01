@@ -4,13 +4,13 @@
  */
 package test;
 
-import nl.tiesdavid.ssproject.Game;
-import nl.tiesdavid.ssproject.Move;
-import nl.tiesdavid.ssproject.Player;
-import nl.tiesdavid.ssproject.Tile;
-import nl.tiesdavid.ssproject.exceptions.NonMatchingAttributesException;
-import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
-import nl.tiesdavid.ssproject.exceptions.NotTouchingException;
+import nl.tiesdavid.ssproject.game.Game;
+import nl.tiesdavid.ssproject.game.Move;
+import nl.tiesdavid.ssproject.game.Player;
+import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesdavid.ssproject.game.exceptions.NonMatchingAttributesException;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughTilesGivenException;
+import nl.tiesdavid.ssproject.game.exceptions.NotTouchingException;
 
 import java.util.ArrayList;
 

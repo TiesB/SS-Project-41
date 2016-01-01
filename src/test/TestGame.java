@@ -4,7 +4,7 @@
  */
 package test;
 
-import nl.tiesdavid.ssproject.Game;
+import nl.tiesdavid.ssproject.game.Game;
 
 public class TestGame extends Game {
     public boolean gameOver() {

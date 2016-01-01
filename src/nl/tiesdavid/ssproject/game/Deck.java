@@ -2,7 +2,7 @@
  * Created by Ties on 21-12-2015.
  * @author Ties
  */
-package nl.tiesdavid.ssproject;
+package nl.tiesdavid.ssproject.game;
 
 import java.util.ArrayList;
 
