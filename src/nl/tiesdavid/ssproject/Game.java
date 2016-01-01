@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Game {
+    private static final int MIN_AMOUNT_OF_PLAYERS = 2;
     private static final int MAX_AMOUNT_OF_PLAYERS = 4;
     private static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
 
@@ -36,7 +37,7 @@ public class Game {
      * @throws NotEnoughPlayersException when not enough players (<2) have been added to the game.
      */
     public void play() throws NotEnoughPlayersException {
-        if (players.size() >= 2) {
+        if (players.size() >= MIN_AMOUNT_OF_PLAYERS) {
             board.reset();
 
             Player currentPlayer = players.get(0);

@@ -1,5 +1,5 @@
 package test; /**
- * Created by tiesb on 30-12-2015.
+ * Created by Ties Bolding on 30-12-2015.
  * @author tiesb
  */
 
@@ -9,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class GameTest {
-    TestGame game;
+ class GameTest {
+    private TestGame game;
 
     @Before
     public void setUp() {

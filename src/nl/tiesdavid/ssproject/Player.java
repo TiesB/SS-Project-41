@@ -17,7 +17,7 @@ public abstract class Player implements Comparable<Player> {
 
     private final String name;
     protected final Deck deck;
-    protected final Game game;
+    private final Game game;
 
     protected int score;
 
@@ -35,14 +35,14 @@ public abstract class Player implements Comparable<Player> {
      * The function to determine the player's move. Will be called in makeMove().
      * @return the move player wants to make.
      */
-    public abstract Move determineMove();
+    protected abstract Move determineMove();
 
     /**
      * You probably want to override this.
      * @param e the exception thrown.
      * @return a newly generated move.
      */
-    public Move handleMoveException(Exception e) {
+    protected Move handleMoveException(Exception e) {
         System.out.println(e.getMessage());
         return determineMove();
     }
@@ -142,7 +142,7 @@ public abstract class Player implements Comparable<Player> {
         }
     }
 
-    protected void win() {
+    void win() {
         score += 6;
         System.out.println(name + " has won! With a score of: " + score);
     }
@@ -155,7 +155,10 @@ public abstract class Player implements Comparable<Player> {
         return score;
     }
 
-    protected void addToScore(int increment) {
+    private void addToScore(int increment) {
+        if (increment < 0) {
+            return;
+        }
         score += increment;
     }
 

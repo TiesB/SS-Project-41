@@ -121,7 +121,7 @@ public class Board {
      * @param y The Y coordinate of the requested tile.
      * @return Whether a tile exists at a given coordinate.
      */
-    public boolean tileExists(int x, int y) {
+    private boolean tileExists(int x, int y) {
         return getTile(x, y) != null;
     }
 
