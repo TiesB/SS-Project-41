@@ -1,5 +1,6 @@
 package test; /**
  * Created by Ties on 26-12-2015.
+ * @author Ties
  */
 
 import nl.tiesdavid.ssproject.Game;

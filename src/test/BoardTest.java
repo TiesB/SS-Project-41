@@ -1,6 +1,7 @@
 package test;
 /**
  * Created by Ties on 20-12-2015.
+ * @author Ties
  */
 
 import nl.tiesdavid.ssproject.Board;

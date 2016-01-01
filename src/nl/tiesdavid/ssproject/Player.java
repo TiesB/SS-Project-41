@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Ties on 19-12-2015.
+ * @author Ties
  */
 public abstract class Player implements Comparable<Player> {
     protected static final int DECK_SIZE = 6;
@@ -244,6 +245,6 @@ public abstract class Player implements Comparable<Player> {
 
     @Override
     public int compareTo(Player o) {
-        return Integer.compare(score, ((Player) o).getScore());
+        return Integer.compare(score, o.getScore());
     }
 }

@@ -1,5 +1,6 @@
 /**
  * Created by Ties on 23-12-2015.
+ * @author Ties
  */
 package nl.tiesdavid.ssproject.exceptions;
 
