@@ -17,7 +17,7 @@ public abstract class Player implements Comparable<Player> {
 
     private final String name;
     protected final Deck deck;
-    private final Game game;
+    protected final Game game;
 
     protected int score;
 
