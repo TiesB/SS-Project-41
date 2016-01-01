@@ -1,12 +1,10 @@
 package nl.tiesdavid.ssproject;
 
 import nl.tiesdavid.ssproject.enums.MoveType;
-import nl.tiesdavid.ssproject.exceptions.MoveException;
-import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
-import nl.tiesdavid.ssproject.exceptions.NotInDeckException;
-import nl.tiesdavid.ssproject.exceptions.TilesDontShareAttributeException;
+import nl.tiesdavid.ssproject.exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Ties on 19-12-2015.
@@ -71,9 +69,8 @@ public abstract class Player implements Comparable<Player> {
             ArrayList<Tile> tiles = move.getTileList();
 
             try {
-                if (!checkCorrectTileSet(tiles)) {
-                    throw new TilesDontShareAttributeException();
-                }
+                checkCorrectTileSet(tiles);
+
                 for (Tile tile : tiles) {
                     placeAndDrawTile(tile, board);
                 }
@@ -84,36 +81,47 @@ public abstract class Player implements Comparable<Player> {
         }
     }
 
-    private Boolean decideCheckForColor(ArrayList<Tile> tiles, int i) {
-        try {
-            if (tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
-                    && !tiles.get(0).getShape().equals(tiles.get(i).getShape())) {
-                return true;
-            } else if (!tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
-                    && tiles.get(i).getShape().equals(tiles.get(i + 1).getShape())) {
-                return false;
-            } else {
-                return decideCheckForColor(tiles, i + 1);
-            }
-        } catch (NullPointerException e) {
-            return null;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return null;
-            //TODO: Wrong set entered.
-        }
-    }
-
-    private boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException {
+    protected boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
 
         if (tiles.size() < 1) {
             throw new NotEnoughTilesGivenException();
         }
 
-        Boolean checkForColor = decideCheckForColor(tiles, 0);
+        if (!checkCorrectOnXY(tiles)) {
+            throw new NotTouchingException();
+        }
+
+        if (!checkCorrectOnAttributes(tiles)) {
+            throw new NonMatchingAttributesException();
+        }
+
+        return true;
+    }
+
+    private boolean checkCorrectOnXY(ArrayList<Tile> tiles) {
+        Collections.sort(tiles, Tile.COMPARE_TILE);
+
+        boolean goodOnX = true, goodOnY = true;
+
+        for (int i = 1; i < tiles.size(); i++) {
+            if (!(tiles.get(i - 1).getX() == tiles.get(i).getX() - 1 || tiles.get(i - 1).getX() == tiles.get(i).getX() + 1)){
+                goodOnX = false;
+            }
+            if (!(tiles.get(i - 1).getY() == tiles.get(i).getY() - 1 || tiles.get(i - 1).getY() == tiles.get(i).getY() + 1)){
+                goodOnY = false;
+            }
+        }
+
+        return goodOnX || goodOnY;
+    }
+
+    private boolean checkCorrectOnAttributes(ArrayList<Tile> tiles) {
+        Boolean checkOnColor = decideCheckOnColor(tiles, 0);
         Tile.Color color = tiles.get(0).getColor();
         Tile.Shape shape = tiles.get(0).getShape();
 
         boolean goodOnColor = true, goodOnShape = true;
+
         for (int i = 1; i < tiles.size(); i++) {
             if (!tiles.get(i - 1).getColor().equals(color)) {
                 goodOnColor = false;
@@ -122,12 +130,31 @@ public abstract class Player implements Comparable<Player> {
                 goodOnShape = false;
             }
         }
-        if (checkForColor == null) {
+        if (checkOnColor == null) {
             return goodOnColor || goodOnShape;
-        } else if (checkForColor) {
+        } else if (checkOnColor) {
             return goodOnColor;
         } else {
             return goodOnShape;
+        }
+    }
+
+    private Boolean decideCheckOnColor(ArrayList<Tile> tiles, int i) {
+        try {
+            if (tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
+                    && !tiles.get(0).getShape().equals(tiles.get(i).getShape())) {
+                return true;
+            } else if (!tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
+                    && tiles.get(i).getShape().equals(tiles.get(i + 1).getShape())) {
+                return false;
+            } else {
+                return decideCheckOnColor(tiles, i + 1);
+            }
+        } catch (NullPointerException e) {
+            return null;
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+            //TODO: Wrong set entered.
         }
     }
 

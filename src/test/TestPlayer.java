@@ -8,6 +8,11 @@ import nl.tiesdavid.ssproject.Game;
 import nl.tiesdavid.ssproject.Move;
 import nl.tiesdavid.ssproject.Player;
 import nl.tiesdavid.ssproject.Tile;
+import nl.tiesdavid.ssproject.exceptions.NonMatchingAttributesException;
+import nl.tiesdavid.ssproject.exceptions.NotEnoughTilesGivenException;
+import nl.tiesdavid.ssproject.exceptions.NotTouchingException;
+
+import java.util.ArrayList;
 
 public class TestPlayer extends Player {
     TestPlayer(Game game) {
@@ -17,6 +22,11 @@ public class TestPlayer extends Player {
 
     public void addTileToDeck(Tile tile) {
         this.deck.add(tile);
+    }
+
+    @Override
+    public boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
+        return super.checkCorrectTileSet(tiles);
     }
 
     public void setScore(int score) {

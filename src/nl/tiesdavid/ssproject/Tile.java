@@ -4,7 +4,21 @@
  */
 package nl.tiesdavid.ssproject;
 
+import java.util.Comparator;
+
 public class Tile {
+    public static Comparator<Tile> COMPARE_TILE = new Comparator<Tile>() {
+        @Override
+        public int compare(Tile o1, Tile o2) {
+            int x = Integer.compare(o1.getX(), o2.getX());
+            if (x == 0) {
+                return Integer.compare(o1.getY(), o2.getY()) * -1;
+            } else {
+                return x * -1;
+            }
+        }
+    };
+
     public enum Color {
         BLUE('B', 0x0000FF),
         GREEN('G', 0x00FF00),
