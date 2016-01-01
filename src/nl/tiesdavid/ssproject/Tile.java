@@ -28,24 +28,24 @@ public class Tile {
     }
 
     public enum Shape {
-        CIRCLE('A', "\u25cb"),
-        DIAMOND('B', "\u25c7"),
-        CLOVER('C', "\uD83C\uDF40"),
-        STARBURST('D', "\u273A"),
-        SQUARE('E', "\u25A0"),
-        CRISSCROSS('F', "\u2716");
+        CIRCLE('A', '\u25cb'),
+        DIAMOND('B', '\u25c7'),
+        CLOVER('C', '\u2618'),
+        CRISSCROSS('D', '\u2716'),
+        STARBURST('E', '\u273A'),
+        SQUARE('F', '\u25A0');
 
         public final char user;
-        public final String printable;
+        public final char printable;
 
-        Shape(char user, String printable) {
+        Shape(char user, char printable) {
             this.user = user;
             this.printable = printable;
         }
 
         @Override
         public String toString() {
-            return this.printable;
+            return "" + this.printable;
         }
     }
 

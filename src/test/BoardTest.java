@@ -50,7 +50,7 @@ public class BoardTest {
             fail(e.getMessage());
         }
 
-        assertEquals("R+", board.toString());
+        assertEquals(Tile.Color.RED.toString() + Tile.Shape.CLOVER.toString(), board.toString());
     }
 
     @Test(expected = CoordinatesAlreadyFilledException.class)
