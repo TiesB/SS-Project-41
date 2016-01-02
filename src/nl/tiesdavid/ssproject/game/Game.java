@@ -4,6 +4,7 @@
  */
 package nl.tiesdavid.ssproject.game;
 
+import nl.tiesdavid.ssproject.game.exceptions.MoveException;
 import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 
 import java.util.ArrayList;
@@ -15,11 +16,13 @@ public class Game {
     private static final int MAX_AMOUNT_OF_PLAYERS = 4;
     private static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
 
-    private final Board board;
+    private Board board;
     private final ArrayList<Tile> bag;
     private final ArrayList<Player> players;
 
     private final Random randomGenerator;
+
+    private boolean running = false;
 
     public Game() {
         board = new Board();
@@ -38,6 +41,8 @@ public class Game {
      */
     public void play() throws NotEnoughPlayersException {
         if (players.size() >= MIN_AMOUNT_OF_PLAYERS) {
+            running = true;
+
             board.reset();
 
             Player currentPlayer = players.get(0);
@@ -53,21 +58,40 @@ public class Game {
                 }
             }
             while (!gameOver()) {
-                currentPlayer.makeMove();
-                currentPlayerI = (currentPlayerI + 1) % players.size();
-                currentPlayer = players.get(currentPlayerI);
+                try {
+                    currentPlayer.makeMove(null);
+
+                    while(!currentPlayer.moveFinished()){
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    currentPlayerI = (currentPlayerI + 1) % players.size();
+                    currentPlayer = players.get(currentPlayerI);
+                } catch (MoveException e) {
+                    System.out.println("Invalid move made by player: " + currentPlayer.getName());
+                }
             }
 
             finish();
         } else {
+            System.out.println(players.size());
             throw new NotEnoughPlayersException();
         }
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     /**
      * Rounds up the game by printing the final scores and calling the win() function on the victorious player.
      */
     private void finish() {
+        running = false;
         Collections.sort(players);
         printScores();
         players.get(0).win();
@@ -77,8 +101,8 @@ public class Game {
      * Checks whether the game is over.
      * @return true when game is over.
      */
-    protected boolean gameOver() {
-        if (players.size() == 0) {
+    public boolean gameOver() {
+        if (players.size() < MIN_AMOUNT_OF_PLAYERS) {
             return true;
         }
         for (Player player : players) {

@@ -1,10 +1,6 @@
 package nl.tiesdavid.ssproject.online.clientside;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -51,12 +47,13 @@ public class Client {
         }
 
         Scanner userIn = new Scanner(System.in);
-        System.out.println("Choose your name: ");
+        System.out.print("Choose your name: ");
         String name = userIn.next();
+        System.out.println();
 
         HumanClientPlayer player = new HumanClientPlayer(name);
         
-        String command = "SHOW_BOARD";
+        String command = "INIT " + name;
 
 
         // try to open a Socket to the server
@@ -72,34 +69,41 @@ public class Client {
                     socket.getInputStream()));
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
                     socket.getOutputStream()));
-            
-            int rNum = -1;
-            
+
             out.write(command);
             out.newLine();
             out.flush();
-            List<String> stringList = new ArrayList<String>();
+            List<String> stringList = new ArrayList<>();
             String line = in.readLine();
             while (line != null && !line.equals("")) {
             	stringList.add(line);
             	line = in.readLine();
             }
+            player.parseDeckString(stringList.get(0));
             do {
+                line = in.readLine();
                 System.out.println("Current state of the board:");
-            	for (String lineToPrint : stringList) {
+            	for (String lineToPrint : stringList.subList(1, stringList.size())) {
             		System.out.printf("%s" + System.lineSeparator(), lineToPrint);
 				}
-	            System.out.print("Enter recipe number (or 0 to exit): ");
 	            System.out.flush();
+                while (!line.startsWith("MAKE_MOVE")) {
+                    try {
+                        Thread.sleep(2000);
+                        line = in.readLine();
+                    } catch(InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                player.parseResponse(line);
 
                 command = player.getCommand();
 
-	            if (!command.equals("EXIT")) {
+	            if (!command.equals("")) {
 		            out.write(command);
 		            out.newLine();
 		            out.flush();
-		            System.out.println("System response: ");
-		            System.out.println("------");
 		            line = in.readLine();
 		            while (line != null && !line.equals("--EOT--")) {
 		            	// The server uses a special string ("--EOT--") to mark the end of a recipe.
@@ -108,7 +112,7 @@ public class Client {
 		            }
 		            System.out.println("------");
 	            } else {
-	            	System.out.println("Invalid recipe number, try again.");
+	            	System.out.println("Invalid command, try again.");
 	            }
             } while (!command.equals("EXIT"));
             System.out.println("Exiting.");

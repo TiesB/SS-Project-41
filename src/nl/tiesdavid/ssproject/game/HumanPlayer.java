@@ -17,7 +17,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Move determineMove() {
+    protected Move determineMove() {
         game.printBoard();
         System.out.println(getName() +
                 ", what kind of move do you want to make? (Type the corresponding number)");
@@ -90,7 +90,8 @@ public class HumanPlayer extends Player {
         try {
             return new Move(MoveType.ADD_MULTIPLE_TILES, getMultipleTilesFromUser(true));
         } catch (InvalidMoveTypeWithArgumentsException e) {
-            return handleMoveException(e);
+            handleMoveException(e);
+            return determineMove();
         }
     }
 
@@ -98,7 +99,8 @@ public class HumanPlayer extends Player {
         try {
             return new Move(MoveType.TRADE_TILES, getMultipleTilesFromUser(false));
         } catch (InvalidMoveTypeWithArgumentsException e) {
-            return handleMoveException(e);
+            handleMoveException(e);
+            return determineMove();
         }
     }
 
@@ -112,6 +114,9 @@ public class HumanPlayer extends Player {
                 return tradeTiles();
             case 4:
                 game.printBoard();
+                return null;
+            case 5:
+                System.out.println(deck);
                 return null;
             case 99:
                 deck.clear();
@@ -146,11 +151,11 @@ public class HumanPlayer extends Player {
                 }
             }
         } while (!tileRead);
-        return parseTileString(input);
+        return parseTileString(new String[] {input});
     }
 
-    private Tile parseTileString(String input) {
-        char[] chars = input.toCharArray();
+    protected Tile parseTileString(String[] input) {
+        char[] chars = input[0].toCharArray();
         Tile.Color color = null;
         Tile.Shape shape = null;
         for (Tile.Color color1 : Tile.Color.values()) {
@@ -167,6 +172,12 @@ public class HumanPlayer extends Player {
 
         if (color == null || shape == null) {
             return null;
+        }
+
+        if (input.length > 1) {
+            int x = Integer.parseInt(input[1]);
+            int y = Integer.parseInt(input[2]);
+            return new Tile (x, y, color, shape);
         }
 
         return new Tile(color, shape);

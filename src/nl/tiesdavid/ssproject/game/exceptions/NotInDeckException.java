@@ -6,6 +6,11 @@ package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NotInDeckException extends MoveException {
     @Override
+    public int getCode() {
+        return 10;
+    }
+
+    @Override
     public String getMessage() {
         return "You do not have this tile in your deck.";
     }

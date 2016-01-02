@@ -6,6 +6,11 @@ package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NotEnoughTilesGivenException extends MoveException {
     @Override
+    public int getCode() {
+        return 12;
+    }
+
+    @Override
     public String getMessage() {
         return "There were no tiles given.";
     }

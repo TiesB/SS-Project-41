@@ -121,6 +121,10 @@ public class Tile {
         return color.toString() + shape.toString() + " @ " + getX() + ", " + getY();
     }
 
+    public String toUserString() {
+        return "" + color.user + shape.user;
+    }
+
     @Override
     public String toString() {
         return color.toString() + shape.toString();

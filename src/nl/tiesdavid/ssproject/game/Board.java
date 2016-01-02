@@ -24,6 +24,8 @@ public class Board {
         int x = tile.getX();
         int y = tile.getY();
 
+        System.out.println("board: Trying to place tile: " + tile + " @" + x + ", " + y);
+
         if (tileExists(x, y)) {
             throw new CoordinatesAlreadyFilledException();
         }

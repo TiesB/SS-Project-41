@@ -6,6 +6,11 @@ package nl.tiesdavid.ssproject.game.exceptions;
 
 public class InvalidMoveTypeWithArgumentsException extends MoveException {
     @Override
+    public int getCode() {
+        return 16;
+    }
+
+    @Override
     public String getMessage() {
         return "The arguments do not correspond with the given MoveType.";
     }

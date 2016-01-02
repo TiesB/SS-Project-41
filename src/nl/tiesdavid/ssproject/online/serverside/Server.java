@@ -1,6 +1,7 @@
 package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.Game;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -29,10 +30,22 @@ public class Server extends Thread {
         	// with that as this recipe server has some security issues!
         	// ServerSocket ssock = new ServerSocket(port);
             while (true) {
-                 Socket sock = ssock.accept();
-                 System.out.println("Client connected!");
-                 ClientHandler handler = new ClientHandler(sock, game);
-                 handler.start();
+                Socket sock = ssock.accept();
+                System.out.println("Client connected!");
+                ClientHandler handler = new ClientHandler(sock, game);
+                handler.start();
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+                if (!game.isRunning()) {
+                    try {
+                        game.play();
+                    } catch (NotEnoughPlayersException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

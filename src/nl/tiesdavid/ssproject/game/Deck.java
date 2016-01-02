@@ -11,11 +11,21 @@ public class Deck extends ArrayList<Tile> {
         super(deckSize);
     }
 
+    public String toUserString() {
+        String line = "";
+        for (int i = 0; i < size() - 1; i++) {
+            line += get(i).toUserString() + " ";
+        }
+        line += get(size() - 1).toUserString();
+
+        return line;
+    }
+
     @Override
     public String toString() {
         String line = "";
         for (int i = 0; i < size() - 1; i++) {
-            line += get(i) + " | ";
+            line += get(i) + " ";
         }
         line += get(size() - 1);
 

@@ -7,6 +7,11 @@ import java.net.Socket;
 
 
 public class ClientHandler extends Thread {
+    final static String INIT_COMMAND = "INIT";
+    final static String SHOW_BOARD_COMMAND = "SHOW_BOARD";
+    final static String MAKE_MOVE_COMMAND = "MAKE_MOVE";
+    final static String EXIT_COMMAND = "EXIT";
+
     private BufferedReader in;
     private BufferedWriter out;
     private Socket sock;
@@ -18,7 +23,6 @@ public class ClientHandler extends Thread {
         out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
         this.sock = sock;
         this.game = game;
-        this.player = new OnlinePlayer("Online: " + sock.getInetAddress(), game);
     }
     
     public void run() {
@@ -36,11 +40,19 @@ public class ClientHandler extends Thread {
         } catch (IOException e) {
             // For now, ignore and let thread stop.
         }
-
     }
-    
-    final static String SHOW_BOARD_COMMAND = "SHOW_BOARD";
-    final static String GET_COMMAND = "GET";
+
+    public void startMove() {
+        try {
+            showBoard(out);
+            out.write(MAKE_MOVE_COMMAND);
+            player.sendDeck(out);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Handle server commands
      * @param msg command from client
@@ -51,60 +63,25 @@ public class ClientHandler extends Thread {
     	if (msg.equals(SHOW_BOARD_COMMAND)) {
     		System.out.println("Showing board.");
     		showBoard(out);
-    	} else if (msg.startsWith(GET_COMMAND + " ")){
-    		System.out.println("Showing recipe.");
-    		String recipeName = msg.substring(GET_COMMAND.length() + 1);
-    		showRecipe(recipeName, out);
+    	} else if (msg.startsWith(INIT_COMMAND)) {
+            this.player = new OnlinePlayer("Online: " + msg.split(" ")[1], game, this);
+            game.addPlayer(this.player);
+            this.player.sendDeck(out);
+            showBoard(out);
+        } else if (msg.equals(EXIT_COMMAND)){
+    		System.out.println("EXITING.");
+            shutdown();
+    		//TODO
     	} else {
-    		out.write("ERROR: unknown command.");
+    		int result = player.handleCommand(msg);
+            out.write(result + System.lineSeparator());
+            out.write("--EOT--");
+            out.flush();
     	}
     }
 
     private void showBoard(Writer out) throws IOException {
         game.getBoard().printBoard(out);
-    }
-
-    /**
-     * List available recipes.
-     * @param out
-     * @throws IOException
-     */
-    private void listRecipes(Writer out) throws IOException {
-    	File[] files = new File("recipes").listFiles();
-    	for (File file : files) {
-			out.write(file.getName() + System.lineSeparator());
-		}
-    }
-    
-    /**
-     * Retrieve a recipe and output to client.
-     * @param recipeName
-     * @param out
-     * @throws IOException 
-     */
-    private void showRecipe(String recipeName, Writer out) throws IOException {
-    	String recipeFilename = "recipes" + File.separator + recipeName;
-    	System.out.println("Sending " + recipeFilename);
-    	BufferedReader br = null;
-		try {
-			br = new BufferedReader(new FileReader(recipeFilename));
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found!");
-		}
-
-    	try {
-    		String line = br.readLine();
-
-    		while (line != null) {
-				out.write(line + System.lineSeparator());
-    			line = br.readLine();
-    		}
-    	} finally {
-    		br.close();
-    	}
-    	// This silly server uses a special string to signal it is done
-    	// sending lines.
-    	out.write("--EOT--");
     }
     
     private void shutdown() {

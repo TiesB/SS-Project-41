@@ -1,11 +1,7 @@
 package nl.tiesdavid.ssproject.game;
 
 import nl.tiesdavid.ssproject.game.enums.MoveType;
-import nl.tiesdavid.ssproject.game.exceptions.MoveException;
-import nl.tiesdavid.ssproject.game.exceptions.NonMatchingAttributesException;
-import nl.tiesdavid.ssproject.game.exceptions.NotEnoughTilesGivenException;
-import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
-import nl.tiesdavid.ssproject.game.exceptions.NotTouchingException;
+import nl.tiesdavid.ssproject.game.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,8 +14,10 @@ public abstract class Player implements Comparable<Player> {
     protected static final int DECK_SIZE = 6;
 
     private final String name;
-    protected final Deck deck;
+    protected Deck deck;
     protected final Game game;
+
+    protected boolean moveFinished;
 
     protected int score;
 
@@ -27,6 +25,8 @@ public abstract class Player implements Comparable<Player> {
         this.name = name;
         this.deck = new Deck(DECK_SIZE);
         this.game = game;
+
+        moveFinished = false;
 
         score = 0;
 
@@ -44,28 +44,39 @@ public abstract class Player implements Comparable<Player> {
      * @param e the exception thrown.
      * @return a newly generated move.
      */
-    protected Move handleMoveException(Exception e) {
+    protected void handleMoveException(Exception e) {
         System.out.println(e.getMessage());
-        return determineMove();
+    }
+
+    protected void setMoveFinished(boolean b) {
+        this.moveFinished = b;
+    }
+
+    public boolean moveFinished() {
+        return moveFinished;
     }
 
     /**
      * Makes the move
      */
-    public void makeMove() {
+    public void makeMove(Move move) throws NotInDeckException, InvalidTilePlacementException, NotEnoughTilesGivenException, NonMatchingAttributesException, NotTouchingException {
         Board board = game.getBoard();
-        Move move = determineMove();
-
         if (move == null) {
-            return;
+            move = determineMove();
         }
 
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
             tilesToBeTraded.forEach(this::tradeTile);
+
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
             System.out.println(move.getTile());
-            placeAndDrawTile(move.getTile(), board);
+            try {
+                placeAndDrawTile(move.getTile(), board);
+            } catch (MoveException e) {
+                handleMoveException(e);
+                throw e;
+            }
 
         } else {
             ArrayList<Tile> tiles = move.getTileList();
@@ -79,8 +90,10 @@ public abstract class Player implements Comparable<Player> {
 
             } catch (MoveException e) {
                 handleMoveException(e);
+                throw e;
             }
         }
+        setMoveFinished(true);
     }
 
     protected boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
@@ -160,14 +173,20 @@ public abstract class Player implements Comparable<Player> {
         }
     }
 
-    protected void placeAndDrawTile(Tile tile, Board board) {
+    protected void placeAndDrawTile(Tile tile, Board board) throws NotInDeckException, InvalidTilePlacementException {
         try {
+            int x = tile.getX();
+            int y = tile.getY();
+            tile = findTile(tile);
+            tile.setX(x);
+            tile.setY(y);
             board.placeTile(tile);
             addToScore(board.getScore(tile));
             deck.remove(tile);
             drawTileFromBag();
         } catch (MoveException e) {
             handleMoveException(e);
+            throw e;
         }
     }
 
