@@ -15,6 +15,33 @@ import java.util.Scanner;
 public class Client {
     private static final String USAGE = "usage: <address> <port>";
 
+    private static void makeMove(HumanClientPlayer player,BufferedReader in, BufferedWriter out) throws IOException {
+        String command = player.getCommand();
+        try {
+            if (!command.equals("")) {
+                out.write(command);
+                out.newLine();
+                out.flush();
+                String line = in.readLine();
+                while (line != null && !line.startsWith("--EOT--")) {
+                    // The server uses a special string ("--EOT--") to mark the end of a recipe.
+                    int res = player.parseResponse(line);
+
+                    if (res != 0) {
+                        makeMove(player, in, out);
+                    }
+
+                    line = in.readLine();
+                }
+                System.out.println("------");
+            } else {
+                System.out.println("Invalid command, try again.");
+            }
+        } catch (IOException e) {
+            throw e;
+        }
+    }
+
     /**
      * @param args
      */
@@ -89,31 +116,14 @@ public class Client {
 	            System.out.flush();
                 while (!line.startsWith("MAKE_MOVE")) {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(500);
                         line = in.readLine();
                     } catch(InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
                 }
-
                 player.parseResponse(line);
-
-                command = player.getCommand();
-
-	            if (!command.equals("")) {
-		            out.write(command);
-		            out.newLine();
-		            out.flush();
-		            line = in.readLine();
-		            while (line != null && !line.equals("--EOT--")) {
-		            	// The server uses a special string ("--EOT--") to mark the end of a recipe.
-		            	player.parseResponse(line);
-		            	line = in.readLine();
-		            }
-		            System.out.println("------");
-	            } else {
-	            	System.out.println("Invalid command, try again.");
-	            }
+                makeMove(player, in, out);
             } while (!command.equals("EXIT"));
             System.out.println("Exiting.");
             userIn.close();

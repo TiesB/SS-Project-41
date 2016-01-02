@@ -32,11 +32,14 @@ public class OnlinePlayer extends HumanPlayer {
         handler.startMove();
     }
 
-    private void doMove(Move move) {
+    private int doMove(Move move) {
         try {
             super.makeMove(move);
+            setMoveFinished(true);
+            return 0;
         } catch (MoveException e) {
             e.printStackTrace();
+            return e.getCode();
         }
     }
 
@@ -54,8 +57,7 @@ public class OnlinePlayer extends HumanPlayer {
             System.out.println(s);
         }
         Tile tile = parseTileString(tileString);
-        doMove(new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile));
-        return 0;
+        return doMove(new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile));
     }
 
     private int handleMultiple(MoveType moveType, String[] strings) {
@@ -63,13 +65,17 @@ public class OnlinePlayer extends HumanPlayer {
         for (int i = 0; i < strings.length; i = i + 4) {
             tiles.add(parseTileString(Arrays.copyOfRange(strings, i, i + 4)));
         }
+
+        Move move = null;
+
         try {
-            doMove(new Move(moveType, tiles));
-        } catch (MoveException e) {
-            handleMoveException(e);
+            move = new Move(moveType, tiles);
+        } catch (InvalidMoveTypeWithArgumentsException e) {
+            e.printStackTrace();
             return e.getCode();
         }
-        return 0;
+
+        return doMove(move);
     }
 
     public int handleCommand(String msg) {

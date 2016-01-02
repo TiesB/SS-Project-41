@@ -73,8 +73,9 @@ public class ClientHandler extends Thread {
             shutdown();
     		//TODO
     	} else {
-    		int result = player.handleCommand(msg);
+            int result = player.handleCommand(msg);
             out.write(result + System.lineSeparator());
+            out.flush();
             out.write("--EOT--");
             out.flush();
     	}

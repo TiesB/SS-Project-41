@@ -35,7 +35,7 @@ public class Server extends Thread {
                 ClientHandler handler = new ClientHandler(sock, game);
                 handler.start();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                 } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }

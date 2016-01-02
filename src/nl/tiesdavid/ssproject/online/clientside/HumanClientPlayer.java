@@ -27,13 +27,13 @@ public class HumanClientPlayer extends HumanPlayer {
         return "";
     }
 
-    public void parseResponse(String response) {
+    public int parseResponse(String response) {
         if (response.startsWith("MAKE_MOVE")) {
             needsToMakeMove = true;
-            return;
+            return 0;
         } else if (response.startsWith("DECK")) {
             parseDeckString(response);
-            return;
+            return 0;
         }
         int res = -1;
         try {
@@ -45,10 +45,10 @@ public class HumanClientPlayer extends HumanPlayer {
         switch (res) {
             case 0:
                 System.out.println("Move succeeded!");
-                break;
+                return 0;
             default:
                 System.out.println(":(" + Integer.toString(res));
-                break;
+                return -1;
         }
     }
 
