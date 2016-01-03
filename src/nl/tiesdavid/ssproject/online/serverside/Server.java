@@ -3,16 +3,44 @@ package nl.tiesdavid.ssproject.online.serverside;
 import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * A sloppily programmed recipe server. 
  *
  */
 public class Server extends Thread {
+    class StartCommando extends Thread {
+        private Game game;
+
+        StartCommando(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public void run() {
+            Scanner adminIn = new Scanner(System.in);
+            boolean running = true;
+            System.out.println("When ready, type \"START\" to begin the game.");
+            while (running) {
+                if (adminIn.next().equals("START")) {
+                    try {
+                        game.play();
+                        running = false;
+                    } catch (NotEnoughPlayersException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
     private int port;
     
     public Server(int port) {
@@ -21,14 +49,19 @@ public class Server extends Thread {
     
     public void run() {
         try {
-            System.out.println(port);
-            ServerSocket ssock = new ServerSocket(port,0,InetAddress.getByName("127.0.0.1"));
+            System.out.println("Port: " + port);
+            ServerSocket ssock = new ServerSocket(port, 0, InetAddress.getByName("127.0.0.1"));
+
+            BufferedReader adminIn = new BufferedReader(new InputStreamReader(System.in));
 
             Game game = new Game();
         	// If you want external hosts (i.e., not this computer) to connect to 
-        	// this server you can use the following line instead. However, be careful 
-        	// with that as this recipe server has some security issues!
+        	// this server you can use the following line instead.
         	// ServerSocket ssock = new ServerSocket(port);
+
+            new StartCommando(game).start();
+
+            System.out.println("Waiting for players to connect...");
             while (true) {
                 Socket sock = ssock.accept();
                 System.out.println("Client connected!");
@@ -39,13 +72,8 @@ public class Server extends Thread {
                 } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
-                if (!game.isRunning()) {
-                    try {
-                        game.play();
-                    } catch (NotEnoughPlayersException e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,7 +103,7 @@ public class Server extends Thread {
         
         // And start the server
         Server s = new Server(port);
-        System.out.println("Server starting.");
+        System.out.println("Server starting...");
         s.start();
     }
 }

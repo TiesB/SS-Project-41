@@ -7,6 +7,7 @@ package nl.tiesdavid.ssproject.game;
 import nl.tiesdavid.ssproject.game.enums.MoveType;
 import nl.tiesdavid.ssproject.game.exceptions.InvalidMoveTypeWithArgumentsException;
 import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
+import nl.tiesdavid.ssproject.game.exceptions.StopEnteringException;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -28,7 +29,7 @@ public class HumanPlayer extends Player {
         return parseChoice(choice);
     }
 
-    protected Tile getTileFromUser(String string, boolean readXY) {
+    protected Tile getTileFromUser(String string, boolean readXY) throws StopEnteringException{
         Tile tile = readTile(string);
         try {
             tile = findTile(tile);
@@ -58,10 +59,10 @@ public class HumanPlayer extends Player {
         ArrayList<Tile> chosenTiles = new ArrayList<>();
 
         do {
-            //I hate the >100 character line CheckStyle rule. I think it's stupid.
-            Tile tile = getTileFromUser(
-                    "Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
             try {
+                //I hate the >100 character line CheckStyle rule. I think it's stupid.
+                Tile tile = getTileFromUser(
+                        "Choose a tile. Use the format shown. Type '-' to stop entering.", readXY);
                 tile = findTile(tile);
                 if (chosenTiles.contains(tile) && !hasDuplicate(tile)) {
                     System.out.println("You have already chosen this tile.");
@@ -71,6 +72,8 @@ public class HumanPlayer extends Player {
                 }
             } catch (NotInDeckException e) {
                 handleMoveException(e);
+            } catch (StopEnteringException e) {
+                System.out.println("You have chosen " + chosenTiles.size() + " tiles.");
             }
         } while (chosenTiles.size() + 1 <= DECK_SIZE);
 
@@ -78,7 +81,11 @@ public class HumanPlayer extends Player {
     }
 
     private Move addToGridAndDraw() {
-        Tile tile = getTileFromUser("Choose a tile. Use the format shown: ", true);
+        Tile tile = null;
+        try {
+            tile = getTileFromUser("Choose a tile. Use the format shown: ", true);
+        } catch (StopEnteringException ignored) {
+        }
         if (tile == null) {
             //TODO: Communicate with user.
             return addToGridAndDraw();
@@ -127,7 +134,7 @@ public class HumanPlayer extends Player {
         }
     }
 
-    protected Tile readTile(String prompt) {
+    protected Tile readTile(String prompt) throws StopEnteringException {
         System.out.println(deck);
 
         for (Tile.Shape shape : Tile.Shape.values()) {
@@ -136,7 +143,6 @@ public class HumanPlayer extends Player {
 
         String input = "";
         boolean tileRead = false;
-        @SuppressWarnings("resource")
         Scanner line = new Scanner(System.in);
         do {
             System.out.print(prompt);
@@ -146,7 +152,7 @@ public class HumanPlayer extends Player {
                     if (input.matches("[BGOPRY][ABCDEF]")) {
                         tileRead = true;
                     } else if (input.equals("-")) {
-                        return null;
+                        throw new StopEnteringException();
                     }
                 }
             }

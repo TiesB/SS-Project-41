@@ -6,7 +6,9 @@ package nl.tiesdavid.ssproject.online.clientside;
 
 import nl.tiesdavid.ssproject.game.*;
 import nl.tiesdavid.ssproject.game.enums.MoveType;
+import nl.tiesdavid.ssproject.game.exceptions.MoveException;
 import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
+import nl.tiesdavid.ssproject.game.exceptions.StopEnteringException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,17 +40,20 @@ public class HumanClientPlayer extends HumanPlayer {
         int res = -1;
         try {
             res = Integer.parseInt(response);
+            switch (res) {
+                case 0:
+                    System.out.println("Move succeeded!");
+                    return 0;
+                default:
+                    System.out.println(":(" + Integer.toString(res));
+                    return -1;
+            }
         } catch (NumberFormatException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-        switch (res) {
-            case 0:
-                System.out.println("Move succeeded!");
-                return 0;
-            default:
-                System.out.println(":(" + Integer.toString(res));
-                return -1;
+            if (response.endsWith("--EOT--")) {
+                response = response.split("--")[0];
+            }
+            System.out.println(response);
+            return -1;
         }
     }
 
@@ -91,8 +96,12 @@ public class HumanClientPlayer extends HumanPlayer {
         }
     }
 
+    private MoveException getExceptionByCode(int code) {
+        return null;
+    }
+
     @Override
-    protected Tile getTileFromUser(String string, boolean readXY) {
+    protected Tile getTileFromUser(String string, boolean readXY) throws StopEnteringException {
         Tile tile = readTile(string);
         try {
             tile = findTile(tile);

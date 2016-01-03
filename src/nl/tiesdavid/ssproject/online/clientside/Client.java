@@ -17,34 +17,27 @@ public class Client {
 
     private static void makeMove(HumanClientPlayer player,BufferedReader in, BufferedWriter out) throws IOException {
         String command = player.getCommand();
-        try {
-            if (!command.equals("")) {
-                out.write(command);
-                out.newLine();
-                out.flush();
-                String line = in.readLine();
-                while (line != null && !line.startsWith("--EOT--")) {
-                    // The server uses a special string ("--EOT--") to mark the end of a recipe.
-                    int res = player.parseResponse(line);
+        if (!command.equals("")) {
+            out.write(command);
+            out.newLine();
+            out.flush();
+            String line = in.readLine();
+            while (line != null && !line.startsWith("--EOT--")) {
+                // The server uses a special string ("--EOT--") to mark the end of a transmission.
+                int res = player.parseResponse(line);
 
-                    if (res != 0) {
-                        makeMove(player, in, out);
-                    }
-
-                    line = in.readLine();
+                if (res != 0) {
+                    makeMove(player, in, out);
                 }
-                System.out.println("------");
-            } else {
-                System.out.println("Invalid command, try again.");
+
+                line = in.readLine();
             }
-        } catch (IOException e) {
-            throw e;
+            System.out.println("------");
+        } else {
+            System.out.println("Invalid command, try again.");
         }
     }
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println(USAGE);

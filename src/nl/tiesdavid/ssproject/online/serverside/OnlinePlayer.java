@@ -32,14 +32,14 @@ public class OnlinePlayer extends HumanPlayer {
         handler.startMove();
     }
 
-    private int doMove(Move move) {
+    private int doMove(Move move) throws MoveException{
         try {
             super.makeMove(move);
             setMoveFinished(true);
             return 0;
         } catch (MoveException e) {
             e.printStackTrace();
-            return e.getCode();
+            throw e;
         }
     }
 
@@ -52,7 +52,7 @@ public class OnlinePlayer extends HumanPlayer {
         }
     }
 
-    private int handleAddTileDrawNew(String[] tileString) {
+    private int handleAddTileDrawNew(String[] tileString) throws MoveException {
         for (String s : tileString) {
             System.out.println(s);
         }
@@ -60,7 +60,7 @@ public class OnlinePlayer extends HumanPlayer {
         return doMove(new Move(MoveType.ADD_TILE_AND_DRAW_NEW, tile));
     }
 
-    private int handleMultiple(MoveType moveType, String[] strings) {
+    private int handleMultiple(MoveType moveType, String[] strings) throws MoveException {
         ArrayList<Tile> tiles = new ArrayList<>();
         for (int i = 0; i < strings.length; i = i + 4) {
             tiles.add(parseTileString(Arrays.copyOfRange(strings, i, i + 4)));
@@ -78,7 +78,7 @@ public class OnlinePlayer extends HumanPlayer {
         return doMove(move);
     }
 
-    public int handleCommand(String msg) {
+    public int handleCommand(String msg) throws MoveException {
         String[] parts = msg.split(" ");
         int type = -1;
         try {

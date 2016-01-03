@@ -1,6 +1,7 @@
 package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.Game;
+import nl.tiesdavid.ssproject.game.exceptions.MoveException;
 
 import java.io.*;
 import java.net.Socket;
@@ -73,8 +74,12 @@ public class ClientHandler extends Thread {
             shutdown();
     		//TODO
     	} else {
-            int result = player.handleCommand(msg);
-            out.write(result + System.lineSeparator());
+            try {
+                int result = player.handleCommand(msg);
+                out.write(result + System.lineSeparator());
+            } catch (MoveException e) {
+                out.write(e.getMessage());
+            }
             out.flush();
             out.write("--EOT--");
             out.flush();

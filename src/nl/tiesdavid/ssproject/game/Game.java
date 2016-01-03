@@ -78,7 +78,6 @@ public class Game {
 
             finish();
         } else {
-            System.out.println(players.size());
             throw new NotEnoughPlayersException();
         }
     }
