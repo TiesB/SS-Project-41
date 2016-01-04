@@ -192,10 +192,6 @@ public class Game {
         System.out.println();
     }
 
-    public void printBoard() {
-        System.out.println(board);
-    }
-
     public Board getBoard() {
         return this.board;
     }

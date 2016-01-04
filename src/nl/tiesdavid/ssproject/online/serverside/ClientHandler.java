@@ -87,7 +87,7 @@ public class ClientHandler extends Thread {
     }
 
     private void showBoard(Writer out) throws IOException {
-        game.getBoard().printBoard(out);
+        game.getBoard().deepCopy().printBoard(out);
     }
     
     private void shutdown() {

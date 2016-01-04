@@ -30,7 +30,10 @@ public class HumanClientPlayer extends HumanPlayer {
     }
 
     public int parseResponse(String response) {
-        if (response.startsWith("MAKE_MOVE")) {
+        if (response.startsWith("BOARD")) {
+            System.out.println(response.substring(6));
+            return 0;
+        } else if (response.startsWith("MAKE_MOVE")) {
             needsToMakeMove = true;
             return 0;
         } else if (response.startsWith("DECK")) {

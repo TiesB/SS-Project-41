@@ -4,8 +4,6 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -69,7 +67,6 @@ public class Client {
         Scanner userIn = new Scanner(System.in);
         System.out.print("Choose your name: ");
         String name = userIn.next();
-        System.out.println();
 
         HumanClientPlayer player = new HumanClientPlayer(name);
         
@@ -93,23 +90,16 @@ public class Client {
             out.write(command);
             out.newLine();
             out.flush();
-            List<String> stringList = new ArrayList<>();
             String line = in.readLine();
-            while (line != null && !line.equals("")) {
-            	stringList.add(line);
-            	line = in.readLine();
-            }
-            player.parseDeckString(stringList.get(0));
             do {
-                line = in.readLine();
-                System.out.println("Current state of the board:");
-            	for (String lineToPrint : stringList.subList(1, stringList.size())) {
-            		System.out.printf("%s" + System.lineSeparator(), lineToPrint);
-				}
-	            System.out.flush();
+                while (line != null && !line.equals("")) {
+                    player.parseResponse(line);
+                    line = in.readLine();
+                }
+                System.out.println("Waiting till it's our turn...");
                 while (!line.startsWith("MAKE_MOVE")) {
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(100);
                         line = in.readLine();
                     } catch(InterruptedException ex) {
                         Thread.currentThread().interrupt();

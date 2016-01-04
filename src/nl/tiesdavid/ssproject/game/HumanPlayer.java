@@ -19,7 +19,6 @@ public class HumanPlayer extends Player {
 
     @Override
     protected Move determineMove() {
-        game.printBoard();
         System.out.println(getName() +
                 ", what kind of move do you want to make? (Type the corresponding number)");
         System.out.println("1 - Add a tile to the grid and draw one.");
@@ -119,15 +118,6 @@ public class HumanPlayer extends Player {
                 return addMultipleToGrid();
             case 3:
                 return tradeTiles();
-            case 4:
-                game.printBoard();
-                return null;
-            case 5:
-                System.out.println(deck);
-                return null;
-            case 99:
-                deck.clear();
-                return null;
             default:
                 game.printScores();
                 return null;

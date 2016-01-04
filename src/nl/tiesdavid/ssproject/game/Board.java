@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private final ArrayList<Tile> tiles;
+    private ArrayList<Tile> tiles;
     private int minX, maxX, minY, maxY;
 
     public Board() {
@@ -269,6 +269,19 @@ public class Board {
         }
     }
 
+    public Board deepCopy() {
+        Board board = new Board();
+        try {
+            for (Tile tile : tiles) {
+                board.placeTile(tile);
+            }
+            return board;
+        } catch (InvalidTilePlacementException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     /**
      * Resets the board to a state where there are no tiles put down.
      */
@@ -280,7 +293,7 @@ public class Board {
         String string;
 
         for (int i = minY - 2; i <= maxY + 2; i++) {
-            string = "";
+            string = "BOARD ";
 
             if (i == minY - 2) {
                 string += String.format("%5s", "");
