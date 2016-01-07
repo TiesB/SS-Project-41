@@ -67,7 +67,9 @@ public abstract class Player implements Comparable<Player> {
 
         if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
             ArrayList<Tile> tilesToBeTraded = move.getTileList();
-            tilesToBeTraded.forEach(this::tradeTile);
+            for (Tile tile : tilesToBeTraded) {
+                tradeTile(tile);
+            }
 
         } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
             System.out.println(move.getTile());
