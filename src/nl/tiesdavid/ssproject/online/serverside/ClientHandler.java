@@ -1,100 +1,137 @@
+/**
+ * Created by Ties on 7-1-2016.
+ */
 package nl.tiesdavid.ssproject.online.serverside;
 
-import nl.tiesdavid.ssproject.game.Game;
-import nl.tiesdavid.ssproject.game.exceptions.MoveException;
+import nl.tiesdavid.ssproject.game.exceptions.ExistingNameException;
+import nl.tiesdavid.ssproject.game.exceptions.UnacceptableNameException;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
-
+import java.util.Arrays;
 
 public class ClientHandler extends Thread {
-    final static String INIT_COMMAND = "INIT";
-    final static String SHOW_BOARD_COMMAND = "SHOW_BOARD";
-    final static String MAKE_MOVE_COMMAND = "MAKE_MOVE";
-    final static String EXIT_COMMAND = "EXIT";
+    public static final int UNACCEPTABLE_NAME_ERROR = -69;
+    public static final String HELLO_COMMAND = "hello";
 
-    private BufferedReader in;
-    private BufferedWriter out;
-    private Socket sock;
-    private Game game;
-    private OnlinePlayer player;
-    
-    public ClientHandler(Socket sock, Game game) throws IOException {
-        in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-        this.sock = sock;
-        this.game = game;
+    private final Lobby lobby;
+
+    private final InetAddress inetAddress;
+
+    private String[] options;
+
+    private String name;
+    private boolean disconnected;
+
+    private final BufferedReader in;
+    private final BufferedWriter out;
+
+    private OnlineGame currentGame;
+
+    public ClientHandler(Socket socket, Lobby lobby) throws IOException {
+        this.lobby = lobby;
+
+        this.inetAddress = socket.getInetAddress();
+
+        this.disconnected = false;
+
+        this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
-    
+
+    public void assignGame(OnlineGame game) {
+        this.currentGame = game;
+    }
+
+    public void disconnectFromGame() {
+        this.currentGame = null;
+    }
+
+    public void sendMessageToClient(String messageToBeSend) {
+        try {
+            out.write(messageToBeSend);
+            out.newLine();
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            disconnect();
+        }
+    }
+
+    private void disconnect() {
+        currentGame.disconnectPlayer(null); //TODO
+        lobby.disconnectClient(this);
+        disconnected = true;
+    }
+
+    private void initClient(String[] messageParts) {
+        try {
+            setPlayerName(messageParts[1]);
+            parseOptions(Arrays.copyOfRange(messageParts, 2, messageParts.length));
+            lobby.connectClient(this);
+        } catch (UnacceptableNameException e) {
+            sendErrorMessage(UNACCEPTABLE_NAME_ERROR);
+        } catch (ExistingNameException e) {
+            sendErrorMessage(Lobby.NAME_ALREADY_EXISTS_ERROR);
+        }
+    }
+
+    private void parseOptions(String[] options) {
+        this.options = options;
+    }
+
+    private void handleMessage(String message) {
+        String[] messageParts = message.split(" ");
+        String command = messageParts[0];
+        if (command.equals(HELLO_COMMAND)) {
+            initClient(messageParts);
+        }
+    }
+
+    private void sendErrorMessage(int error) {
+        sendMessageToClient("error" + Integer.toString(error));
+    }
+
+    private void setPlayerName(String name) throws UnacceptableNameException {
+        if (name.contains(" ") || name.contains("/") || name.contains("\\")) {
+            throw new UnacceptableNameException(name);
+        }
+        this.name = name;
+    }
+
+    public String getPlayerName() {
+        return this.name;
+    }
+
+    public String[] getOptionsString() {
+        String string = "";
+
+        if (this.options.length > 0) {
+            for (int i = 0; i < this.options.length - 1; i++) {
+                string += this.options[i];
+            }
+            string += this.options[options.length - 1];
+        }
+
+        return string;
+    }
+
+    public boolean isInGame() {
+        return currentGame != null;
+    }
+
+    @Override
     public void run() {
-        String msg;
+        String receivedMessage;
         try {
-            msg = in.readLine();
-            while (msg != null) {
-                System.out.println("Command received: " + msg + " from: " + sock.getInetAddress());
-                handleCommand(msg, out);
-                out.newLine();
-                out.flush();
-                msg = in.readLine();                
+            receivedMessage = in.readLine();
+            while (receivedMessage != null && !disconnected) {
+                System.out.println("Command received: " + receivedMessage + "\n\tFrom: " + inetAddress);
+                handleMessage(receivedMessage);
             }
-            shutdown();
         } catch (IOException e) {
-            // For now, ignore and let thread stop.
-        }
-    }
-
-    public void startMove() {
-        try {
-            showBoard(out);
-            out.write(MAKE_MOVE_COMMAND);
-            player.sendDeck(out);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Handle server commands
-     * @param msg command from client
-     * @param out Writer to to write the result to.
-     * @throws IOException 
-     */
-    private void handleCommand(String msg, Writer out) throws IOException {
-    	if (msg.equals(SHOW_BOARD_COMMAND)) {
-    		System.out.println("Showing board.");
-    		showBoard(out);
-    	} else if (msg.startsWith(INIT_COMMAND)) {
-            this.player = new OnlinePlayer("Online: " + msg.split(" ")[1], game, this);
-            game.addPlayer(this.player);
-            this.player.sendDeck(out);
-            showBoard(out);
-        } else if (msg.equals(EXIT_COMMAND)){
-    		System.out.println("EXITING.");
-            shutdown();
-    		//TODO
-    	} else {
-            try {
-                int result = player.handleCommand(msg);
-                out.write(result + System.lineSeparator());
-            } catch (MoveException e) {
-                out.write(e.getMessage());
-            }
-            out.flush();
-            out.write("--EOT--");
-            out.flush();
-    	}
-    }
-
-    private void showBoard(Writer out) throws IOException {
-        game.getBoard().deepCopy().printBoard(out);
-    }
-    
-    private void shutdown() {
-        try {
-            sock.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            disconnect();
         }
     }
 }
