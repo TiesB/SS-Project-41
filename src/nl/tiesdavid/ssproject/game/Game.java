@@ -332,7 +332,7 @@ public class Game {
         }
 
         if (!checkCorrectOnAttributes(tiles)) {
-            throw new NonMatchingAttributesException();
+            throw new TilesDontShareAttributeException();
         }
 
         return;

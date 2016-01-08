@@ -17,6 +17,8 @@ public class Challenge {
         this.invitedPlayers = invitedPlayers;
 
         this.playersWhoAccepted = new ArrayList<>();
+
+        this.playersWhoAccepted.add(creator);
     }
 
     public OnlineGame startGame(Lobby lobby) {

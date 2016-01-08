@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OnlineGame extends Game {
-    public static final String NEW_STONES_COMMAND = "newstones";
     public static final String TURN_COMMAND = "turn";
     public static final String PLACED_COMMAND = "placed";
     public static final String TRADED_COMMAND = "traded";
@@ -40,6 +39,7 @@ public class OnlineGame extends Game {
         for (Tile tile : tiles) {
             message += tile.toProtocolForm();
         }
+
         distributeMessage(message);
     }
 
@@ -47,6 +47,8 @@ public class OnlineGame extends Game {
     protected void handleTraded(Player player, ArrayList<Tile> tiles) {
         super.handleTraded(player, tiles);
         String message = TRADED_COMMAND + " " + player.getName() + " " + Integer.toString(tiles.size());
+
+        distributeMessage(message);
     }
 
     public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
@@ -74,12 +76,12 @@ public class OnlineGame extends Game {
         //TODO
     }
 
+
     @Override
     public void play() {
-
         for (ClientHandler handler : clientHandlers.keySet()) {
             OnlinePlayer player = clientHandlers.get(handler);
-            player.
+            player.sendDeck();
         }
     }
 
