@@ -3,5 +3,5 @@
  */
 package nl.tiesdavid.ssproject.game.exceptions;
 
-public class StopEnteringException extends Exception{
+public class StopEnteringException extends Exception {
 }

@@ -25,7 +25,8 @@ public class TestPlayer extends Player {
     }
 
     @Override
-    public boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
+    public boolean checkCorrectTileSet(ArrayList<Tile> tiles)
+            throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
         return super.checkCorrectTileSet(tiles);
     }
 

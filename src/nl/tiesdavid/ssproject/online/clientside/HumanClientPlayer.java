@@ -52,10 +52,6 @@ public class HumanClientPlayer extends HumanPlayer {
                     return -1;
             }
         } catch (NumberFormatException e) {
-            if (response.endsWith("--EOT--")) {
-                response = response.split("--")[0];
-            }
-            System.out.println(response);
             return -1;
         }
     }
@@ -69,7 +65,7 @@ public class HumanClientPlayer extends HumanPlayer {
         this.deck = newDeck;
     }
 
-    private String parseMove (Move move) {
+    private String parseMove(Move move) {
         if (move == null) {
             return "";
         } else {

@@ -61,7 +61,8 @@ public class PlayerTest {
     }
 
     @Test (expected = NotTouchingException.class)
-    public void notOnSameLineTest() throws NotTouchingException, NonMatchingAttributesException, NotEnoughTilesGivenException {
+    public void notOnSameLineTest()
+            throws NotTouchingException, NonMatchingAttributesException, NotEnoughTilesGivenException {
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(1, 2, Tile.Color.BLUE, Tile.Shape.STARBURST));
         tiles.add(new Tile(1, 1, Tile.Color.BLUE, Tile.Shape.STARBURST));
@@ -79,7 +80,8 @@ public class PlayerTest {
     }
 
     @Test (expected = NotTouchingException.class)
-    public void notInSameColumnTest() throws NotTouchingException, NonMatchingAttributesException, NotEnoughTilesGivenException {
+    public void notInSameColumnTest()
+            throws NotTouchingException, NonMatchingAttributesException, NotEnoughTilesGivenException {
         ArrayList<Tile> tiles = new ArrayList<>();
         tiles.add(new Tile(2, 1, Tile.Color.BLUE, Tile.Shape.STARBURST));
         tiles.add(new Tile(1, 1, Tile.Color.BLUE, Tile.Shape.STARBURST));

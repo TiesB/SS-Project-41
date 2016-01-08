@@ -30,6 +30,7 @@ public class TestClient {
                     } catch (InterruptedException e) {
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -54,7 +55,6 @@ public class TestClient {
                     out.newLine();
                     out.flush();
                 }
-                System.out.println(in.readLine());
                 line = scanner.nextLine();
             }
         } catch (IOException e) {

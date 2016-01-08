@@ -13,7 +13,8 @@ import java.util.Scanner;
 public class Client {
     private static final String USAGE = "usage: <address> <port>";
 
-    private static void makeMove(HumanClientPlayer player,BufferedReader in, BufferedWriter out) throws IOException {
+    private static void makeMove(HumanClientPlayer player, BufferedReader in, BufferedWriter out)
+            throws IOException {
         String command = player.getCommand();
         if (!command.equals("")) {
             out.write(command);
@@ -101,7 +102,7 @@ public class Client {
                     try {
                         Thread.sleep(100);
                         line = in.readLine();
-                    } catch(InterruptedException ex) {
+                    } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
                 }

@@ -4,10 +4,13 @@
  */
 package nl.tiesdavid.ssproject.game;
 
+import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
+import nl.tiesdavid.ssproject.online.serverside.Lobby;
+
 import java.util.Comparator;
 
 public class Tile {
-    public static Comparator<Tile> COMPARE_TILE = new Comparator<Tile>() {
+    public static Comparator<Tile> tileComparator = new Comparator<Tile>() {
         @Override
         public int compare(Tile o1, Tile o2) {
             int x = Integer.compare(o1.getX(), o2.getX());
@@ -20,12 +23,12 @@ public class Tile {
     };
 
     public enum Color {
-        BLUE('B', 0x0000FF),
-        GREEN('G', 0x00FF00),
-        ORANGE('O', 0xFFA500),
-        PURPLE('P', 0x551A8B),
-        RED('R', 0xFF0000),
-        YELLOW('Y', 0xFFFF00);
+        BLUE('4', 0x0000FF),
+        GREEN('3', 0x00FF00),
+        ORANGE('1', 0xFFA500),
+        PURPLE('5', 0x551A8B),
+        RED('0', 0xFF0000),
+        YELLOW('2', 0xFFFF00);
 
         public final char user;
         public final int hex;
@@ -42,12 +45,12 @@ public class Tile {
     }
 
     public enum Shape {
-        CIRCLE('A', '\u25cb'),
-        DIAMOND('B', '\u25c7'),
-        CLOVER('C', '\u2618'),
-        CRISSCROSS('D', '\u2716'),
-        STARBURST('E', '\u273A'),
-        SQUARE('F', '\u25A0');
+        CIRCLE('0', '\u25cb'),
+        DIAMOND('2', '\u25c7'),
+        CLOVER('5', '\u2618'),
+        CRISSCROSS('1', '\u2716'),
+        STARBURST('4', '\u273A'),
+        SQUARE('3', '\u25A0');
 
         public final char user;
         public final char printable;
@@ -64,6 +67,7 @@ public class Tile {
     }
 
     private int x, y;
+    private boolean hasXY;
     private boolean checked;
     private final Color color;
     private final Shape shape;
@@ -71,6 +75,7 @@ public class Tile {
     public Tile(int x, int y, Color color, Shape shape) {
         this.x = x;
         this.y = y;
+        this.hasXY = true;
         this.color = color;
         this.shape = shape;
     }
@@ -78,6 +83,7 @@ public class Tile {
     public Tile(Color color, Shape shape) {
         this.color = color;
         this.shape = shape;
+        this.hasXY = false;
         this.checked = false;
     }
 
@@ -87,6 +93,10 @@ public class Tile {
 
     public int getY() {
         return this.y;
+    }
+
+    public boolean hasXY() {
+        return this.hasXY;
     }
 
     public boolean getChecked() {
@@ -103,14 +113,86 @@ public class Tile {
 
     public void setX(int x) {
         this.x = x;
+        this.hasXY = true;
     }
 
     public void setY(int y) {
         this.y = y;
+        this.hasXY = true;
     }
 
     public void setChecked() {
         this.checked = true;
+    }
+
+    public String toProtocolForm() {
+        String string = Character.toString(this.getColor().user) + "," + Character.toString(this.getShape().user);
+        if (this.hasXY()) {
+            string += " " + Integer.toString(getX()) + "," + Integer.toString(getY());
+        }
+        return string;
+    }
+
+    public static Tile fromProtocolString(String tileString) throws UnparsableDataException {
+        Color color = null;
+        Shape shape = null;
+
+        char[] tileStringChars = tileString.toCharArray();
+
+        if (Lobby.DEBUG) {
+            for (char tileStringChar : tileStringChars) {
+                System.out.println(tileStringChar);
+            }
+        }
+
+        char colorChar = tileStringChars[0];
+        char shapeChar = tileStringChars[2];
+
+        for (Color color1 : Color.values()) {
+            if (color1.user == colorChar) {
+                color = color1;
+            }
+        }
+
+        for (Shape shape1 : Shape.values()) {
+            if (shape1.user == shapeChar) {
+                shape = shape1;
+            }
+        }
+
+        if (color == null || shape == null) {
+            throw new UnparsableDataException(tileString);
+        }
+
+        return new Tile(color, shape);
+    }
+
+    public static Tile fromProtocolString(String tileString, String locationString) throws UnparsableDataException {
+        Tile tile = fromProtocolString(tileString);
+        int x, y;
+
+        char[] locationStringChars = locationString.toCharArray();
+
+        if (Lobby.DEBUG) {
+            for (char locationStringChar : locationStringChars) {
+                System.out.println(locationStringChar);
+            }
+        }
+
+        char xChar = locationStringChars[0];
+        char yChar = locationStringChars[2];
+
+        try {
+            x = Integer.parseInt(new String(new char[]{xChar}));
+            y = Integer.parseInt(new String(new char[]{yChar}));
+        } catch (NumberFormatException e) {
+            throw new UnparsableDataException(locationString);
+        }
+
+        tile.setX(x);
+        tile.setY(y);
+
+        return tile;
     }
 
     /**

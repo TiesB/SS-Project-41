@@ -7,7 +7,7 @@ package nl.tiesdavid.ssproject.game;
 import java.util.ArrayList;
 
 public class Deck extends ArrayList<Tile> {
-    public Deck(int deckSize){
+    public Deck(int deckSize) {
         super(deckSize);
     }
 

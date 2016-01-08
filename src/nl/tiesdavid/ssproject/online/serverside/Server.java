@@ -23,7 +23,8 @@ public class Server extends Thread {
                 new ServerSocket(port);
             when actually going online.
              */
-            ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName("127.0.0.1"));
+            ServerSocket serverSocket =
+                    new ServerSocket(port, 0, InetAddress.getByName("127.0.0.1"));
 
             Lobby lobby = new Lobby();
 
@@ -31,7 +32,8 @@ public class Server extends Thread {
 
             while (true) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Client connected from " + socket.getInetAddress().toString() + "!");
+                System.out.println("Client connected from "
+                        + socket.getInetAddress().toString() + "!");
                 new ClientHandler(socket, lobby).start();
             }
         } catch (IOException e) {

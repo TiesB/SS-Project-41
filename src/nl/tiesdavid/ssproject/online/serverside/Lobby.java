@@ -12,24 +12,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby {
-    private static final boolean DEBUG = true;
+    public static final boolean DEBUG = true;
 
-    private static final String[] OPTIONS = new String[]{"chat"};
+    private static final String[] OPTIONS = new String[]{"chat", "challenge"};
 
-    public static final int NAME_ALREADY_EXISTS_ERROR = -42;
-    public static final String WELCOME_COMMAND = "hellofromtheotherside";
+    public static final int NAME_ALREADY_EXISTS_ERROR = 2;
+
+    public static final String WELCOME_COMMAND = "hello_from_the_otherside";
     public static final String JOIN_COMMAND = "joinlobby";
+
     public static final String GENERAL_CHAT_MESSAGE_COMMAND = "msg";
     public static final String PRIVATE_CHAT_MESSAGE_COMMAND = "msgpm";
 
+    public static final String START_GAME_COMMAND = "start";
+
+    public static final String NEW_CHALLENGE_COMMAND = "newchallenge";
+    public static final String ACCEPT_CHALLENGE_SERVER_COMMAND = "accept";
+    public static final String DECLINE_CHALLENGE_SERVER_COMMAND = "decline";
+
     private Map<String, ClientHandler> namesWithClients;
     private Map<OnlineGame, ArrayList<ClientHandler>> gamesWithClients;
+    private Map<Integer, Challenge> challengesByID;
     private ArrayList<ClientHandler> clientsInLobby;
+    private Map<Integer, ArrayList<ClientHandler>> waitingClientsByRequestedNo;
 
     public Lobby() {
         this.namesWithClients = new HashMap<>();
         this.gamesWithClients = new HashMap<>();
+        this.challengesByID = new HashMap<>();
         this.clientsInLobby = new ArrayList<>();
+        this.waitingClientsByRequestedNo = new HashMap<>();
     }
 
     public void sendGeneralChatMessage(ClientHandler sender, String message) {
@@ -46,14 +58,17 @@ public class Lobby {
 
         for (ClientHandler client : receivers) {
             if (client != sender) { //TODO: Decide whether sender should receive own message.
-                client.sendMessageToClient(GENERAL_CHAT_MESSAGE_COMMAND + " " + sender.getPlayerName() + " " + message);
+                client.sendMessageToClient(GENERAL_CHAT_MESSAGE_COMMAND + " "
+                        + sender.getPlayerName() + " " + message);
             }
         }
     }
 
-    public void sendPrivateChatMessage(ClientHandler sender, String receiver, String message) throws UnsupportedOptionException, NonexistingPlayerException {
+    public void sendPrivateChatMessage(ClientHandler sender, String receiver, String message)
+            throws UnsupportedOptionException, NonexistingPlayerException {
         if (DEBUG) {
-            System.out.println("Sending private message " + sender.getPlayerName() + " " + receiver + " " + message);
+            System.out.println("Sending private message " + sender.getPlayerName()
+                    + " " + receiver + " " + message);
         }
 
         ClientHandler receiverHandler = getClientHandlerByName(receiver);
@@ -61,7 +76,137 @@ public class Lobby {
             throw new UnsupportedOptionException(receiver, ClientHandler.CHAT_OPTION);
         }
 
-        receiverHandler.sendMessageToClient(PRIVATE_CHAT_MESSAGE_COMMAND + " " + sender.getPlayerName() + " " + message);
+        receiverHandler.sendMessageToClient(PRIVATE_CHAT_MESSAGE_COMMAND
+                + " " + sender.getPlayerName()
+                + " " + message);
+    }
+
+    public void createChallenge(ClientHandler creator, String[] players)
+            throws UnsupportedOptionException, NonexistingPlayerException {
+        if (DEBUG) {
+            System.out.println("Creating challenge: " + creator.getPlayerName());
+        }
+
+        if (players.length + 1 < 2) {
+            return;
+        }
+
+        ArrayList<ClientHandler> playerHandlers = new ArrayList<>();
+        for (String player : players) {
+            playerHandlers.add(getClientHandlerByName(player));
+        }
+        for (ClientHandler playerHandler : playerHandlers) {
+            if (!playerHandler.hasOption(ClientHandler.CHALLENGE_OPTION)) {
+                String name = playerHandler.getPlayerName();
+                //Dit hoeft dus alleen maar omdat CheckStyle anders zeurt over 100+ karakters
+                // , wat achterlijk is.
+                throw new UnsupportedOptionException(name, ClientHandler.CHALLENGE_OPTION);
+            }
+
+            if (!clientsInLobby.contains(playerHandler)) {
+                //TODO
+                playerHandlers.remove(playerHandler);
+            }
+        }
+
+        int id = gamesWithClients.size() + 1;
+
+        Challenge challenge = new Challenge(id, creator, playerHandlers);
+        challengesByID.put(id, challenge);
+        warnInvitedPlayers(challenge);
+    }
+
+    private void warnInvitedPlayers(Challenge challenge) {
+        ArrayList<ClientHandler> players = challenge.getInvitedPlayers();
+        String creatorName = challenge.getCreator().getPlayerName();
+        for (ClientHandler player : players) {
+            player.sendMessageToClient(NEW_CHALLENGE_COMMAND
+                    + " " + Integer.toString(challenge.getId()) + " " + creatorName);
+        }
+    }
+
+    public void acceptChallenge(ClientHandler client, int challengeId) {
+        Challenge challenge = getChallengeById(challengeId);
+        if (challenge == null) {
+            //TODO
+            return;
+        }
+        if (!clientsInLobby.contains(client)) {
+            //TODO
+            return;
+        }
+        for (ArrayList<ClientHandler> clientHandlers : waitingClientsByRequestedNo.values()) {
+            if (clientHandlers.contains(client)) {
+                clientHandlers.remove(client);
+            }
+        }
+
+        challenge.playerAccepts(client);
+        challenge.getCreator()
+                .sendMessageToClient(ACCEPT_CHALLENGE_SERVER_COMMAND
+                        + " " + Integer.toString(challengeId)
+                        + " " + client.getPlayerName());
+    }
+
+    public void declineChallenge(ClientHandler client, int challengeId) {
+        Challenge challenge = getChallengeById(challengeId);
+        if (challenge == null) {
+            //TODO
+            return;
+        }
+
+        challenge.playerDeclines(client);
+        challenge.getCreator()
+                .sendMessageToClient(DECLINE_CHALLENGE_SERVER_COMMAND
+                        + " " + Integer.toString(challengeId)
+                        + " " + client.getPlayerName());
+    }
+
+    public void startChallenge(ClientHandler client, int challengeId) {
+        Challenge challenge = getChallengeById(challengeId);
+        if (!challenge.getCreator().equals(client)) {
+            return;
+        }
+
+        OnlineGame game = challenge.startGame(this);
+
+        startGame(game);
+    }
+
+    public void waitForGame(ClientHandler client, int requestedNoOfPlayers) {
+        if (!waitingClientsByRequestedNo.containsKey(requestedNoOfPlayers)) {
+            waitingClientsByRequestedNo.put(requestedNoOfPlayers, new ArrayList<ClientHandler>());
+        }
+
+        waitingClientsByRequestedNo.get(requestedNoOfPlayers).add(client);
+
+        checkWaitingPlayers();
+    }
+
+    private void checkWaitingPlayers() {
+        for (Integer requestedNo : waitingClientsByRequestedNo.keySet()) {
+            if (waitingClientsByRequestedNo.get(requestedNo).size() == requestedNo) {
+                startWaitingPlayersGame(requestedNo);
+            }
+        }
+    }
+
+    private void startWaitingPlayersGame(int requestedNo) {
+        if (DEBUG) {
+            System.out.println("Starting waiting players game...");
+        }
+
+        ArrayList<ClientHandler> clients = waitingClientsByRequestedNo.get(requestedNo);
+        OnlineGame game = new OnlineGame(this);
+        for (ClientHandler client : clients) {
+            if (DEBUG) {
+                System.out.println(client.getPlayerName());
+            }
+
+            game.addPlayer(client);
+        }
+
+        startGame(game);
     }
 
     private void sendMessageToAllClients(String message) {
@@ -88,6 +233,44 @@ public class Lobby {
         sendMessageToAllClients(JOIN_COMMAND + " " + name + " " + options);
     }
 
+    private void startGame(OnlineGame game) {
+        if (DEBUG) {
+            System.out.println("Starting game...");
+        }
+
+        ArrayList<ClientHandler> clientsInGame = game.getClientHandlers();
+        ArrayList<String> clientNames = new ArrayList<>();
+
+        for (ClientHandler handler : clientsInGame) {
+            for (ArrayList<ClientHandler> clientHandlers : waitingClientsByRequestedNo.values()) {
+                for (ClientHandler clientHandler : clientHandlers) {
+                    if (clientHandler.equals(handler)) {
+                        clientHandlers.remove(clientHandler);
+                    }
+                }
+            }
+
+            if (clientsInLobby.contains(handler)) {
+                clientsInLobby.remove(handler);
+            }
+
+            handler.assignGame(game);
+
+            clientNames.add(handler.getPlayerName());
+        }
+
+        gamesWithClients.put(game, clientsInGame);
+
+        String startMessage = START_GAME_COMMAND;
+        for (String clientName : clientNames) {
+            startMessage += " " + clientName;
+        }
+
+        sendMessageToAllClients(startMessage);
+
+        //game.play(); TODO
+    }
+
     public void disconnectClient(ClientHandler client) {
         namesWithClients.remove(client.getPlayerName());
     }
@@ -109,5 +292,9 @@ public class Lobby {
         }
 
         return handler;
+    }
+
+    private Challenge getChallengeById(int challengeId) {
+        return this.challengesByID.get(challengeId);
     }
 }

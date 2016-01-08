@@ -3,10 +3,8 @@
  */
 package nl.tiesdavid.ssproject.online.serverside;
 
-import nl.tiesdavid.ssproject.game.exceptions.ExistingNameException;
-import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
-import nl.tiesdavid.ssproject.game.exceptions.UnacceptableNameException;
-import nl.tiesdavid.ssproject.game.exceptions.UnsupportedOptionException;
+import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesdavid.ssproject.game.exceptions.*;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -15,13 +13,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ClientHandler extends Thread {
-    public static final int UNACCEPTABLE_NAME_ERROR = -69;
-    public static final int NONEXISTING_PLAYER_ERROR = -321;
+    public static final int UNACCEPTABLE_NAME_ERROR = 2;
+    public static final int NONEXISTING_PLAYER_ERROR = 0;
     public static final int SERVER_UNSUPPORTED_COMMAND_ERROR = -492;
     public static final int PLAYER_UNSUPPORTED_COMMAND_ERROR = -429;
+    public static final int WRONG_COMMAND_ERROR = 0;
+    public static final String ERROR_COMMAND = "error";
+
     public static final String HELLO_COMMAND = "hello";
     public static final String GENERAL_CHAT_COMMAND = "chat";
     public static final String PRIVATE_CHAT_COMMAND = "chatpm";
+    public static final String CREATE_CHALLENGE_COMMAND = "challenge";
+    public static final String ACCEPT_CHALLENGE_COMMAND = "accept";
+    public static final String START_CHALLENGE_COMMAND = "start";
+    public static final String DECLINE_CHALLENGE_COMMAND = "decline";
+    public static final String WAIT_FOR_GAME_COMMAND = "join";
+    public static final String PLACE_COMMAND = "place";
+    public static final String TRADE_COMMAND = "trade";
+
     public static final String CHAT_OPTION = "chat";
     public static final String CHALLENGE_OPTION = "challenge";
 
@@ -71,13 +80,18 @@ public class ClientHandler extends Thread {
 
     private void disconnect() {
         if (currentGame != null) {
-            currentGame.disconnectPlayer(null); //TODO
+            currentGame.disconnectClient(this); //TODO
         }
         lobby.disconnectClient(this);
         disconnected = true;
     }
 
     private void initClient(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
         try {
             setPlayerName(messageParts[1]);
             parseOptions(Arrays.copyOfRange(messageParts, 2, messageParts.length));
@@ -91,6 +105,7 @@ public class ClientHandler extends Thread {
 
     private void distributeGeneralChatMessage(String[] messageParts) {
         if (messageParts.length < 2) {
+            sendWrongCommandMessage();
             return;
         }
 
@@ -106,6 +121,7 @@ public class ClientHandler extends Thread {
 
     private void distributePrivateChatMessage(String[] messageParts) {
         if (messageParts.length < 3) {
+            sendWrongCommandMessage();
             return;
         }
 
@@ -129,8 +145,135 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void parseOptions(String[] options) {
-        this.options.addAll(Arrays.asList(options));
+    private void createChallenge(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        String[] invitedPlayers = Arrays.copyOfRange(messageParts, 1, messageParts.length);
+        try {
+            lobby.createChallenge(this, invitedPlayers);
+        } catch (UnsupportedOptionException e) {
+            e.printStackTrace();
+            sendErrorMessage(PLAYER_UNSUPPORTED_COMMAND_ERROR);
+        } catch (NonexistingPlayerException e) {
+            e.printStackTrace();
+            sendErrorMessage(NONEXISTING_PLAYER_ERROR);
+        }
+    }
+
+    private void acceptChallenge(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        try {
+            int challengeId = Integer.parseInt(messageParts[1]);
+            lobby.acceptChallenge(this, challengeId);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            sendWrongCommandMessage();
+        }
+    }
+
+    private void declineChallenge(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        try {
+            int challengeId = Integer.parseInt(messageParts[1]);
+            lobby.declineChallenge(this, challengeId);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            sendWrongCommandMessage();
+        }
+    }
+
+    private void startChallenge(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        try {
+            int challengeId = Integer.parseInt(messageParts[1]);
+            lobby.startChallenge(this, challengeId);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            sendErrorMessage(WRONG_COMMAND_ERROR);
+        }
+    }
+
+    private void waitForGame(String[] messageParts) {
+        if (messageParts.length < 2) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        try {
+            int requestedNo = Integer.parseInt(messageParts[1]);
+            lobby.waitForGame(this, requestedNo);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            sendWrongCommandMessage();
+        }
+    }
+
+    private void placeTiles(String[] messageParts) {
+        if (messageParts.length % 2 != 1 || messageParts.length < 3
+                || currentGame == null) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        ArrayList<Tile> tiles = new ArrayList<>();
+        
+        for (int i = 1; i < messageParts.length; i = i + 2) {
+            String tileString = messageParts[i];
+            String locationString = messageParts[i];
+            try {
+                tiles.add(Tile.fromProtocolString(tileString, locationString));
+            } catch (UnparsableDataException e) {
+                sendWrongCommandMessage();
+                return;
+            }
+        }
+
+        try {
+            currentGame.place(this, tiles);
+        } catch (MoveException e) {
+            sendWrongCommandMessage();
+        }
+    }
+
+    private void tradeTiles(String[] messageParts) {
+        if (messageParts.length < 2
+                || currentGame == null) {
+            sendWrongCommandMessage();
+            return;
+        }
+
+        ArrayList<Tile> tiles = new ArrayList<>();
+
+        for (int i = 1; i < messageParts.length; i++) {
+            String tileString = messageParts[i];
+            try {
+                tiles.add(Tile.fromProtocolString(tileString));
+            } catch (UnparsableDataException e) {
+                sendWrongCommandMessage();
+                return;
+            }
+        }
+
+        try {
+            currentGame.trade(this, tiles);
+        } catch (MoveException e) {
+            sendWrongCommandMessage();
+        }
     }
 
     private void handleMessage(String message) {
@@ -146,19 +289,43 @@ public class ClientHandler extends Thread {
             case PRIVATE_CHAT_COMMAND:
                 distributePrivateChatMessage(messageParts);
                 break;
+            case CREATE_CHALLENGE_COMMAND:
+                createChallenge(messageParts);
+                break;
+            case ACCEPT_CHALLENGE_COMMAND:
+                acceptChallenge(messageParts);
+                break;
+            case DECLINE_CHALLENGE_COMMAND:
+                declineChallenge(messageParts);
+                break;
+            case START_CHALLENGE_COMMAND:
+                startChallenge(messageParts);
+                break;
+            case WAIT_FOR_GAME_COMMAND:
+                waitForGame(messageParts);
+                break;
+            case PLACE_COMMAND:
+                placeTiles(messageParts);
+            case TRADE_COMMAND:
+                tradeTiles(messageParts);
+                break;
         }
+    }
+
+    private void sendWrongCommandMessage() {
+        sendErrorMessage(WRONG_COMMAND_ERROR);
     }
 
     private void sendErrorMessage(int error) {
         //TODO: Use variable error message.
-        sendMessageToClient("error " + Integer.toString(error));
+        sendMessageToClient(ERROR_COMMAND + " " + Integer.toString(error));
     }
 
-    private void setPlayerName(String name) throws UnacceptableNameException {
-        if (name.contains(" ") || name.contains("/") || name.contains("\\")) {
-            throw new UnacceptableNameException(name);
+    private void setPlayerName(String newName) throws UnacceptableNameException {
+        if (newName.contains(" ") || newName.contains("/") || newName.contains("\\")) {
+            throw new UnacceptableNameException(newName);
         }
-        this.name = name;
+        this.name = newName;
     }
 
     public String getPlayerName() {
@@ -178,6 +345,10 @@ public class ClientHandler extends Thread {
         return string;
     }
 
+    private void parseOptions(String[] newOptions) {
+        this.options.addAll(Arrays.asList(newOptions));
+    }
+
     public boolean hasOption(String option) {
         return this.options.contains(option);
     }
@@ -195,7 +366,8 @@ public class ClientHandler extends Thread {
         try {
             String receivedMessage = in.readLine();
             while (receivedMessage != null && !disconnected) {
-                System.out.println("Command received: " + receivedMessage + "\n\tFrom: " + inetAddress);
+                System.out.println("Command received: " + receivedMessage
+                        + "\n\tFrom: " + inetAddress);
                 handleMessage(receivedMessage);
                 receivedMessage = in.readLine();
             }

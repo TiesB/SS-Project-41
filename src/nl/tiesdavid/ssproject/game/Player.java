@@ -1,10 +1,8 @@
 package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.game.enums.MoveType;
-import nl.tiesdavid.ssproject.game.exceptions.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import nl.tiesdavid.ssproject.game.exceptions.InvalidTilePlacementException;
+import nl.tiesdavid.ssproject.game.exceptions.MoveException;
+import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
 
 /**
  * Created by Ties on 19-12-2015.
@@ -56,135 +54,17 @@ public abstract class Player implements Comparable<Player> {
         return moveFinished;
     }
 
-    /**
-     * Makes the move
-     */
-    public void makeMove(Move move) throws NotInDeckException, InvalidTilePlacementException, NotEnoughTilesGivenException, NonMatchingAttributesException, NotTouchingException {
-        Board board = game.getBoard();
-        if (move == null) {
-            move = determineMove();
-        }
-
-        if (move.getMoveType().equals(MoveType.TRADE_TILES)) {
-            ArrayList<Tile> tilesToBeTraded = move.getTileList();
-            for (Tile tile : tilesToBeTraded) {
-                tradeTile(tile);
-            }
-
-        } else if (move.getMoveType().equals(MoveType.ADD_TILE_AND_DRAW_NEW)) {
-            System.out.println(move.getTile());
-            try {
-                placeAndDrawTile(move.getTile(), board);
-            } catch (MoveException e) {
-                handleMoveException(e);
-                throw e;
-            }
-
-        } else {
-            ArrayList<Tile> tiles = move.getTileList();
-
-            try {
-                checkCorrectTileSet(tiles);
-
-                for (Tile tile : tiles) {
-                    placeAndDrawTile(tile, board);
-                }
-
-            } catch (MoveException e) {
-                handleMoveException(e);
-                throw e;
-            }
-        }
-        setMoveFinished(true);
-    }
-
-    protected boolean checkCorrectTileSet(ArrayList<Tile> tiles) throws NotEnoughTilesGivenException, NotTouchingException, NonMatchingAttributesException {
-
-        if (tiles.size() < 1) {
-            throw new NotEnoughTilesGivenException();
-        }
-
-        if (!checkCorrectOnXY(tiles)) {
-            throw new NotTouchingException();
-        }
-
-        if (!checkCorrectOnAttributes(tiles)) {
-            throw new NonMatchingAttributesException();
-        }
-
-        return true;
-    }
-
-    private boolean checkCorrectOnXY(ArrayList<Tile> tiles) {
-        Collections.sort(tiles, Tile.COMPARE_TILE);
-
-        boolean goodOnX = true, goodOnY = true;
-
-        for (int i = 1; i < tiles.size(); i++) {
-            if (!(tiles.get(i - 1).getX() == tiles.get(i).getX() - 1 || tiles.get(i - 1).getX() == tiles.get(i).getX() + 1)){
-                goodOnX = false;
-            }
-            if (!(tiles.get(i - 1).getY() == tiles.get(i).getY() - 1 || tiles.get(i - 1).getY() == tiles.get(i).getY() + 1)){
-                goodOnY = false;
-            }
-        }
-
-        return goodOnX || goodOnY;
-    }
-
-    private boolean checkCorrectOnAttributes(ArrayList<Tile> tiles) {
-        Boolean checkOnColor = decideCheckOnColor(tiles, 0);
-        Tile.Color color = tiles.get(0).getColor();
-        Tile.Shape shape = tiles.get(0).getShape();
-
-        boolean goodOnColor = true, goodOnShape = true;
-
-        for (int i = 1; i < tiles.size(); i++) {
-            if (!tiles.get(i - 1).getColor().equals(color)) {
-                goodOnColor = false;
-            }
-            if (!tiles.get(i - 1).getShape().equals(shape)) {
-                goodOnShape = false;
-            }
-        }
-        if (checkOnColor == null) {
-            return goodOnColor || goodOnShape;
-        } else if (checkOnColor) {
-            return goodOnColor;
-        } else {
-            return goodOnShape;
-        }
-    }
-
-    private Boolean decideCheckOnColor(ArrayList<Tile> tiles, int i) {
-        try {
-            if (tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
-                    && !tiles.get(0).getShape().equals(tiles.get(i).getShape())) {
-                return true;
-            } else if (!tiles.get(i).getColor().equals(tiles.get(i + 1).getColor())
-                    && tiles.get(i).getShape().equals(tiles.get(i + 1).getShape())) {
-                return false;
-            } else {
-                return decideCheckOnColor(tiles, i + 1);
-            }
-        } catch (NullPointerException e) {
-            return null;
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-            //TODO: Wrong set entered.
-        }
-    }
-
-    protected void placeAndDrawTile(Tile tile, Board board) throws NotInDeckException, InvalidTilePlacementException {
+    protected void placeAndDrawTile(Tile tile, Board board)
+            throws NotInDeckException, InvalidTilePlacementException {
         try {
             int x = tile.getX();
             int y = tile.getY();
-            tile = findTile(tile);
-            tile.setX(x);
-            tile.setY(y);
-            board.placeTile(tile);
-            addToScore(board.getScore(tile));
-            deck.remove(tile);
+            Tile actualTile = findTile(tile);
+            actualTile.setX(x);
+            actualTile.setY(y);
+            board.placeTile(actualTile);
+            addToScore(board.getScore(actualTile));
+            deck.remove(actualTile);
             drawTileFromBag();
         } catch (MoveException e) {
             handleMoveException(e);
@@ -240,10 +120,11 @@ public abstract class Player implements Comparable<Player> {
         return deck.size() > 0;
     }
 
-    protected boolean hasDuplicate (Tile tile) {
+    protected boolean hasDuplicate(Tile tile) {
         int count = 0;
         for (Tile tile1 : deck) {
-            if (tile1.getShape().equals(tile.getShape()) && tile1.getColor().equals(tile.getColor())) {
+            if (tile1.getShape().equals(tile.getShape())
+                    && tile1.getColor().equals(tile.getColor())) {
                 count++;
             }
         }
@@ -269,7 +150,6 @@ public abstract class Player implements Comparable<Player> {
      * @return The number of deck sharing a characteristic.
      */
     public int getNoOfTilesSharingACharacteristic() {
-        //TODO: Fix this one. Now counts everything double.
         int count = 0;
 
         for (int i = 0; i < deck.size(); i++) {
@@ -289,6 +169,28 @@ public abstract class Player implements Comparable<Player> {
         }
 
         return count;
+    }
+
+    public void removeTile(Tile tile) {
+        Tile.Color color = tile.getColor();
+        Tile.Shape shape = tile.getShape();
+        for (Tile tile1 : deck) {
+            if (tile1.getColor().equals(color) && tile1.getShape().equals(shape)) {
+                deck.remove(tile1);
+                return;
+            }
+        }
+    }
+
+    public boolean hasTile(Tile tile) {
+        Tile.Color color = tile.getColor();
+        Tile.Shape shape = tile.getShape();
+        for (Tile tile1 : deck) {
+            if (tile1.getColor().equals(color) && tile1.getShape().equals(shape)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

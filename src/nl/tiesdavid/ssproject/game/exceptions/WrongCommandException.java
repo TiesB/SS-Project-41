@@ -4,8 +4,7 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class WrongCommandException extends Exception {
-    @Override
-    public String getMessage() {
-        return "Wrong message received.";
+    public WrongCommandException(String command) {
+        super("Wrong command: " + command);
     }
 }

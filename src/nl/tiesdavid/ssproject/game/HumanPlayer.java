@@ -28,7 +28,7 @@ public class HumanPlayer extends Player {
         return parseChoice(choice);
     }
 
-    protected Tile getTileFromUser(String string, boolean readXY) throws StopEnteringException{
+    protected Tile getTileFromUser(String string, boolean readXY) throws StopEnteringException {
         Tile tile = readTile(string);
         try {
             tile = findTile(tile);
@@ -173,7 +173,7 @@ public class HumanPlayer extends Player {
         if (input.length > 1) {
             int x = Integer.parseInt(input[1]);
             int y = Integer.parseInt(input[2]);
-            return new Tile (x, y, color, shape);
+            return new Tile(x, y, color, shape);
         }
 
         return new Tile(color, shape);
