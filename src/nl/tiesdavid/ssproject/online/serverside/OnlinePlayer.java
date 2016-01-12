@@ -23,6 +23,7 @@ public class OnlinePlayer extends Player {
     }
 
     public void sendDeck() {
+        System.out.println("hoi");
         sendNewTiles(deck);
     }
 

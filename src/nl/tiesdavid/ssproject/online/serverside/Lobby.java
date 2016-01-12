@@ -88,6 +88,7 @@ public class Lobby {
         }
 
         if (players.length + 1 < 2) {
+            creator.sendWrongCommandMessage();
             return;
         }
 
@@ -128,11 +129,11 @@ public class Lobby {
     public void acceptChallenge(ClientHandler client, int challengeId) {
         Challenge challenge = getChallengeById(challengeId);
         if (challenge == null) {
-            //TODO
+            client.sendWrongCommandMessage();
             return;
         }
         if (!clientsInLobby.contains(client)) {
-            //TODO
+            client.sendWrongCommandMessage();
             return;
         }
         for (ArrayList<ClientHandler> clientHandlers : waitingClientsByRequestedNo.values()) {
@@ -241,22 +242,12 @@ public class Lobby {
         ArrayList<ClientHandler> clientsInGame = game.getClientHandlers();
         ArrayList<String> clientNames = new ArrayList<>();
 
-        for (ClientHandler handler : clientsInGame) {
-            for (ArrayList<ClientHandler> clientHandlers : waitingClientsByRequestedNo.values()) {
-                for (ClientHandler clientHandler : clientHandlers) {
-                    if (clientHandler.equals(handler)) {
-                        clientHandlers.remove(clientHandler);
-                    }
-                }
-            }
+        for (ClientHandler clientInGame : clientsInGame) {
+            removeWaitingClient(clientInGame);
 
-            if (clientsInLobby.contains(handler)) {
-                clientsInLobby.remove(handler);
-            }
+            clientInGame.assignGame(game);
 
-            handler.assignGame(game);
-
-            clientNames.add(handler.getPlayerName());
+            clientNames.add(clientInGame.getPlayerName());
         }
 
         gamesWithClients.put(game, clientsInGame);
@@ -268,7 +259,14 @@ public class Lobby {
 
         sendMessageToAllClients(startMessage);
 
-        //game.play(); TODO
+        game.play();
+    }
+
+    private void removeWaitingClient(ClientHandler client) {
+        for (ArrayList<ClientHandler> waitingClients : waitingClientsByRequestedNo.values()) {
+            waitingClients.remove(client);
+        }
+        clientsInLobby.remove(client);
     }
 
     public void disconnectClient(ClientHandler client) {

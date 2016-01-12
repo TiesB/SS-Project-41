@@ -31,6 +31,7 @@ public class TestClient {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    System.exit(-1);
                 }
             }
         }

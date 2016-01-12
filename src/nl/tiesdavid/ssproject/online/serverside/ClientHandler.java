@@ -42,6 +42,7 @@ public class ClientHandler extends Thread {
     private ArrayList<String> options;
 
     private String name;
+    private boolean initialized;
     private boolean disconnected;
 
     private final BufferedReader in;
@@ -54,6 +55,7 @@ public class ClientHandler extends Thread {
 
         this.options = new ArrayList<>();
 
+        this.initialized = false;
         this.disconnected = false;
 
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -87,7 +89,7 @@ public class ClientHandler extends Thread {
     }
 
     private void initClient(String[] messageParts) {
-        if (messageParts.length < 2) {
+        if (initialized || messageParts.length < 2) {
             sendWrongCommandMessage();
             return;
         }
@@ -96,6 +98,8 @@ public class ClientHandler extends Thread {
             setPlayerName(messageParts[1]);
             parseOptions(Arrays.copyOfRange(messageParts, 2, messageParts.length));
             lobby.connectClient(this);
+
+            initialized = true;
         } catch (UnacceptableNameException e) {
             sendErrorMessage(UNACCEPTABLE_NAME_ERROR);
         } catch (ExistingNameException e) {
@@ -247,6 +251,8 @@ public class ClientHandler extends Thread {
             currentGame.place(this, tiles);
         } catch (MoveException e) {
             sendWrongCommandMessage();
+        } catch (NotCurrentPlayerException e) {
+            sendWrongCommandMessage();
         }
     }
 
@@ -273,12 +279,20 @@ public class ClientHandler extends Thread {
             currentGame.trade(this, tiles);
         } catch (MoveException e) {
             sendWrongCommandMessage();
+        } catch (NotCurrentPlayerException e) {
+            sendWrongCommandMessage();
         }
     }
 
     private void handleMessage(String message) {
         String[] messageParts = message.split(" ");
         String command = messageParts[0].toLowerCase();
+
+        if (!initialized && !command.equals(HELLO_COMMAND)) {
+            sendWrongCommandMessage();
+            return;
+        }
+
         switch (command) {
             case HELLO_COMMAND:
                 initClient(messageParts);
@@ -312,7 +326,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void sendWrongCommandMessage() {
+    public void sendWrongCommandMessage() {
         sendErrorMessage(WRONG_COMMAND_ERROR);
     }
 
@@ -373,6 +387,7 @@ public class ClientHandler extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            //TODO: Handle disconnect.
         }
     }
 }

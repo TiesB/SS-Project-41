@@ -45,41 +45,7 @@ public class Board {
                 throw new NoNeighboringTileException();
             }
 
-            //To the left
-            int tempX = x - 1;
-            Tile nextTile = getTile(tempX, y);
-            while (nextTile != null) {
-                neighboringTile = true;
-                horizontalLine += 1;
-                nextTile = getTile(--tempX, y);
-            }
 
-            //To the right
-            tempX = x + 1;
-            nextTile = getTile(tempX, y);
-            while (nextTile != null) {
-                neighboringTile = true;
-                horizontalLine += 1;
-                nextTile = getTile(++tempX, y);
-            }
-
-            //Upwards
-            int tempY = y - 1;
-            nextTile = getTile(x, tempY);
-            while (nextTile != null) {
-                neighboringTile = true;
-                verticalLine += 1;
-                nextTile = getTile(x, --tempY);
-            }
-
-            //Downwards
-            tempY = y + 1;
-            nextTile = getTile(tempX, y);
-            while (nextTile != null) {
-                neighboringTile = true;
-                verticalLine += 1;
-                nextTile = getTile(x, ++tempY);
-            }
 
             if (!neighboringTile) {
                 throw new NoNeighboringTileException();

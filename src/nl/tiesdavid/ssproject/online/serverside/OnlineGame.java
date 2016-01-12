@@ -7,6 +7,7 @@ import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.MoveException;
+import nl.tiesdavid.ssproject.game.exceptions.NotCurrentPlayerException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,12 @@ public class OnlineGame extends Game {
         super();
         this.lobby = lobby;
         this.clientHandlers = new HashMap<>();
+    }
+
+    @Override
+    protected void takeTurn(Player player) {
+        super.takeTurn(player);
+        distributeMessage(TURN_COMMAND + " " + player.getName());
     }
 
     private void distributeMessage(String message) {
@@ -51,12 +58,12 @@ public class OnlineGame extends Game {
         distributeMessage(message);
     }
 
-    public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
+    public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         return this.place(player, tiles);
     }
 
-    public ArrayList<Tile> trade(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
+    public ArrayList<Tile> trade(ClientHandler client, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         return this.trade(player, tiles);
     }

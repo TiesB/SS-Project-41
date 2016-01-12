@@ -15,21 +15,23 @@ public class Game {
 
     private Board board;
     private final ArrayList<Tile> bag;
-    private final Map<Player, Integer> playersWithScores;
+    private final LinkedHashMap<Player, Integer> playersWithScores;
+
+    private Player currentPlayer;
 
     private final Random randomGenerator;
 
     private boolean running = false;
 
     public Game() {
-        board = new Board();
-        bag = new ArrayList<>();
-        playersWithScores = new HashMap<>();
+        this.board = new Board();
+        this.bag = new ArrayList<>();
+        this.playersWithScores = new LinkedHashMap<>();
 
-        fillBag();
+        this.fillBag();
 
-        randomGenerator = new Random();
-        randomGenerator.setSeed(System.currentTimeMillis());
+        this.randomGenerator = new Random();
+        this.randomGenerator.setSeed(System.currentTimeMillis());
     }
 
     /**
@@ -42,45 +44,45 @@ public class Game {
 
             board.reset();
 
-            ArrayList<Player> players = new ArrayList<>(playersWithScores.keySet());
+            Iterator<Player> iterator = playersWithScores.keySet().iterator();
 
-            Player currentPlayer = players.get(0);
-            int currentPlayerI = 0;
-            int highestCount = 0;
-            for (int i = 0; i < players.size(); i++) {
-                Player player = players.get(i);
-                int n = player.getNoOfTilesSharingACharacteristic();
-                if (n > highestCount) {
-                    highestCount = n;
-                    currentPlayer = player;
-                    currentPlayerI = i;
+            Player highestScoringPlayer = null;
+            int highestScore = -1;
+
+            while (iterator.hasNext()) {
+                Player player = iterator.next();
+                if (player.getNoOfTilesSharingACharacteristic() > highestScore) {
+                    highestScoringPlayer = player;
+                    highestScore = player.getNoOfTilesSharingACharacteristic();
                 }
             }
-            /**
+
+            iterator = playersWithScores.keySet().iterator();
+
+            while (iterator.hasNext() && !iterator.next().equals(highestScoringPlayer)) {
+                //Nothing to do here. Just let let the iterator start at the correct player.
+                //noinspection UnnecessaryContinue
+                continue;
+            }
+
             while (!gameOver()) {
-                try {
-                    currentPlayer.makeMove(null);
-
-                    while (!currentPlayer.moveFinished()) {
-                        try {
-                            Thread.sleep(500);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    currentPlayerI = (currentPlayerI + 1) % playersWithScores.size();
-                    currentPlayer = playersWithScores.get(currentPlayerI);
-                } catch (MoveException e) {
-                    System.out.println("Invalid move made by player: " + currentPlayer.getName());
+                while (iterator.hasNext()) {
+                    takeTurn(currentPlayer);
+                    currentPlayer = iterator.next();
                 }
-            }TODO
-             **/
-
-            finish();
+                iterator = playersWithScores.keySet().iterator();
+            }
         } else {
             throw new NotEnoughPlayersException();
         }
+    }
+
+    protected void takeTurn(Player player) {
+        //TODO. Is overridden in OnlineGame.
+    }
+
+    private void wrongMove(Player player) {
+        System.out.println("Invalid move made by player: " + currentPlayer.getName());
     }
 
     public boolean isRunning() {
@@ -151,7 +153,11 @@ public class Game {
         }
     }
 
-    public ArrayList<Tile> place(Player player, ArrayList<Tile> tiles) throws MoveException {
+    public ArrayList<Tile> place(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+        if (!currentPlayer.equals(player)) {
+            throw new NotCurrentPlayerException(player);
+        }
+
         checkCorrectTileSet(tiles); //Throws an exception when parsing an incorrect set.
 
         for (Tile tile : tiles) {
@@ -195,7 +201,11 @@ public class Game {
         return tilesToBeDealed;
     }
 
-    public ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws MoveException {
+    public ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+        if (!currentPlayer.equals(player)) {
+            throw new NotCurrentPlayerException(player);
+        }
+
         int amount = tiles.size();
 
         if (amount > amountOfTilesLeft()) {
@@ -334,8 +344,6 @@ public class Game {
         if (!checkCorrectOnAttributes(tiles)) {
             throw new TilesDontShareAttributeException();
         }
-
-        return;
     }
 
     private boolean checkCorrectOnXY(ArrayList<Tile> tiles) {
