@@ -18,6 +18,7 @@ public class Game {
     private final LinkedHashMap<Player, Integer> playersWithScores;
 
     private Player currentPlayer;
+    private boolean moveFinished;
 
     private final Random randomGenerator;
 
@@ -67,7 +68,15 @@ public class Game {
 
             while (!gameOver()) {
                 while (iterator.hasNext()) {
+                    moveFinished = false;
                     takeTurn(currentPlayer);
+                    while (!moveFinished) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     currentPlayer = iterator.next();
                 }
                 iterator = playersWithScores.keySet().iterator();
@@ -81,35 +90,8 @@ public class Game {
         //TODO. Is overridden in OnlineGame.
     }
 
-    private void wrongMove(Player player) {
-        System.out.println("Invalid move made by player: " + currentPlayer.getName());
-    }
-
     public boolean isRunning() {
         return running;
-    }
-
-    /**
-     * Rounds up the game by printing the final scores
-     * and calling the win() function on the victorious player.
-     */
-    private void finish() {
-        running = false;
-
-        int highestScore = 0;
-        Player highestScoringPlayer = null;
-
-        for (Player player : playersWithScores.keySet()) {
-            int score = playersWithScores.get(player);
-            if (score > highestScore || highestScoringPlayer == null) {
-                highestScore = score;
-                highestScoringPlayer = player;
-            }
-        }
-        printScores();
-        if (highestScoringPlayer != null) {
-            highestScoringPlayer.win();
-        }
     }
 
     /**
@@ -234,6 +216,10 @@ public class Game {
         return tilesToBeDealed;
     }
 
+    protected void handleMoveFinished() {
+        moveFinished = true;
+    }
+
     protected void handlePlaced(Player player, int score, ArrayList<Tile> tiles) {
         int oldScore = playersWithScores.get(player);
         playersWithScores.replace(player, oldScore, oldScore + score);
@@ -279,37 +265,7 @@ public class Game {
     /**
      * Prints the scores in a user-friendly table.
      */
-    public void printScores() {
-        /**
-        //TODO: Format line3 nicely (same spacing as line1).
-        String line1 = "";
 
-        for (int i = 0; i < playersWithScores.size() - 1; i++) {
-            line1 += String.format("%12s", playersWithScores.get(i).getName());
-            line1 += " | ";
-        }
-        line1 += String.format("%12s", playersWithScores.get(playersWithScores.size() - 1).getName());
-        System.out.println(line1);
-
-        String line2 = "";
-        for (int i = 0; i < line1.length(); i++) {
-            line2 += "-";
-        }
-        System.out.println(line2);
-
-        String line3 = "";
-
-        for (int i = 0; i < playersWithScores.size() - 1; i++) {
-            line3 += String.format("%12s", playersWithScores.get(i).getScore() + " | ");
-        }
-        line3 += String.format("%12s", playersWithScores.get(playersWithScores.size() - 1).getScore());
-
-        System.out.println(line3);
-
-        System.out.println();
-         TODO: This should be removed, but can be used for spare parts.
-         **/
-    }
 
     public Board getBoard() {
         return this.board;
@@ -323,10 +279,9 @@ public class Game {
 
         String string = "";
 
-        for (int i = 0; i < playersWithScores.size() - 1; i++) {
-            string += playersWithScores.get(i) + System.lineSeparator();
+        for (Player player : playersWithScores.keySet()) {
+            string += playersWithScores.get(player) + System.lineSeparator();
         }
-        string += playersWithScores.get(playersWithScores.size() - 1);
 
         return string;
     }
