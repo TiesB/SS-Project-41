@@ -139,14 +139,8 @@ public class Tile {
 
         char[] tileStringChars = tileString.toCharArray();
 
-        if (Lobby.DEBUG) {
-            for (char tileStringChar : tileStringChars) {
-                System.out.println(tileStringChar);
-            }
-        }
-
-        char colorChar = tileStringChars[0];
-        char shapeChar = tileStringChars[2];
+        char shapeChar = tileStringChars[0];
+        char colorChar = tileStringChars[2];
 
         for (Color color1 : Color.values()) {
             if (color1.user == colorChar) {
@@ -168,6 +162,7 @@ public class Tile {
     }
 
     public static Tile fromProtocolString(String tileString, String locationString) throws UnparsableDataException {
+        //TODO: The entire parsing is fucked at the moment.
         Tile tile = fromProtocolString(tileString);
         int x, y;
 

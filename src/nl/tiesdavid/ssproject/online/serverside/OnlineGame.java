@@ -30,7 +30,7 @@ public class OnlineGame extends Game {
     @Override
     protected void takeTurn(Player player) {
         super.takeTurn(player);
-        distributeMessage(TURN_COMMAND + " " + player.getName());
+        distributeMessage(TURN_COMMAND + " " + player.getPlayerName());
     }
 
     private void distributeMessage(String message) {
@@ -81,15 +81,6 @@ public class OnlineGame extends Game {
 
     private void shutdown() {
         //TODO
-    }
-
-
-    @Override
-    public void play() {
-        for (ClientHandler handler : clientHandlers.keySet()) {
-            OnlinePlayer player = clientHandlers.get(handler);
-            player.sendDeck();
-        }
     }
 
     public ArrayList<ClientHandler> getClientHandlers() {

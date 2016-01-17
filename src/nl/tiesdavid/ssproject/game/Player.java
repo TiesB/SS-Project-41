@@ -15,16 +15,12 @@ public abstract class Player implements Comparable<Player> {
     protected Deck deck;
     protected final Game game;
 
-    protected boolean moveFinished;
-
     protected int score;
 
     public Player(String name, Game game) {
         this.name = name;
         this.deck = new Deck(DECK_SIZE);
         this.game = game;
-
-        moveFinished = false;
 
         score = 0;
 
@@ -44,14 +40,6 @@ public abstract class Player implements Comparable<Player> {
      */
     protected void handleMoveException(Exception e) {
         System.out.println(e.getMessage());
-    }
-
-    protected void setMoveFinished(boolean b) {
-        this.moveFinished = b;
-    }
-
-    public boolean moveFinished() {
-        return moveFinished;
     }
 
     protected void placeAndDrawTile(Tile tile, Board board)
@@ -103,6 +91,10 @@ public abstract class Player implements Comparable<Player> {
         if (tile != null) {
             deck.add(tile);
         }
+    }
+
+    public void prepareForGame() {
+
     }
 
     private void fillDeck() {
@@ -191,6 +183,10 @@ public abstract class Player implements Comparable<Player> {
             }
         }
         return false;
+    }
+
+    public String getPlayerName() {
+        return name;
     }
 
     @Override

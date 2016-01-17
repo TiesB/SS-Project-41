@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 //TODO: Remove.
 public class TestClient {
-    static class Reader extends Thread {
+    private static class Reader extends Thread {
         private BufferedReader in;
 
         public Reader(BufferedReader in) {
@@ -53,6 +53,7 @@ public class TestClient {
             while (true) {
                 if (!line.equals("") && !line.equals("exit")) {
                     out.write(line);
+                    System.out.println("Just sent: " + line);
                     out.newLine();
                     out.flush();
                 }

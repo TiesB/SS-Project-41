@@ -5,6 +5,7 @@ package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.exceptions.ExistingNameException;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
+import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 import nl.tiesdavid.ssproject.game.exceptions.UnsupportedOptionException;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class Lobby {
     public static final int NAME_ALREADY_EXISTS_ERROR = 2;
 
     public static final String WELCOME_COMMAND = "hello_from_the_otherside";
+    public static final String PLAYERS_COMMAND = "players";
     public static final String JOIN_COMMAND = "joinlobby";
 
     public static final String GENERAL_CHAT_MESSAGE_COMMAND = "msg";
@@ -231,6 +233,7 @@ public class Lobby {
         namesWithClients.put(name, client);
         clientsInLobby.add(client);
         sendWelcomeMessage(client);
+        sendPlayersMessage(client);
         sendMessageToAllClients(JOIN_COMMAND + " " + name + " " + options);
     }
 
@@ -259,7 +262,11 @@ public class Lobby {
 
         sendMessageToAllClients(startMessage);
 
-        game.play();
+        try {
+            game.play();
+        } catch (NotEnoughPlayersException e) {
+            e.printStackTrace();
+        }
     }
 
     private void removeWaitingClient(ClientHandler client) {
@@ -277,6 +284,15 @@ public class Lobby {
         String message = WELCOME_COMMAND;
         for (String option : OPTIONS) {
             message += " " + option;
+        }
+
+        client.sendMessageToClient(message);
+    }
+
+    private void sendPlayersMessage(ClientHandler client) {
+        String message = PLAYERS_COMMAND;
+        for (String s : namesWithClients.keySet()) {
+            message += " " + s;
         }
 
         client.sendMessageToClient(message);

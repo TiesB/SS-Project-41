@@ -9,10 +9,48 @@ import nl.tiesdavid.ssproject.game.exceptions.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 public class ClientHandler extends Thread {
+    private static class Reader extends Thread {
+        private ClientHandler clientHandler;
+        private InetAddress inetAddress;
+        private BufferedReader in;
+
+        private boolean running;
+
+        public Reader(ClientHandler clientHandler, InetAddress inetAddress, BufferedReader in) {
+            this.clientHandler = clientHandler;
+            this.inetAddress = inetAddress;
+            this.in = in;
+
+            this.running = true;
+        }
+
+        public void close() {
+            this.running = false;
+        }
+
+        @Override
+        public void run() {
+            while (running) {
+                try {
+                    String line = in.readLine();
+                    if (!line.equals("")) {
+                        System.out.println("Command received: " + line
+                                + "\n\tFrom: " + inetAddress);
+                        clientHandler.handleMessage(line);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(-1);
+                }
+            }
+        }
+    }
+
+    private static final boolean DEBUG = true;
+
     public static final int UNACCEPTABLE_NAME_ERROR = 2;
     public static final int NONEXISTING_PLAYER_ERROR = 0;
     public static final int SERVER_UNSUPPORTED_COMMAND_ERROR = -492;
@@ -213,13 +251,21 @@ public class ClientHandler extends Thread {
     }
 
     private void waitForGame(String[] messageParts) {
-        if (messageParts.length < 2) {
+        if (currentGame != null || messageParts.length < 2) {
             sendWrongCommandMessage();
             return;
         }
 
         try {
             int requestedNo = Integer.parseInt(messageParts[1]);
+
+            List<Integer> allowedNos = Arrays.asList(2, 3, 4);
+
+            if (!allowedNos.contains(requestedNo)) {
+                sendWrongCommandMessage();
+                return;
+            }
+
             lobby.waitForGame(this, requestedNo);
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -228,6 +274,7 @@ public class ClientHandler extends Thread {
     }
 
     private void placeTiles(String[] messageParts) {
+        printDebugMessage("Placing tiles...");
         if (messageParts.length % 2 != 1 || messageParts.length < 3
                 || currentGame == null) {
             sendWrongCommandMessage();
@@ -240,7 +287,9 @@ public class ClientHandler extends Thread {
             String tileString = messageParts[i];
             String locationString = messageParts[i];
             try {
-                tiles.add(Tile.fromProtocolString(tileString, locationString));
+                Tile tile = Tile.fromProtocolString(tileString, locationString);
+                printDebugMessage("Tile: " + tile.toLongString());
+                tiles.add(tile);
             } catch (UnparsableDataException e) {
                 sendWrongCommandMessage();
                 return;
@@ -250,8 +299,6 @@ public class ClientHandler extends Thread {
         try {
             currentGame.place(this, tiles);
         } catch (MoveException e) {
-            sendWrongCommandMessage();
-        } catch (NotCurrentPlayerException e) {
             sendWrongCommandMessage();
         }
     }
@@ -278,8 +325,6 @@ public class ClientHandler extends Thread {
         try {
             currentGame.trade(this, tiles);
         } catch (MoveException e) {
-            sendWrongCommandMessage();
-        } catch (NotCurrentPlayerException e) {
             sendWrongCommandMessage();
         }
     }
@@ -320,6 +365,7 @@ public class ClientHandler extends Thread {
                 break;
             case PLACE_COMMAND:
                 placeTiles(messageParts);
+                break;
             case TRADE_COMMAND:
                 tradeTiles(messageParts);
                 break;
@@ -375,19 +421,15 @@ public class ClientHandler extends Thread {
         return this.currentGame;
     }
 
+    private void printDebugMessage(String message) {
+        if (DEBUG) {
+            System.out.println(getPlayerName() + ": " + message);
+        }
+    }
+
     @Override
     public void run() {
-        try {
-            String receivedMessage = in.readLine();
-            while (receivedMessage != null && !disconnected) {
-                System.out.println("Command received: " + receivedMessage
-                        + "\n\tFrom: " + inetAddress);
-                handleMessage(receivedMessage);
-                receivedMessage = in.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            //TODO: Handle disconnect.
-        }
+        new Reader(this, inetAddress, in).start();  //Using this so the reader will continue,
+                                                    //even when a command is being processed.
     }
 }

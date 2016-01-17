@@ -18,6 +18,7 @@ public class Game {
     private final LinkedHashMap<Player, Integer> playersWithScores;
 
     private Player currentPlayer;
+    private boolean firstMoveDone;
     private boolean moveFinished;
 
     private final Random randomGenerator;
@@ -58,6 +59,8 @@ public class Game {
                 }
             }
 
+            currentPlayer = highestScoringPlayer;
+
             iterator = playersWithScores.keySet().iterator();
 
             while (iterator.hasNext() && !iterator.next().equals(highestScoringPlayer)) {
@@ -66,7 +69,14 @@ public class Game {
                 continue;
             }
 
-            while (!gameOver()) {
+            //Start of game.
+            firstMoveDone = false;
+
+            for (Player player : playersWithScores.keySet()) {
+                player.prepareForGame();
+            }
+
+            while (running) {
                 while (iterator.hasNext()) {
                     moveFinished = false;
                     takeTurn(currentPlayer);
@@ -77,6 +87,12 @@ public class Game {
                             e.printStackTrace();
                         }
                     }
+
+                    if (gameOver()) {
+                        finish();
+                        return;
+                    }
+
                     currentPlayer = iterator.next();
                 }
                 iterator = playersWithScores.keySet().iterator();
@@ -90,8 +106,8 @@ public class Game {
         //TODO. Is overridden in OnlineGame.
     }
 
-    public boolean isRunning() {
-        return running;
+    protected void finish() {
+        running = true;
     }
 
     /**
@@ -184,6 +200,10 @@ public class Game {
     }
 
     public ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+        if (!firstMoveDone) {
+            throw new FirstMoveException();
+        }
+
         if (!currentPlayer.equals(player)) {
             throw new NotCurrentPlayerException(player);
         }
@@ -217,16 +237,21 @@ public class Game {
     }
 
     protected void handleMoveFinished() {
+        if (!firstMoveDone) {
+            firstMoveDone = true;
+        }
         moveFinished = true;
     }
 
     protected void handlePlaced(Player player, int score, ArrayList<Tile> tiles) {
         int oldScore = playersWithScores.get(player);
         playersWithScores.replace(player, oldScore, oldScore + score);
+
+        handleMoveFinished();
     }
 
     protected void handleTraded(Player player, ArrayList<Tile> tiles) {
-
+        handleMoveFinished();
     }
 
     public int amountOfTilesLeft() {

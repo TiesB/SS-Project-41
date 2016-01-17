@@ -22,8 +22,13 @@ public class OnlinePlayer extends Player {
         clientHandler.sendMessageToClient(message);
     }
 
+    @Override
+    public void prepareForGame() {
+        super.prepareForGame();
+        sendDeck();
+    }
+
     public void sendDeck() {
-        System.out.println("hoi");
         sendNewTiles(deck);
     }
 
