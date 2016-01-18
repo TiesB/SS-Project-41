@@ -25,10 +25,6 @@ public class TestClient {
                     if (!line.equals("")) {
                         System.out.println(line);
                     }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     System.exit(-1);

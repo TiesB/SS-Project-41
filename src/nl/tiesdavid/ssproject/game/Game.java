@@ -8,7 +8,7 @@ import nl.tiesdavid.ssproject.game.exceptions.*;
 
 import java.util.*;
 
-public class Game {
+public class Game extends Thread {
     private static final int MIN_AMOUNT_OF_PLAYERS = 2;
     private static final int MAX_AMOUNT_OF_PLAYERS = 4;
     private static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
@@ -34,6 +34,15 @@ public class Game {
 
         this.randomGenerator = new Random();
         this.randomGenerator.setSeed(System.currentTimeMillis());
+    }
+
+    @Override
+    public void run() {
+        try {
+            play();
+        } catch (NotEnoughPlayersException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -145,13 +154,13 @@ public class Game {
      * Adds a player to the game. Makes sure the # of playersWithScores doesn't exceed 4.
      * @param player The player to be added.
      */
-    public void addPlayer(Player player) {
+    public synchronized void addPlayer(Player player) {
         if (playersWithScores.size() <= MAX_AMOUNT_OF_PLAYERS) {
             playersWithScores.put(player, 0);
         }
     }
 
-    public ArrayList<Tile> place(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public synchronized ArrayList<Tile> place(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
         if (!currentPlayer.equals(player)) {
             throw new NotCurrentPlayerException(player);
         }
@@ -199,7 +208,7 @@ public class Game {
         return tilesToBeDealed;
     }
 
-    public ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public synchronized ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
         if (!firstMoveDone) {
             throw new FirstMoveException();
         }

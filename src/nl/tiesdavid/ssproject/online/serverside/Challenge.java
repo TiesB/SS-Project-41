@@ -22,12 +22,13 @@ public class Challenge {
     }
 
     public OnlineGame startGame(Lobby lobby) {
-        OnlineGame game = new OnlineGame(lobby);
-        for (ClientHandler player : playersWhoAccepted) {
-            game.addPlayer(player);
+        synchronized (this) {
+            OnlineGame game = new OnlineGame(lobby);
+            for (ClientHandler player : playersWhoAccepted) {
+                game.addPlayer(player);
+            }
+            return game;
         }
-
-        return game;
     }
 
     public void playerAccepts(ClientHandler player) {

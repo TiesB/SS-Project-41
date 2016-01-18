@@ -38,7 +38,6 @@ public class Server extends Thread {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.exit(-1);
         }
     }
 

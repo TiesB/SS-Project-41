@@ -5,7 +5,6 @@
 package nl.tiesdavid.ssproject.game;
 
 import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
-import nl.tiesdavid.ssproject.online.serverside.Lobby;
 
 import java.util.Comparator;
 
@@ -167,12 +166,6 @@ public class Tile {
         int x, y;
 
         char[] locationStringChars = locationString.toCharArray();
-
-        if (Lobby.DEBUG) {
-            for (char locationStringChar : locationStringChars) {
-                System.out.println(locationStringChar);
-            }
-        }
 
         char xChar = locationStringChars[0];
         char yChar = locationStringChars[2];

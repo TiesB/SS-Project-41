@@ -43,7 +43,6 @@ public class ClientHandler extends Thread {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.exit(-1);
                 }
             }
         }
@@ -285,7 +284,7 @@ public class ClientHandler extends Thread {
         
         for (int i = 1; i < messageParts.length; i = i + 2) {
             String tileString = messageParts[i];
-            String locationString = messageParts[i];
+            String locationString = messageParts[i + 1];
             try {
                 Tile tile = Tile.fromProtocolString(tileString, locationString);
                 printDebugMessage("Tile: " + tile.toLongString());
@@ -299,6 +298,7 @@ public class ClientHandler extends Thread {
         try {
             currentGame.place(this, tiles);
         } catch (MoveException e) {
+            printDebugMessage(e.getMessage());
             sendWrongCommandMessage();
         }
     }
@@ -370,6 +370,7 @@ public class ClientHandler extends Thread {
                 tradeTiles(messageParts);
                 break;
         }
+        System.out.println(getPlayerName() + ": Finished handling command: " + message);
     }
 
     public void sendWrongCommandMessage() {

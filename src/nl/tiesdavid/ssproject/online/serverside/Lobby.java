@@ -5,7 +5,6 @@ package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.exceptions.ExistingNameException;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
-import nl.tiesdavid.ssproject.game.exceptions.NotEnoughPlayersException;
 import nl.tiesdavid.ssproject.game.exceptions.UnsupportedOptionException;
 
 import java.util.ArrayList;
@@ -262,11 +261,7 @@ public class Lobby {
 
         sendMessageToAllClients(startMessage);
 
-        try {
-            game.play();
-        } catch (NotEnoughPlayersException e) {
-            e.printStackTrace();
-        }
+        game.start();
     }
 
     private void removeWaitingClient(ClientHandler client) {
