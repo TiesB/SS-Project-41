@@ -125,7 +125,7 @@ public class Tile {
     }
 
     public String toProtocolForm() {
-        String string = Character.toString(this.getColor().user) + "," + Character.toString(this.getShape().user);
+        String string = Character.toString(this.getShape().user) + "," + Character.toString(this.getColor().user);
         if (this.hasXY()) {
             string += " " + Integer.toString(getX()) + "," + Integer.toString(getY());
         }

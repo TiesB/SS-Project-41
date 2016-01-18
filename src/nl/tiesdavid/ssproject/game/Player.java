@@ -1,7 +1,5 @@
 package nl.tiesdavid.ssproject.game;
 
-import nl.tiesdavid.ssproject.game.exceptions.InvalidTilePlacementException;
-import nl.tiesdavid.ssproject.game.exceptions.MoveException;
 import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
 
 /**
@@ -27,41 +25,8 @@ public abstract class Player implements Comparable<Player> {
         fillDeck();
     }
 
-    /**
-     * The function to determine the player's move. Will be called in makeMove().
-     * @return the move player wants to make.
-     */
-    protected abstract Move determineMove();
-
-    /**
-     * You probably want to override this.
-     * @param e the exception thrown.
-     * @return a newly generated move.
-     */
-    protected void handleMoveException(Exception e) {
-        System.out.println(e.getMessage());
-    }
-
-    protected void placeAndDrawTile(Tile tile, Board board)
-            throws NotInDeckException, InvalidTilePlacementException {
-        try {
-            int x = tile.getX();
-            int y = tile.getY();
-            Tile actualTile = findTile(tile);
-            actualTile.setX(x);
-            actualTile.setY(y);
-            board.placeTile(actualTile);
-            addToScore(board.getScore(actualTile));
-            deck.remove(actualTile);
-            drawTileFromBag();
-        } catch (MoveException e) {
-            handleMoveException(e);
-            throw e;
-        }
-    }
-
     void win() {
-        score += 6;
+        score += 6; //TODO: Remove this function, but don't forget to retain the 6 points bonus.
         System.out.println(name + " has won! With a score of: " + score);
     }
 
@@ -71,19 +36,6 @@ public abstract class Player implements Comparable<Player> {
 
     public int getScore() {
         return score;
-    }
-
-    private void addToScore(int increment) {
-        if (increment < 0) {
-            return;
-        }
-        score += increment;
-    }
-
-    private void tradeTile(Tile tile) {
-        deck.remove(tile);
-        game.addTileToBag(tile);
-        drawTileFromBag();
     }
 
     protected void drawTileFromBag() {

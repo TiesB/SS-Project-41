@@ -5,10 +5,6 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class OutOfBoundsException extends InvalidTilePlacementException {
-    @Override
-    public int getCode() {
-        return 19;
-    }
 
     @Override
     public String getMessage() {

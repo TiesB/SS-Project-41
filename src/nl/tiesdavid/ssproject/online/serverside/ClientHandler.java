@@ -296,7 +296,7 @@ public class ClientHandler extends Thread {
         }
 
         try {
-            currentGame.place(this, tiles);
+            ArrayList<Tile> tilesToBeDealed = currentGame.place(this, tiles);
         } catch (MoveException e) {
             printDebugMessage(e.getMessage());
             sendWrongCommandMessage();

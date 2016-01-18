@@ -5,10 +5,6 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class TilesDontShareAttributeException extends MoveException {
-    @Override
-    public int getCode() {
-        return 20;
-    }
 
     @Override
     public String getMessage() {

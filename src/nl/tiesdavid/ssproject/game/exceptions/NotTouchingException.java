@@ -4,10 +4,6 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NotTouchingException extends MoveException {
-    @Override
-    public int getCode() {
-        return 18;
-    }
 
     @Override
     public String getMessage() {

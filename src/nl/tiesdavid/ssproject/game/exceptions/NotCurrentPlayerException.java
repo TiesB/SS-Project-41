@@ -6,7 +6,7 @@ package nl.tiesdavid.ssproject.game.exceptions;
 import nl.tiesdavid.ssproject.game.Player;
 
 public class NotCurrentPlayerException extends MoveException {
-    private Player player;
+    private final Player player;
 
     public NotCurrentPlayerException(Player player) {
         this.player = player;
@@ -15,10 +15,5 @@ public class NotCurrentPlayerException extends MoveException {
     @Override
     public String getMessage() {
         return player.getName() + " is not the current player.";
-    }
-
-    @Override
-    public int getCode() {
-        return 2342;
     }
 }

@@ -180,18 +180,8 @@ public class Game extends Thread {
         tilesToBePlaced.addAll(tiles);
         for (int i = 0; i < tilesToBePlaced.size(); i++) {
             for (Tile tile : tilesToBePlaced) {
-                //TODO: Check whether this works when tiles get removed.
-                try {
-                    int possibleScore = board.placeTile(tile);
-                    score += possibleScore; //So that when an exception is thrown, it doesn't get added to the score.
-                    tilesToBePlaced.remove(tile);
-                } catch (InvalidTilePlacementException e) {
-                    //Nothing to be done here.
-                }
+                score += board.placeTile(tile);
             }
-        }
-        if (tilesToBePlaced.size() > 0) { //Failed: one or more tiles could not be placed.
-            throw new InvalidTilePlacementException();
         }
 
         ArrayList<Tile> tilesToBeDealed = new ArrayList<>();

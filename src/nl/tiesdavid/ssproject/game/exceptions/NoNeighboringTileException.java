@@ -5,10 +5,6 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NoNeighboringTileException extends InvalidTilePlacementException {
-    @Override
-    public int getCode() {
-        return 14;
-    }
 
     @Override
     public String getMessage() {

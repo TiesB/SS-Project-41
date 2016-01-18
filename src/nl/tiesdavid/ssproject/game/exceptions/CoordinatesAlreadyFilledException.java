@@ -5,10 +5,6 @@
 package nl.tiesdavid.ssproject.game.exceptions;
 
 public class CoordinatesAlreadyFilledException extends InvalidTilePlacementException {
-    @Override
-    public int getCode() {
-        return 17;
-    }
 
     @Override
     public String getMessage() {

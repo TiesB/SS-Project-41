@@ -5,7 +5,6 @@
 package test;
 
 import nl.tiesdavid.ssproject.game.Game;
-import nl.tiesdavid.ssproject.game.Move;
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 
@@ -25,10 +24,5 @@ public class TestPlayer extends Player {
 
     public void clearDeck() {
         this.deck.clear();
-    }
-
-    @Override
-    public Move determineMove() {
-        return null;
     }
 }

@@ -8,11 +8,6 @@ public class FirstMoveException extends MoveException{
     }
 
     @Override
-    public int getCode() {
-        return 88;
-    }
-
-    @Override
     public String getMessage() {
         return "It is not allowed to trade tiles in the first move.";
     }

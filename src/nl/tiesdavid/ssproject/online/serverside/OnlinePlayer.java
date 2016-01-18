@@ -3,7 +3,6 @@
  */
 package nl.tiesdavid.ssproject.online.serverside;
 
-import nl.tiesdavid.ssproject.game.Move;
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 
@@ -33,16 +32,19 @@ public class OnlinePlayer extends Player {
     }
 
     public void sendNewTiles(ArrayList<Tile> tiles) {
+        if (Lobby.DEBUG) {
+            String message = getPlayerName();
+            for (Tile tile : tiles) {
+                message += " " + tile.toLongString();
+            }
+            sendMessage(message);
+        }
+
         String message = NEW_STONES_COMMAND;
         for (Tile tile : tiles) {
             message += " " + tile.toProtocolForm();
         }
 
         sendMessage(message);
-    }
-
-    @Override
-    protected Move determineMove() {
-        return null;
     }
 }
