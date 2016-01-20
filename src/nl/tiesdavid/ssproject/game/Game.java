@@ -73,7 +73,7 @@ public class Game extends Thread {
             iterator = playersWithScores.keySet().iterator();
 
             while (iterator.hasNext() && !iterator.next().equals(highestScoringPlayer)) {
-                //Nothing to do here. Just let let the iterator start at the correct player.
+                //Nothing to do here. Just let let the iterator setUp at the correct player.
                 //noinspection UnnecessaryContinue
                 continue;
             }

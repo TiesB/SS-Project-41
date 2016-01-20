@@ -33,17 +33,17 @@ public class ClientHandler extends Thread {
 
         @Override
         public void run() {
-            while (running) {
-                try {
+            try {
+                while (running) {
                     String line = in.readLine();
                     if (!line.equals("")) {
                         System.out.println("Command received: " + line
                                 + "\n\tFrom: " + inetAddress);
                         clientHandler.handleMessage(line);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+            } catch (IOException e) {
+                e.printStackTrace(); //TODO: Disconnect client.
             }
         }
     }
@@ -62,7 +62,7 @@ public class ClientHandler extends Thread {
     public static final String PRIVATE_CHAT_COMMAND = "chatpm";
     public static final String CREATE_CHALLENGE_COMMAND = "challenge";
     public static final String ACCEPT_CHALLENGE_COMMAND = "accept";
-    public static final String START_CHALLENGE_COMMAND = "start";
+    public static final String START_CHALLENGE_COMMAND = "setUp";
     public static final String DECLINE_CHALLENGE_COMMAND = "decline";
     public static final String WAIT_FOR_GAME_COMMAND = "join";
     public static final String PLACE_COMMAND = "place";

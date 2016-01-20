@@ -6,57 +6,36 @@ package nl.tiesdavid.ssproject.online.clientside;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.Scanner;
+import java.net.UnknownHostException;
 
 //TODO: Remove.
-public class TestClient {
-    private static class Reader extends Thread {
-        private BufferedReader in;
+public class TestClient extends Thread {
+    private InetAddress inetAddress;
+    private int port;
 
-        public Reader(BufferedReader in) {
-            this.in = in;
-        }
+    public TestClient(InetAddress inetAddress, int port) {
+        this.inetAddress = inetAddress;
+        this.port = port;
+    }
 
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    String line = in.readLine();
-                    if (!line.equals("")) {
-                        System.out.println(line);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.exit(-1);
-                }
-            }
+    @Override
+    public void run() {
+        ClientController clientController = new ClientController();
+
+        try {
+            Socket socket = new Socket(inetAddress, port);
+            clientController.setSocket(socket);
+        } catch (IOException e) {
+            clientController.showError(e);
         }
     }
 
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket(InetAddress.getByName("127.0.0.1"), 3339);
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    socket.getInputStream()));
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                    socket.getOutputStream()));
-
-            new Reader(in).start();
-
-            Scanner scanner = new Scanner(System.in);
-
-            String line = scanner.nextLine();
-            while (true) {
-                if (!line.equals("") && !line.equals("exit")) {
-                    out.write(line);
-                    System.out.println("Just sent: " + line);
-                    out.newLine();
-                    out.flush();
-                }
-                line = scanner.nextLine();
-            }
-        } catch (IOException e) {
+            new TestClient(InetAddress.getByName("127.0.0.1"), 3339).start();
+        } catch (UnknownHostException e) {
             e.printStackTrace();
+            System.exit(-1);
         }
     }
 }
