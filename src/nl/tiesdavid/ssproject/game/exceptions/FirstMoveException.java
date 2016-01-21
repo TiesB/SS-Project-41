@@ -3,7 +3,7 @@
  */
 package nl.tiesdavid.ssproject.game.exceptions;
 
-public class FirstMoveException extends MoveException{
+public class FirstMoveException extends MoveException {
     public FirstMoveException() {
     }
 

@@ -24,9 +24,7 @@ public class Challenge {
     public OnlineGame startGame(Lobby lobby) {
         synchronized (this) {
             OnlineGame game = new OnlineGame(lobby);
-            for (ClientHandler player : playersWhoAccepted) {
-                game.addPlayer(player);
-            }
+            playersWhoAccepted.forEach(game::addPlayer);
             return game;
         }
     }

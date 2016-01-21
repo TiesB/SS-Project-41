@@ -9,13 +9,26 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 public class ClientController extends Observable implements Observer {
-    public static final int STARTUP = 0;
-    public static final int LOBBY = 1;
-    public static final int GAME = 2;
+    public static final String HELLO_COMMAND = "hello";
+    public static final String GENERAL_CHAT_COMMAND = "chat";
+    public static final String PRIVATE_CHAT_COMMAND = "chatpm";
+    public static final String CREATE_CHALLENGE_COMMAND = "challenge";
+    public static final String ACCEPT_CHALLENGE_COMMAND = "accept";
+    public static final String START_CHALLENGE_COMMAND = "setUp";
+    public static final String DECLINE_CHALLENGE_COMMAND = "decline";
+    public static final String WAIT_FOR_GAME_COMMAND = "join";
+    public static final String PLACE_COMMAND = "place";
+    public static final String TRADE_COMMAND = "trade";
+
+    public static final String CHAT_OPTION = "chat";
+    public static final String CHALLENGE_OPTION = "challenge";
+
+    private static final String[] OPTIONS = new String[] {CHAT_OPTION, CHALLENGE_OPTION};
 
     // Control
     private CommunicationController commOps;
@@ -30,9 +43,31 @@ public class ClientController extends Observable implements Observer {
         addObserver(uiController);
     }
 
-    public void connect(String username, String serverIP, int serverPort) {
-        InetAddress serverIPAddress = null;
-        Socket socket = null;
+    private void init() {
+        if (commOps != null) {
+            String message = HELLO_COMMAND + username;
+            for (String option : OPTIONS) {
+                message += " " + option;
+            }
+            commOps.sendMessage(message);
+        }
+    }
+
+    public void parseUIStartupResult(ArrayList<String> result) {
+        if (result.size() < 3) {
+            return;
+        }
+
+        int serverPort = Integer.parseInt(result.get(2));
+
+        connect(result.get(0), result.get(1), serverPort);
+
+        init();
+    }
+
+    public void connect(String newUsername, String serverIP, int serverPort) {
+        InetAddress serverIPAddress;
+        Socket socket;
 
         try {
             serverIPAddress = InetAddress.getByName(serverIP);
@@ -48,7 +83,7 @@ public class ClientController extends Observable implements Observer {
             return;
         }
 
-        this.username = username;
+        this.username = newUsername;
 
         try {
             setSocket(socket);

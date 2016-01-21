@@ -47,7 +47,8 @@ public class Game extends Thread {
 
     /**
      * Starts a game.
-     * @throws NotEnoughPlayersException when not enough playersWithScores (<2) have been added to the game.
+     * @throws NotEnoughPlayersException when not enough playersWithScores (<2)
+     * have been added to the game.
      */
     public void play() throws NotEnoughPlayersException {
         if (playersWithScores.size() >= MIN_AMOUNT_OF_PLAYERS) {
@@ -81,9 +82,7 @@ public class Game extends Thread {
             //Start of game.
             firstMoveDone = false;
 
-            for (Player player : playersWithScores.keySet()) {
-                player.prepareForGame();
-            }
+            playersWithScores.keySet().forEach(Player::prepareForGame);
 
             while (running) {
                 while (iterator.hasNext()) {
@@ -160,7 +159,8 @@ public class Game extends Thread {
         }
     }
 
-    public synchronized ArrayList<Tile> place(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public synchronized ArrayList<Tile> place(Player player, ArrayList<Tile> tiles)
+            throws MoveException {
         if (!currentPlayer.equals(player)) {
             throw new NotCurrentPlayerException(player);
         }
@@ -189,16 +189,15 @@ public class Game extends Thread {
             tilesToBeDealed.add(getTileFromBag());
         }
 
-        for (Tile tile : tiles) {
-            player.removeTile(tile);
-        }
+        tiles.forEach(player::removeTile);
 
         handlePlaced(player, score, tiles);
 
         return tilesToBeDealed;
     }
 
-    public synchronized ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public synchronized ArrayList<Tile> trade(Player player, ArrayList<Tile> tiles)
+            throws MoveException {
         if (!firstMoveDone) {
             throw new FirstMoveException();
         }
@@ -219,9 +218,7 @@ public class Game extends Thread {
             }
         }
 
-        for (Tile tile : tiles) {
-            player.removeTile(tile);
-        }
+        tiles.forEach(player::removeTile);
 
         ArrayList<Tile> tilesToBeDealed = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
@@ -273,9 +270,7 @@ public class Game extends Thread {
     }
 
     public void putBackInBag(ArrayList<Tile> tiles) {
-        for (Tile tile : tiles) {
-            addTileToBag(tile);
-        }
+        tiles.forEach(this::addTileToBag);
     }
 
     /**

@@ -9,15 +9,12 @@ import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
 import java.util.Comparator;
 
 public class Tile {
-    public static Comparator<Tile> tileComparator = new Comparator<Tile>() {
-        @Override
-        public int compare(Tile o1, Tile o2) {
-            int x = Integer.compare(o1.getX(), o2.getX());
-            if (x == 0) {
-                return Integer.compare(o1.getY(), o2.getY()) * -1;
-            } else {
-                return x * -1;
-            }
+    public static Comparator<Tile> tileComparator = (o1, o2) -> {
+        int x1 = Integer.compare(o1.getX(), o2.getX());
+        if (x1 == 0) {
+            return Integer.compare(o1.getY(), o2.getY()) * -1;
+        } else {
+            return x1 * -1;
         }
     };
 
@@ -125,7 +122,8 @@ public class Tile {
     }
 
     public String toProtocolForm() {
-        String string = Character.toString(this.getShape().user) + "," + Character.toString(this.getColor().user);
+        String string = Character.toString(this.getShape().user)
+                + "," + Character.toString(this.getColor().user);
         if (this.hasXY()) {
             string += " " + Integer.toString(getX()) + "," + Integer.toString(getY());
         }
@@ -160,7 +158,8 @@ public class Tile {
         return new Tile(color, shape);
     }
 
-    public static Tile fromProtocolString(String tileString, String locationString) throws UnparsableDataException {
+    public static Tile fromProtocolString(String tileString, String locationString)
+            throws UnparsableDataException {
         //TODO: The entire parsing is fucked at the moment.
         Tile tile = fromProtocolString(tileString);
         int x, y;

@@ -7,7 +7,6 @@ import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.MoveException;
-import nl.tiesdavid.ssproject.game.exceptions.NotCurrentPlayerException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,17 +52,18 @@ public class OnlineGame extends Game {
     @Override
     protected void handleTraded(Player player, ArrayList<Tile> tiles) {
         super.handleTraded(player, tiles);
-        String message = TRADED_COMMAND + " " + player.getName() + " " + Integer.toString(tiles.size());
+        String message = TRADED_COMMAND + " " + player.getName()
+                + " " + Integer.toString(tiles.size());
 
         distributeMessage(message);
     }
 
-    public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         return this.place(player, tiles);
     }
 
-    public ArrayList<Tile> trade(ClientHandler client, ArrayList<Tile> tiles) throws NotCurrentPlayerException, MoveException {
+    public ArrayList<Tile> trade(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         return this.trade(player, tiles);
     }

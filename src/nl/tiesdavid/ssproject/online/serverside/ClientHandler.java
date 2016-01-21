@@ -296,7 +296,7 @@ public class ClientHandler extends Thread {
         }
 
         try {
-            ArrayList<Tile> tilesToBeDealed = currentGame.place(this, tiles);
+            ArrayList<Tile> tilesToBeDealed = currentGame.place(this, tiles); //TODO
         } catch (MoveException e) {
             printDebugMessage(e.getMessage());
             sendWrongCommandMessage();
@@ -323,7 +323,7 @@ public class ClientHandler extends Thread {
         }
 
         try {
-            currentGame.trade(this, tiles);
+            ArrayList<Tile> tilesToBeDealed = currentGame.trade(this, tiles); //TODO
         } catch (MoveException e) {
             sendWrongCommandMessage();
         }

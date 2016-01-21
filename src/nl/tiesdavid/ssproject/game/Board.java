@@ -37,22 +37,8 @@ public class Board {
                 throw new OutOfBoundsException();
             }
 
-            int horizontalLine = 0;
-            int verticalLine = 0;
-            boolean neighboringTile = false;
-
             if (!checkNeighboringTiles(tile)) {
                 throw new NoNeighboringTileException();
-            }
-
-
-
-            if (!neighboringTile) {
-                throw new NoNeighboringTileException();
-            }
-
-            if (horizontalLine > 6 || verticalLine > 6) {
-                throw new TooLongLineException();
             }
         }
 
@@ -69,10 +55,15 @@ public class Board {
 
         int[][] values = {{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}};
 
-        for (int[] value : values) {
-            Tile testTile = getTile(value[0], value[1]);
-            if (testTile != null && !checkTile(testTile, color, shape)) {
+        for (int i = 0; i < 7; i++) {
+            if (i == 6) {
                 return false;
+            }
+            for (int[] value : values) {
+                Tile testTile = getTile(value[0], value[1]);
+                if (testTile != null && !checkTile(testTile, color, shape)) {
+                    return false;
+                }
             }
         }
 

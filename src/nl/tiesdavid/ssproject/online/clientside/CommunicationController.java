@@ -36,7 +36,8 @@ public class CommunicationController extends Observable {
 
     private BufferedWriter out;
 
-    public CommunicationController(ClientController clientController, Socket socket) throws IOException {
+    public CommunicationController(ClientController clientController, Socket socket)
+            throws IOException {
         addObserver(clientController);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

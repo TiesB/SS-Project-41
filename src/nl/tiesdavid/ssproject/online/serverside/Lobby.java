@@ -57,12 +57,11 @@ public class Lobby {
             receivers = clientsInLobby;
         }
 
-        for (ClientHandler client : receivers) {
-            if (client != sender) { //TODO: Decide whether sender should receive own message.
-                client.sendMessageToClient(GENERAL_CHAT_MESSAGE_COMMAND + " "
-                        + sender.getPlayerName() + " " + message);
-            }
-        }
+        //TODO: Decide whether sender should receive own message.
+        receivers.stream().filter(client -> client != sender).forEach(client -> { //TODO: Decide whether sender should receive own message.
+            client.sendMessageToClient(GENERAL_CHAT_MESSAGE_COMMAND + " "
+                    + sender.getPlayerName() + " " + message);
+        });
     }
 
     public void sendPrivateChatMessage(ClientHandler sender, String receiver, String message)
@@ -137,11 +136,7 @@ public class Lobby {
             client.sendWrongCommandMessage();
             return;
         }
-        for (ArrayList<ClientHandler> clientHandlers : waitingClientsByRequestedNo.values()) {
-            if (clientHandlers.contains(client)) {
-                clientHandlers.remove(client);
-            }
-        }
+        waitingClientsByRequestedNo.values().stream().filter(clientHandlers -> clientHandlers.contains(client)).forEach(clientHandlers -> clientHandlers.remove(client));
 
         challenge.playerAccepts(client);
         challenge.getCreator()
@@ -177,7 +172,7 @@ public class Lobby {
 
     public void waitForGame(ClientHandler client, int requestedNoOfPlayers) {
         if (!waitingClientsByRequestedNo.containsKey(requestedNoOfPlayers)) {
-            waitingClientsByRequestedNo.put(requestedNoOfPlayers, new ArrayList<ClientHandler>());
+            waitingClientsByRequestedNo.put(requestedNoOfPlayers, new ArrayList<>());
         }
 
         waitingClientsByRequestedNo.get(requestedNoOfPlayers).add(client);
@@ -186,11 +181,7 @@ public class Lobby {
     }
 
     private void checkWaitingPlayers() {
-        for (Integer requestedNo : waitingClientsByRequestedNo.keySet()) {
-            if (waitingClientsByRequestedNo.get(requestedNo).size() == requestedNo) {
-                startWaitingPlayersGame(requestedNo);
-            }
-        }
+        waitingClientsByRequestedNo.keySet().stream().filter(requestedNo -> waitingClientsByRequestedNo.get(requestedNo).size() == requestedNo).forEach(this::startWaitingPlayersGame);
     }
 
     private void startWaitingPlayersGame(int requestedNo) {

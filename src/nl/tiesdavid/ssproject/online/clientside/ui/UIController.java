@@ -4,7 +4,7 @@
 package nl.tiesdavid.ssproject.online.clientside.ui;
 
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
-import nl.tiesdavid.ssproject.online.clientside.ui.guiviews.StartupController;
+import nl.tiesdavid.ssproject.online.clientside.ui.guiviews.StartupDialog;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,9 +17,9 @@ public class UIController extends Thread implements Observer {
     }
 
     private void startStartup() {
-        StartupController startupController = new StartupController();
-        startupController.setClientController(clientController);
-        startupController.startUI();
+        StartupDialog startupDialog = new StartupDialog();
+        startupDialog.startUI(clientController);
+        System.out.println("Lola");
     }
 
     @Override
