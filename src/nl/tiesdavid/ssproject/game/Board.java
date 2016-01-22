@@ -53,17 +53,67 @@ public class Board {
         Tile.Color color = tile.getColor();
         Tile.Shape shape = tile.getShape();
 
-        int[][] values = {{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}};
+        int horizontalLine = 0;
+        int verticalLine = 0;
 
-        for (int i = 0; i < 7; i++) {
-            if (i == 6) {
+        //To the left
+        int tempX = x - 1;
+        Tile nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            if (!checkTile(nextTile, color, shape)) {
                 return false;
             }
-            for (int[] value : values) {
-                Tile testTile = getTile(value[0], value[1]);
-                if (testTile != null && !checkTile(testTile, color, shape)) {
-                    return false;
-                }
+
+            horizontalLine += 1;
+            nextTile = getTile(--tempX, y);
+        }
+
+        //To the right
+        tempX = x + 1;
+        nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            if (!checkTile(nextTile, color, shape)) {
+                return false;
+            }
+
+            horizontalLine += 1;
+            nextTile = getTile(++tempX, y);
+        }
+
+        //Upwards
+        int tempY = y - 1;
+        nextTile = getTile(x, tempY);
+        while (nextTile != null) {
+            if (!checkTile(nextTile, color, shape)) {
+                return false;
+            }
+
+            verticalLine += 1;
+            nextTile = getTile(x, --tempY);
+        }
+
+        //Downwards
+        tempY = y + 1;
+        nextTile = getTile(tempX, y);
+        while (nextTile != null) {
+            if (!checkTile(nextTile, color, shape)) {
+                return false;
+            }
+
+            verticalLine += 1;
+            nextTile = getTile(x, ++tempY);
+        }
+
+        if (horizontalLine > 6 || verticalLine > 6) {
+            return false;
+        }
+
+        int[][] values = {{x - 1, y}, {x + 1, y}, {x, y - 1}, {x, y + 1}};
+
+        for (int[] value : values) {
+            Tile testTile = getTile(value[0], value[1]);
+            if (testTile != null && !checkTile(testTile, color, shape)) {
+                return false;
             }
         }
 

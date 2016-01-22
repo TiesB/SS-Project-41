@@ -178,10 +178,22 @@ public class Game extends Thread {
         int amount = tiles.size();
         ArrayList<Tile> tilesToBePlaced = new ArrayList<>();
         tilesToBePlaced.addAll(tiles);
-        for (int i = 0; i < tilesToBePlaced.size(); i++) {
-            for (Tile tile : tilesToBePlaced) {
+
+        int tries = 0;
+        while (!tilesToBePlaced.isEmpty() && tries < 720) {
+            Tile tile = tilesToBePlaced.get(0);
+            try {
                 score += board.placeTile(tile);
+            } catch (InvalidTilePlacementException e) {
+                tilesToBePlaced.add(tilesToBePlaced.size(), tile);
+            } finally {
+                tilesToBePlaced.remove(0);
             }
+            tries++;
+        }
+
+        if (!tilesToBePlaced.isEmpty()) {
+            throw new InvalidTilePlacementException();
         }
 
         ArrayList<Tile> tilesToBeDealed = new ArrayList<>();
