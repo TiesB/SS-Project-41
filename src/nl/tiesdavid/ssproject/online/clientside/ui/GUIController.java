@@ -9,10 +9,10 @@ import nl.tiesdavid.ssproject.online.clientside.ui.guiviews.StartupDialog;
 import java.util.Observable;
 import java.util.Observer;
 
-public class UIController extends Thread implements Observer {
+public class GUIController extends Thread implements Observer {
     private ClientController clientController;
 
-    public UIController(ClientController clientController) {
+    public GUIController(ClientController clientController) {
         this.clientController = clientController;
     }
 

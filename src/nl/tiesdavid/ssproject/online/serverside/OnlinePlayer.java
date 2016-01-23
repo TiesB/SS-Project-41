@@ -5,11 +5,11 @@ package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesdavid.ssproject.online.Protocol;
 
 import java.util.ArrayList;
 
 public class OnlinePlayer extends Player {
-    public static final String NEW_STONES_COMMAND = "newstones";
     private ClientHandler clientHandler;
 
     public OnlinePlayer(ClientHandler clientHandler, OnlineGame game) {
@@ -32,7 +32,7 @@ public class OnlinePlayer extends Player {
     }
 
     public void sendNewTiles(ArrayList<Tile> tiles) {
-        if (Lobby.DEBUG) {
+        if (ClientHandler.DEBUG) {
             String message = getPlayerName();
             for (Tile tile : tiles) {
                 message += " " + tile.toLongString();
@@ -40,7 +40,7 @@ public class OnlinePlayer extends Player {
             sendMessage(message);
         }
 
-        String message = NEW_STONES_COMMAND;
+        String message = Protocol.SERVER_NEW_STONES_COMMAND;
         for (Tile tile : tiles) {
             message += " " + tile.toProtocolForm();
         }

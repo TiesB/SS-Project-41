@@ -7,15 +7,13 @@ import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.MoveException;
+import nl.tiesdavid.ssproject.online.Protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class OnlineGame extends Game {
-    public static final String TURN_COMMAND = "turn";
-    public static final String PLACED_COMMAND = "placed";
-    public static final String TRADED_COMMAND = "traded";
 
     private final Lobby lobby;
     private Map<ClientHandler, OnlinePlayer> clientHandlers;
@@ -29,7 +27,7 @@ public class OnlineGame extends Game {
     @Override
     protected void takeTurn(Player player) {
         super.takeTurn(player);
-        distributeMessage(TURN_COMMAND + " " + player.getPlayerName());
+        distributeMessage(Protocol.SERVER_TURN_COMMAND + " " + player.getPlayerName());
     }
 
     private void distributeMessage(String message) {
@@ -41,7 +39,7 @@ public class OnlineGame extends Game {
     @Override
     protected void handlePlaced(Player player, int score, ArrayList<Tile> tiles) {
         super.handlePlaced(player, score, tiles);
-        String message = PLACED_COMMAND + " " + player.getName() + " " + Integer.toString(score);
+        String message = Protocol.SERVER_PLACED_COMMAND + " " + player.getName() + " " + Integer.toString(score);
         for (Tile tile : tiles) {
             message += tile.toProtocolForm();
         }
@@ -52,7 +50,7 @@ public class OnlineGame extends Game {
     @Override
     protected void handleTraded(Player player, ArrayList<Tile> tiles) {
         super.handleTraded(player, tiles);
-        String message = TRADED_COMMAND + " " + player.getName()
+        String message = Protocol.SERVER_TRADED_COMMAND + " " + player.getName()
                 + " " + Integer.toString(tiles.size());
 
         distributeMessage(message);

@@ -5,6 +5,7 @@ package nl.tiesdavid.ssproject.online.serverside;
 
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.*;
+import nl.tiesdavid.ssproject.online.Protocol;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -48,28 +49,13 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private static final boolean DEBUG = true;
+    public static final boolean DEBUG = true;
+    public static final String[] OPTIONS = new String[]{"chat", "challenge"};
 
-    public static final int UNACCEPTABLE_NAME_ERROR = 2;
     public static final int NONEXISTING_PLAYER_ERROR = 0;
     public static final int SERVER_UNSUPPORTED_COMMAND_ERROR = -492;
     public static final int PLAYER_UNSUPPORTED_COMMAND_ERROR = -429;
-    public static final int WRONG_COMMAND_ERROR = 0;
     public static final String ERROR_COMMAND = "error";
-
-    public static final String HELLO_COMMAND = "hello";
-    public static final String GENERAL_CHAT_COMMAND = "chat";
-    public static final String PRIVATE_CHAT_COMMAND = "chatpm";
-    public static final String CREATE_CHALLENGE_COMMAND = "challenge";
-    public static final String ACCEPT_CHALLENGE_COMMAND = "accept";
-    public static final String START_CHALLENGE_COMMAND = "setUp";
-    public static final String DECLINE_CHALLENGE_COMMAND = "decline";
-    public static final String WAIT_FOR_GAME_COMMAND = "join";
-    public static final String PLACE_COMMAND = "place";
-    public static final String TRADE_COMMAND = "trade";
-
-    public static final String CHAT_OPTION = "chat";
-    public static final String CHALLENGE_OPTION = "challenge";
 
     private final Lobby lobby;
     private OnlineGame currentGame;
@@ -138,9 +124,9 @@ public class ClientHandler extends Thread {
 
             initialized = true;
         } catch (UnacceptableNameException e) {
-            sendErrorMessage(UNACCEPTABLE_NAME_ERROR);
+            sendErrorMessage(Protocol.UNACCEPTABLE_NAME_ERROR);
         } catch (ExistingNameException e) {
-            sendErrorMessage(Lobby.NAME_ALREADY_EXISTS_ERROR);
+            sendErrorMessage(Protocol.NAME_ALREADY_EXISTS_ERROR);
         }
     }
 
@@ -245,7 +231,7 @@ public class ClientHandler extends Thread {
             lobby.startChallenge(this, challengeId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            sendErrorMessage(WRONG_COMMAND_ERROR);
+            sendErrorMessage(Protocol.WRONG_COMMAND_ERROR);
         }
     }
 
@@ -333,40 +319,40 @@ public class ClientHandler extends Thread {
         String[] messageParts = message.split(" ");
         String command = messageParts[0].toLowerCase();
 
-        if (!initialized && !command.equals(HELLO_COMMAND)) {
+        if (!initialized && !command.equals(Protocol.CLIENT_HELLO_COMMAND)) {
             sendWrongCommandMessage();
             return;
         }
 
         switch (command) {
-            case HELLO_COMMAND:
+            case Protocol.CLIENT_HELLO_COMMAND:
                 initClient(messageParts);
                 break;
-            case GENERAL_CHAT_COMMAND:
+            case Protocol.CLIENT_GENERAL_CHAT_COMMAND:
                 distributeGeneralChatMessage(messageParts);
                 break;
-            case PRIVATE_CHAT_COMMAND:
+            case Protocol.CLIENT_PRIVATE_CHAT_COMMAND:
                 distributePrivateChatMessage(messageParts);
                 break;
-            case CREATE_CHALLENGE_COMMAND:
+            case Protocol.CLIENT_CREATE_CHALLENGE_COMMAND:
                 createChallenge(messageParts);
                 break;
-            case ACCEPT_CHALLENGE_COMMAND:
+            case Protocol.CLIENT_ACCEPT_CHALLENGE_COMMAND:
                 acceptChallenge(messageParts);
                 break;
-            case DECLINE_CHALLENGE_COMMAND:
+            case Protocol.CLIENT_DECLINE_CHALLENGE_COMMAND:
                 declineChallenge(messageParts);
                 break;
-            case START_CHALLENGE_COMMAND:
+            case Protocol.CLIENT_START_CHALLENGE_COMMAND:
                 startChallenge(messageParts);
                 break;
-            case WAIT_FOR_GAME_COMMAND:
+            case Protocol.CLIENT_WAIT_FOR_GAME_COMMAND:
                 waitForGame(messageParts);
                 break;
-            case PLACE_COMMAND:
+            case Protocol.CLIENT_PLACE_COMMAND:
                 placeTiles(messageParts);
                 break;
-            case TRADE_COMMAND:
+            case Protocol.CLIENT_TRADE_COMMAND:
                 tradeTiles(messageParts);
                 break;
         }
@@ -374,7 +360,7 @@ public class ClientHandler extends Thread {
     }
 
     public void sendWrongCommandMessage() {
-        sendErrorMessage(WRONG_COMMAND_ERROR);
+        sendErrorMessage(Protocol.WRONG_COMMAND_ERROR);
     }
 
     private void sendErrorMessage(int error) {

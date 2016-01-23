@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Board {
 
-    private ArrayList<Tile> tiles;
+    protected ArrayList<Tile> tiles;
     private int minX, maxX, minY, maxY;
 
     public Board() {
@@ -20,7 +20,7 @@ public class Board {
         minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
-    public int placeTile(Tile tile) throws InvalidTilePlacementException {
+    public synchronized int placeTile(Tile tile) throws InvalidTilePlacementException {
         int x = tile.getX();
         int y = tile.getY();
 
@@ -262,7 +262,7 @@ public class Board {
         return score;
     }
 
-    private void calculateMinMax(int x, int y) {
+    protected void calculateMinMax(int x, int y) {
         if (x < minX) {
             minX = x;
         } else if (x > maxX) {

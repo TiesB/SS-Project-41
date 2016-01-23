@@ -6,30 +6,13 @@ package nl.tiesdavid.ssproject.online.serverside;
 import nl.tiesdavid.ssproject.game.exceptions.ExistingNameException;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 import nl.tiesdavid.ssproject.game.exceptions.UnsupportedOptionException;
+import nl.tiesdavid.ssproject.online.Protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby {
-    public static final boolean DEBUG = true;
-
-    private static final String[] OPTIONS = new String[]{"chat", "challenge"};
-
-    public static final int NAME_ALREADY_EXISTS_ERROR = 2;
-
-    public static final String WELCOME_COMMAND = "hello_from_the_otherside";
-    public static final String PLAYERS_COMMAND = "players";
-    public static final String JOIN_COMMAND = "joinlobby";
-
-    public static final String GENERAL_CHAT_MESSAGE_COMMAND = "msg";
-    public static final String PRIVATE_CHAT_MESSAGE_COMMAND = "msgpm";
-
-    public static final String START_GAME_COMMAND = "start";
-
-    public static final String NEW_CHALLENGE_COMMAND = "newchallenge";
-    public static final String ACCEPT_CHALLENGE_SERVER_COMMAND = "accept";
-    public static final String DECLINE_CHALLENGE_SERVER_COMMAND = "decline";
 
     private Map<String, ClientHandler> namesWithClients;
     private Map<OnlineGame, ArrayList<ClientHandler>> gamesWithClients;
@@ -46,7 +29,7 @@ public class Lobby {
     }
 
     public void sendGeneralChatMessage(ClientHandler sender, String message) {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Sending message: " + sender.getPlayerName() + " " + message);
         }
         ArrayList<ClientHandler> receivers;
@@ -59,31 +42,31 @@ public class Lobby {
 
         //TODO: Decide whether sender should receive own message.
         receivers.stream().filter(client -> client != sender).forEach(client -> { //TODO: Decide whether sender should receive own message.
-            client.sendMessageToClient(GENERAL_CHAT_MESSAGE_COMMAND + " "
+            client.sendMessageToClient(Protocol.SERVER_GENERAL_CHAT_MESSAGE_COMMAND + " "
                     + sender.getPlayerName() + " " + message);
         });
     }
 
     public void sendPrivateChatMessage(ClientHandler sender, String receiver, String message)
             throws UnsupportedOptionException, NonexistingPlayerException {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Sending private message " + sender.getPlayerName()
                     + " " + receiver + " " + message);
         }
 
         ClientHandler receiverHandler = getClientHandlerByName(receiver);
-        if (!receiverHandler.hasOption(ClientHandler.CHAT_OPTION)) {
-            throw new UnsupportedOptionException(receiver, ClientHandler.CHAT_OPTION);
+        if (!receiverHandler.hasOption(Protocol.CHAT_FEATURE)) {
+            throw new UnsupportedOptionException(receiver, Protocol.CHAT_FEATURE);
         }
 
-        receiverHandler.sendMessageToClient(PRIVATE_CHAT_MESSAGE_COMMAND
+        receiverHandler.sendMessageToClient(Protocol.SERVER_PRIVATE_CHAT_MESSAGE_COMMAND
                 + " " + sender.getPlayerName()
                 + " " + message);
     }
 
     public void createChallenge(ClientHandler creator, String[] players)
             throws UnsupportedOptionException, NonexistingPlayerException {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Creating challenge: " + creator.getPlayerName());
         }
 
@@ -97,11 +80,11 @@ public class Lobby {
             playerHandlers.add(getClientHandlerByName(player));
         }
         for (ClientHandler playerHandler : playerHandlers) {
-            if (!playerHandler.hasOption(ClientHandler.CHALLENGE_OPTION)) {
+            if (!playerHandler.hasOption(Protocol.CHALLENGE_FEATURE)) {
                 String name = playerHandler.getPlayerName();
                 //Dit hoeft dus alleen maar omdat CheckStyle anders zeurt over 100+ karakters
                 // , wat achterlijk is.
-                throw new UnsupportedOptionException(name, ClientHandler.CHALLENGE_OPTION);
+                throw new UnsupportedOptionException(name, Protocol.CHALLENGE_FEATURE);
             }
 
             if (!clientsInLobby.contains(playerHandler)) {
@@ -121,7 +104,7 @@ public class Lobby {
         ArrayList<ClientHandler> players = challenge.getInvitedPlayers();
         String creatorName = challenge.getCreator().getPlayerName();
         for (ClientHandler player : players) {
-            player.sendMessageToClient(NEW_CHALLENGE_COMMAND
+            player.sendMessageToClient(Protocol.SERVER_NEW_CHALLENGE_COMMAND
                     + " " + Integer.toString(challenge.getId()) + " " + creatorName);
         }
     }
@@ -140,7 +123,7 @@ public class Lobby {
 
         challenge.playerAccepts(client);
         challenge.getCreator()
-                .sendMessageToClient(ACCEPT_CHALLENGE_SERVER_COMMAND
+                .sendMessageToClient(Protocol.SERVER_ACCEPT_CHALLENGE_SERVER_COMMAND
                         + " " + Integer.toString(challengeId)
                         + " " + client.getPlayerName());
     }
@@ -154,7 +137,7 @@ public class Lobby {
 
         challenge.playerDeclines(client);
         challenge.getCreator()
-                .sendMessageToClient(DECLINE_CHALLENGE_SERVER_COMMAND
+                .sendMessageToClient(Protocol.SERVER_DECLINE_CHALLENGE_SERVER_COMMAND
                         + " " + Integer.toString(challengeId)
                         + " " + client.getPlayerName());
     }
@@ -185,14 +168,14 @@ public class Lobby {
     }
 
     private void startWaitingPlayersGame(int requestedNo) {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Starting waiting players game...");
         }
 
         ArrayList<ClientHandler> clients = waitingClientsByRequestedNo.get(requestedNo);
         OnlineGame game = new OnlineGame(this);
         for (ClientHandler client : clients) {
-            if (DEBUG) {
+            if (ClientHandler.DEBUG) {
                 System.out.println(client.getPlayerName());
             }
 
@@ -203,7 +186,7 @@ public class Lobby {
     }
 
     private void sendMessageToAllClients(String message) {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Sending message to all clients: " + message);
         }
 
@@ -224,11 +207,11 @@ public class Lobby {
         clientsInLobby.add(client);
         sendWelcomeMessage(client);
         sendPlayersMessage(client);
-        sendMessageToAllClients(JOIN_COMMAND + " " + name + " " + options);
+        sendMessageToAllClients(Protocol.SERVER_JOIN_COMMAND + " " + name + " " + options);
     }
 
     private void startGame(OnlineGame game) {
-        if (DEBUG) {
+        if (ClientHandler.DEBUG) {
             System.out.println("Starting game...");
         }
 
@@ -245,7 +228,7 @@ public class Lobby {
 
         gamesWithClients.put(game, clientsInGame);
 
-        String startMessage = START_GAME_COMMAND;
+        String startMessage = Protocol.SERVER_START_GAME_COMMAND;
         for (String clientName : clientNames) {
             startMessage += " " + clientName;
         }
@@ -267,8 +250,8 @@ public class Lobby {
     }
 
     private void sendWelcomeMessage(ClientHandler client) {
-        String message = WELCOME_COMMAND;
-        for (String option : OPTIONS) {
+        String message = Protocol.SERVER_WELCOME_COMMAND;
+        for (String option : ClientHandler.OPTIONS) {
             message += " " + option;
         }
 
@@ -276,7 +259,7 @@ public class Lobby {
     }
 
     private void sendPlayersMessage(ClientHandler client) {
-        String message = PLAYERS_COMMAND;
+        String message = Protocol.SERVER_PLAYERS_COMMAND;
         for (String s : namesWithClients.keySet()) {
             message += " " + s;
         }

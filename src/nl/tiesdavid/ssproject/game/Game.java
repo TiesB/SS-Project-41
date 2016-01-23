@@ -9,9 +9,9 @@ import nl.tiesdavid.ssproject.game.exceptions.*;
 import java.util.*;
 
 public class Game extends Thread {
-    private static final int MIN_AMOUNT_OF_PLAYERS = 2;
-    private static final int MAX_AMOUNT_OF_PLAYERS = 4;
-    private static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
+    public static final int MIN_AMOUNT_OF_PLAYERS = 2;
+    public static final int MAX_AMOUNT_OF_PLAYERS = 4;
+    public static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
 
     private Board board;
     private final ArrayList<Tile> bag;

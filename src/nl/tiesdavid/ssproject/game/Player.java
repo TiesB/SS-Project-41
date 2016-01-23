@@ -7,7 +7,7 @@ import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
  * @author Ties
  */
 public abstract class Player implements Comparable<Player> {
-    protected static final int DECK_SIZE = 6;
+    public static final int DECK_SIZE = 6;
 
     private final String name;
     protected Deck deck;

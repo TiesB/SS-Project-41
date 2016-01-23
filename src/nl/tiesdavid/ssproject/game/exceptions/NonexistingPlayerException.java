@@ -5,6 +5,6 @@ package nl.tiesdavid.ssproject.game.exceptions;
 
 public class NonexistingPlayerException extends Exception {
     public NonexistingPlayerException(String player) {
-        super("Player " + player + " is not on this server.");
+        super("Player " + player + " is not on this server or in this game.");
     }
 }
