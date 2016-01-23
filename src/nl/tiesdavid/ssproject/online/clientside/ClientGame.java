@@ -28,6 +28,10 @@ public class ClientGame {
         this.tilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
     }
 
+    public void addTileToDeck(Tile tile) {
+        deck.add(tile);
+    }
+
     public void placeTile(Tile tile) {
         board.forcePlace(tile);
         tilesInBag--;

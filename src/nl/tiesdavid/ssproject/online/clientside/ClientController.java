@@ -101,8 +101,16 @@ public class ClientController extends Observable implements Observer {
         this.commOps = new CommunicationController(this, socket);
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public ClientGame getCurrentGame() {
         return currentGame;
+    }
+
+    public TreeSet<Pair<String, Integer>> getPreviousScore() {
+        return previousScore;
     }
 
     public CommunicationController getCommOps() {
@@ -122,7 +130,7 @@ public class ClientController extends Observable implements Observer {
         notifyObservers(e);
     }
 
-    //Sending commands
+    // Sending commands
     private void sendHelloCommand() {
         String message = Protocol.CLIENT_HELLO_COMMAND + username;
         for (String option : FEATURES) {
@@ -169,7 +177,7 @@ public class ClientController extends Observable implements Observer {
         commOps.sendMessage(message);
     }
 
-    //Receiving commands
+    // Receiving commands
     private void receiveWelcomeCommand(String[] messageParts) {
         serverFeatures = Arrays.copyOfRange(messageParts, 1, messageParts.length);
     }
@@ -202,8 +210,21 @@ public class ClientController extends Observable implements Observer {
         }
     }
 
+    private void receiveNewStonesCommand(String[] messageParts) {
+        if (currentGame != null) {
+            for (int i = 1; i < messageParts.length; i++) {
+                try {
+                    Tile tile = Tile.fromProtocolString(messageParts[i]);
+                    currentGame.addTileToDeck(tile);
+                } catch (UnparsableDataException e) {
+                    return;
+                }
+            }
+        }
+    }
+
     private void receivePlacedCommand(String[] messageParts) {
-        if (messageParts.length < 5) {
+        if (messageParts.length < 5 || currentGame == null) {
             return;
         }
         String player = messageParts[1];
@@ -237,8 +258,10 @@ public class ClientController extends Observable implements Observer {
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
-        previousScore = currentGame.getPlayersWithScores();
-        currentGame = null;
+        if (currentGame != null) {
+            previousScore = currentGame.getPlayersWithScores();
+            currentGame = null;
+        }
     }
 
     @Override
@@ -262,14 +285,22 @@ public class ClientController extends Observable implements Observer {
                 case Protocol.SERVER_START_GAME_COMMAND:
                     receiveStartGameCommand(parts);
                     break;
+                case Protocol.SERVER_NEW_STONES_COMMAND:
+                    receiveNewStonesCommand(parts);
+                    break;
                 case Protocol.SERVER_PLACED_COMMAND:
                     receivePlacedCommand(parts);
                     break;
                 case Protocol.SERVER_END_GAME_COMMAND:
                     receiveEndGameCommand(parts);
+                    break;
                 /**
                  * When it's any other than one of these commands,
                  * it is only useful for the UI.
+                 *
+                 * The UI gets the messages after the ClientController on purpose.
+                 * This way the ClientController can organize the data, before
+                 * the UI reads it.
                  */
             }
         }

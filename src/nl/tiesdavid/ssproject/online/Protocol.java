@@ -8,6 +8,7 @@ public class Protocol {
     public static final String CHAT_FEATURE = "chat";
     public static final String CHALLENGE_FEATURE = "challenge";
 
+
     // Server -> Client control commands
     public static final String SERVER_WELCOME_COMMAND = "hello_from_the_otherside";
     public static final String SERVER_PLAYERS_COMMAND = "players";
@@ -49,6 +50,7 @@ public class Protocol {
     // Client -> Server game commands
     public static final String CLIENT_PLACE_COMMAND = "place";
     public static final String CLIENT_TRADE_COMMAND = "trade";
+
 
     // Error codes
     public static final int NAME_ALREADY_EXISTS_ERROR = 2;
