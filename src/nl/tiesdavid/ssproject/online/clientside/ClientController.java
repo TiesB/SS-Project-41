@@ -9,12 +9,13 @@ import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ai.AIPlayer;
+import nl.tiesdavid.ssproject.online.clientside.ui.ChatController;
 import nl.tiesdavid.ssproject.online.clientside.ui.GUIController;
+import nl.tiesdavid.ssproject.online.clientside.ui.TUIController;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.*;
 
 public class ClientController extends Observable implements Observer {
@@ -25,8 +26,6 @@ public class ClientController extends Observable implements Observer {
 
     // Control
     private CommunicationController commOps;
-    private AIPlayer aiPlayer;
-    private GUIController guiController;
     private String[] serverFeatures;
     private Map<String, ArrayList<String>> playersInServer;
 
@@ -37,18 +36,46 @@ public class ClientController extends Observable implements Observer {
 
     public ClientController() {
         this.playersInServer = new HashMap<>();
+        this.currentGame = new ClientGame();
         this.previousScore = new TreeSet<>();
+        startUI();
+    }
+
+    public static void main(String[] args) {
+        new ClientController().startChat();
+    }
+
+    public void startChat() {
+        ChatController chatController = new ChatController(this);
+        chatController.start();
+        addObserver(chatController.getChatConsole());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+
+        }
+
+        setChanged();
+        notifyObservers("Lolaaa");
+    }
+
+    private void startUI() {
         if (USE_AI) {
-            aiPlayer = new AIPlayer(this);
+            AIPlayer aiPlayer = new AIPlayer(this);
             //TODO
             addObserver(aiPlayer);
         } else if (USE_GUI) {
-            guiController = new GUIController(this);
+            GUIController guiController = new GUIController(this);
             guiController.start();
             addObserver(guiController);
         } else {
-
+            TUIController tuiController = new TUIController(this);
+            tuiController.start();
+            addObserver(tuiController);
         }
+
+        // TODO: 24-1-2016 Implement ChatController
     }
 
     private void init() {
@@ -57,44 +84,48 @@ public class ClientController extends Observable implements Observer {
         }
     }
 
-    public void parseUIStartupResult(ArrayList<String> result) {
+    public void parseGUIStartupResult(GUIController guiController, ArrayList<String> result) {
         if (result.size() < 3) {
             return;
         }
 
         int serverPort = Integer.parseInt(result.get(2));
 
-        connect(result.get(0), result.get(1), serverPort);
-
-        init();
+        try {
+            connect(result.get(0), result.get(1), serverPort);
+            init();
+        } catch (IOException e) {
+            deleteObserver(guiController);
+            startUI();
+        }
     }
 
-    public void connect(String newUsername, String serverIP, int serverPort) {
+    public void parseTUIStartupResult(TUIController tuiController, String newUsername,
+                                      String serverIP, int serverPort) {
+        try {
+            connect(newUsername, serverIP, serverPort);
+            init();
+        } catch (IOException e) {
+            deleteObserver(tuiController);
+            startUI();
+        }
+    }
+
+    public void waitForGame(int no) {
+        commOps.sendMessage(Protocol.CLIENT_WAIT_FOR_GAME_COMMAND + " " + Integer.toString(no));
+    }
+
+    public void connect(String newUsername, String serverIP, int serverPort) throws IOException {
         InetAddress serverIPAddress;
         Socket socket;
 
-        try {
-            serverIPAddress = InetAddress.getByName(serverIP);
-        } catch (UnknownHostException e) {
-            //TODO
-            return;
-        }
+        serverIPAddress = InetAddress.getByName(serverIP);
 
-        try {
-            socket = new Socket(serverIPAddress, serverPort);
-        } catch (IOException e) {
-            //TODO
-            return;
-        }
+        socket = new Socket(serverIPAddress, serverPort);
 
         this.username = newUsername;
 
-        try {
-            setSocket(socket);
-        } catch (IOException e) {
-            //TODO
-            return;
-        }
+        setSocket(socket);
     }
 
     public void setSocket(Socket socket) throws IOException {
@@ -115,14 +146,6 @@ public class ClientController extends Observable implements Observer {
 
     public CommunicationController getCommOps() {
         return commOps;
-    }
-
-    public AIPlayer getAiPlayer() {
-        return aiPlayer;
-    }
-
-    public GUIController getGuiController() {
-        return guiController;
     }
 
     public void showError(Exception e) {
@@ -260,7 +283,7 @@ public class ClientController extends Observable implements Observer {
     private void receiveEndGameCommand(String[] messageParts) {
         if (currentGame != null) {
             previousScore = currentGame.getPlayersWithScores();
-            currentGame = null;
+            currentGame = new ClientGame();
         }
     }
 

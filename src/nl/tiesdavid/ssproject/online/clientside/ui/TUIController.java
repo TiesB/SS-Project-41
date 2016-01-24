@@ -4,22 +4,88 @@
 package nl.tiesdavid.ssproject.online.clientside.ui;
 
 import javafx.util.Pair;
+import nl.tiesdavid.ssproject.game.Deck;
+import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
 
 import java.util.*;
 
-public class TUIController implements Observer {
-    private ClientController clientController;
-    private Map<String, ArrayList<String>> playersWithFeatures;
+public class TUIController extends Thread implements Observer {
+    private Scanner scanner;
+
+    private final ClientController clientController;
+    private final Map<String, ArrayList<String>> playersWithFeatures;
 
     public TUIController(ClientController clientController) {
         this.clientController = clientController;
         this.playersWithFeatures = new HashMap<>();
     }
 
+    @Override
+    public void run() {
+        scanner = new Scanner(System.in);
+        init();
+    }
+
+    private void init() {
+        String username = readUsername();
+        printMessage(false, "Enter the server IP address:");
+        String serverIP = readString();
+        printMessage(false, "Enter the server port:");
+        int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
+        clientController.parseTUIStartupResult(this, username, serverIP, serverPort);
+    }
+
     private void takeTurn() {
-        //TODO
+        printDeck();
+        printMessage(false, "Do you want to:");
+        printMessage(false, " (1) Place (a) tile(s).");
+        printMessage(false, " (2) Trade (a) tile(s).");
+        int response = readInt("That's not a valid choice. Choose 1 or 2.", 0, 3);
+        switch (response) {
+            case 1:
+                placeTiles();
+                break;
+            case 2:
+                tradeTiles();
+                break;
+        }
+    }
+
+    private void placeTiles() {
+        ArrayList<Tile> tiles = readTilesForMove();
+        if (tiles != null) {
+            clientController.sendPlaceCommand(tiles);
+        }
+    }
+
+    private void tradeTiles() {
+        ArrayList<Tile> tiles = readTilesForMove();
+        if (tiles != null) {
+            clientController.sendTradeCommand(tiles);
+        }
+    }
+
+    /**
+     * Offers the player a choice to change the type of move.
+     * @param reason The reason why the player is offered this choice.
+     * @return true when the player wants to make a different move.
+     */
+    private boolean offerCancelMoveChoice(String reason) {
+        printMessage(false, reason);
+        printMessage(false, "Do you want to make a different move?");
+        printMessage(false, "Enter 1 for no, 2 for yes.");
+        int response = readInt("That's not a valid choice. Choose 1 or 2.", 0, 3);
+        switch (response) {
+            case 1:
+                return false;
+            case 2:
+                return true;
+            default:
+                return true;
+        }
     }
 
     private void printMessage(boolean notification, String message) {
@@ -42,8 +108,94 @@ public class TUIController implements Observer {
         //TODO
     }
 
+    private void printDeck() {
+        String message = "Your current deck is:";
+        Deck deck = clientController.getCurrentGame().getDeck();
+        for (int i = 0; i < deck.size(); i++) {
+            message += " (" + Integer.toString(i) + ") " + deck.get(i).toString();
+        }
+        printMessage(false, message);
+    }
+
+    private int readInt(String errorMessage, int lowerBound, int upperBound) {
+        boolean read = false;
+        int response = 0;
+        while (!read) {
+            String input = scanner.next();
+            try {
+                response = Integer.parseInt(input);
+                if (response > lowerBound && response < upperBound) {
+                    read = true;
+                } else {
+                    printMessage(true, errorMessage);
+                }
+            } catch (NumberFormatException e) {
+                printMessage(true, errorMessage);
+            }
+        }
+        return response;
+    }
+
+    private String readString() {
+        return scanner.nextLine();
+    }
+
+    private ArrayList<Tile> readTilesForMove() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        boolean read = false;
+        while (!read) {
+            tiles = readTiles();
+            if (tiles.size() > 0) {
+                read = true;
+            } else {
+                boolean wantsToMakeDifferentMove =
+                        offerCancelMoveChoice("You have entered 0 tiles.");
+                if (wantsToMakeDifferentMove) {
+                    takeTurn();
+                    return null;
+                }
+            }
+        }
+        return tiles;
+    }
+
+    private ArrayList<Tile> readTiles() {
+        ArrayList<Tile> tiles = new ArrayList<>();
+        Deck tempDeck = clientController.getCurrentGame().getDeck().getCopy();
+        while (tiles.size() < 6
+                && tiles.size() < clientController.getCurrentGame().getAmountOfTilesInBag()) {
+            printMessage(false, "Which tile do you want to place?");
+            printMessage(true, "Choose one per time, by entering the corresponding number.");
+            int response = readInt("That's not a valid choice. Choose 0 to 5.", -1, 6);
+            Tile tile = clientController.getCurrentGame().getTileFromDeck(response);
+            if (tile != null && tempDeck.contains(tile)) {
+                tiles.add(tile);
+                tempDeck.remove(tile);
+            } else if (!tempDeck.contains(tile)) {
+                printMessage(false, "You have already chosen this tile.");
+            }
+        }
+        return tiles;
+    }
+
+    private String readUsername() {
+        printMessage(false, "Enter your username:");
+        String username = readString();
+        if (!username.contains("\\") && !username.contains(" ")) {
+            return username;
+        } else {
+            printMessage(false, "Invalid username. Please enter again.");
+            return readUsername();
+        }
+    }
+
     private void showError(Exception e) {
         System.out.println(e.getMessage());
+    }
+
+
+    private void receiveWelcomeCommand(String[] messageParts) {
+        printMessage(true, "You have succesfully joined the server.");
     }
 
     private void receiveJoinCommand(String[] messageParts) {
@@ -103,6 +255,7 @@ public class TUIController implements Observer {
 
         String player = messageParts[1];
         if (player.equals(clientController.getUsername())) {
+            printMessage(false, "It's your turn!");
             takeTurn();
         } else {
             printMessage(false, "It's " + player + "'"
@@ -111,7 +264,17 @@ public class TUIController implements Observer {
     }
 
     private void receiveNewStonesCommand(String[] messageParts) {
-        //TODO
+        String message = "You have received:";
+        for (int i = 1; i < messageParts.length; i++) {
+            try {
+                message += (i == 1 ? " " : ", ")
+                        + Tile.fromProtocolString(messageParts[i]).toString();
+            } catch (UnparsableDataException e) {
+                message += "";
+            }
+        }
+        printMessage(false, message);
+        printDeck();
     }
 
     private void receivePlacedCommand(String[] messageParts) {
@@ -137,7 +300,8 @@ public class TUIController implements Observer {
     private void receiveEndGameCommand(String[] messageParts) {
         Pair<String, Integer> winner = clientController.getPreviousScore()
                 .descendingIterator().next();
-        printMessage(false, winner.getKey() + " has won with " + Integer.toString(winner.getValue()) + " points!");
+        printMessage(false, winner.getKey() + " has won with "
+                + Integer.toString(winner.getValue()) + " points!");
     }
 
     @Override
@@ -149,6 +313,9 @@ public class TUIController implements Observer {
                 String[] parts = ((String) arg).split(" ");
                 String command = parts[0];
                 switch (command) {
+                    case Protocol.SERVER_WELCOME_COMMAND:
+                        receiveWelcomeCommand(parts);
+                        break;
                     case Protocol.SERVER_JOIN_COMMAND:
                         receiveJoinCommand(parts);
                         break;

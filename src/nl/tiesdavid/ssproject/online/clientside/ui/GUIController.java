@@ -18,7 +18,7 @@ public class GUIController extends Thread implements Observer {
 
     private void startStartup() {
         StartupDialog startupDialog = new StartupDialog();
-        startupDialog.startUI(clientController);
+        startupDialog.startUI(clientController, this);
         System.out.println("Lola");
     }
 

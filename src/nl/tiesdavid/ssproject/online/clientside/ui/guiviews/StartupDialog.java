@@ -9,12 +9,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
+import nl.tiesdavid.ssproject.online.clientside.ui.GUIController;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class StartupDialog extends Application {
     private ClientController clientController;
+    private GUIController guiController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -78,11 +80,12 @@ public class StartupDialog extends Application {
 
         Optional<ArrayList<String>> result = dialog.showAndWait();
 
-        result.ifPresent(results -> clientController.parseUIStartupResult(results));
+        result.ifPresent(results -> clientController.parseGUIStartupResult(guiController, results));
     }
 
-    public void startUI(ClientController newClientController) {
+    public void startUI(ClientController newClientController, GUIController newGUIController) {
         this.clientController = newClientController;
+        this.guiController = newGUIController;
         launch();
     }
 }

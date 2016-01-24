@@ -14,7 +14,7 @@ import java.util.TreeSet;
 
 public class ClientGame {
     private TreeSet<Pair<String, Integer>> playersWithScores;
-    private int tilesInBag;
+    private int amountOfTilesInBag;
     private Deck deck;
     private ClientBoard board;
 
@@ -25,16 +25,21 @@ public class ClientGame {
                 return Integer.compare(o1.getValue(), o2.getValue());
             }
         });
-        this.tilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
+        this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
     }
 
     public void addTileToDeck(Tile tile) {
         deck.add(tile);
     }
 
+    public Tile getTileFromDeck(int no) {
+        return deck.get(no);
+    }
+
     public void placeTile(Tile tile) {
         board.forcePlace(tile);
-        tilesInBag--;
+        deck.remove(tile);
+        amountOfTilesInBag--;
     }
 
     public void addPlayer(String name) {
@@ -60,6 +65,10 @@ public class ClientGame {
         playersWithScores.add(new Pair<>(name, oldScore + score));
     }
 
+    public int getAmountOfTilesInBag() {
+        return amountOfTilesInBag;
+    }
+
     public synchronized int getScore(String name) throws NonexistingPlayerException {
         Pair<String, Integer> player = getPlayerFromSet(name);
         return player.getValue();
@@ -72,5 +81,13 @@ public class ClientGame {
             }
         }
         throw new NonexistingPlayerException(name);
+    }
+
+    public ClientBoard getBoard() {
+        return board;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 }
