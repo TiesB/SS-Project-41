@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby {
+    public static final String[] SERVER_FEATURES = {Protocol.CHALLENGE_FEATURE, Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
 
     private Map<String, ClientHandler> namesWithClients;
     private Map<OnlineGame, ArrayList<ClientHandler>> gamesWithClients;
@@ -251,7 +252,7 @@ public class Lobby {
 
     private void sendWelcomeMessage(ClientHandler client) {
         String message = Protocol.SERVER_WELCOME_COMMAND;
-        for (String option : ClientHandler.OPTIONS) {
+        for (String option : SERVER_FEATURES) {
             message += " " + option;
         }
 

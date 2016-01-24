@@ -35,7 +35,7 @@ public class ClientHandler extends Thread {
                 while (!line.equals(Protocol.CLIENT_DISCONNECT_COMMAND)) {
                     if (!line.equals("")) {
                         System.out.println("Command received: " + line
-                                + "From: " + inetAddress);
+                                + " from: " + inetAddress);
                         clientHandler.handleMessage(line);
                     }
                     line = in.readLine();
@@ -50,10 +50,8 @@ public class ClientHandler extends Thread {
     }
 
     public static final boolean DEBUG = true;
-    public static final String[] OPTIONS = new String[]{"chat", "challenge"};
 
     public static final int NONEXISTING_PLAYER_ERROR = 0;
-    public static final int SERVER_UNSUPPORTED_COMMAND_ERROR = -492;
     public static final int PLAYER_UNSUPPORTED_COMMAND_ERROR = -429;
     public static final String ERROR_COMMAND = "error";
 
@@ -62,7 +60,7 @@ public class ClientHandler extends Thread {
 
     private final InetAddress inetAddress;
 
-    private ArrayList<String> options;
+    private ArrayList<String> playerFeatures;
 
     private String name;
     private boolean initialized;
@@ -75,7 +73,7 @@ public class ClientHandler extends Thread {
 
         this.inetAddress = socket.getInetAddress();
 
-        this.options = new ArrayList<>();
+        this.playerFeatures = new ArrayList<>();
 
         this.initialized = false;
 
@@ -179,12 +177,9 @@ public class ClientHandler extends Thread {
         String[] invitedPlayers = Arrays.copyOfRange(messageParts, 1, messageParts.length);
         try {
             lobby.createChallenge(this, invitedPlayers);
-        } catch (UnsupportedOptionException e) {
+        } catch (UnsupportedOptionException | NonexistingPlayerException e) {
             e.printStackTrace();
-            sendErrorMessage(PLAYER_UNSUPPORTED_COMMAND_ERROR);
-        } catch (NonexistingPlayerException e) {
-            e.printStackTrace();
-            sendErrorMessage(NONEXISTING_PLAYER_ERROR);
+            sendWrongCommandMessage();
         }
     }
 
@@ -380,22 +375,22 @@ public class ClientHandler extends Thread {
     public String getOptionsString() {
         String string = "";
 
-        if (this.options.size() > 0) {
-            for (int i = 0; i < this.options.size() - 1; i++) {
-                string += this.options.get(i) + " ";
+        if (this.playerFeatures.size() > 0) {
+            for (int i = 0; i < this.playerFeatures.size() - 1; i++) {
+                string += this.playerFeatures.get(i) + " ";
             }
-            string += this.options.get(options.size() - 1);
+            string += this.playerFeatures.get(playerFeatures.size() - 1);
         }
 
         return string;
     }
 
     private void parseOptions(String[] newOptions) {
-        this.options.addAll(Arrays.asList(newOptions));
+        this.playerFeatures.addAll(Arrays.asList(newOptions));
     }
 
     public boolean hasOption(String option) {
-        return this.options.contains(option);
+        return this.playerFeatures.contains(option);
     }
 
     public boolean isInGame() {

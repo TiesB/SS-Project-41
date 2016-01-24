@@ -24,11 +24,11 @@ public class ClientController extends Observable implements Observer {
     private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
 
-    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
+    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
 
     // Control
     private CommunicationController commOps;
-    private String[] serverFeatures;
+    private ArrayList<String> serverFeatures;
     private Map<String, ArrayList<String>> playersInServer;
 
     // Game
@@ -37,6 +37,7 @@ public class ClientController extends Observable implements Observer {
     private TreeSet<Pair<String, Integer>> previousScore;
 
     public ClientController() {
+        this.serverFeatures = new ArrayList<>();
         this.playersInServer = new HashMap<>();
         this.currentGame = new ClientGame();
         this.previousScore = new TreeSet<>();
@@ -45,9 +46,11 @@ public class ClientController extends Observable implements Observer {
     }
 
     public void startChat() {
-        ChatController chatController = new ChatController(this);
-        chatController.start();
-        addObserver(chatController);
+        if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
+            ChatController chatController = new ChatController(this);
+            chatController.start();
+            addObserver(chatController);
+        }
     }
 
     private void startUI() {
@@ -72,6 +75,13 @@ public class ClientController extends Observable implements Observer {
         if (commOps != null) {
             sendHelloCommand();
         }
+    }
+
+    public void disconnect() {
+        if (commOps != null) {
+            commOps.sendMessage(Protocol.CLIENT_DISCONNECT_COMMAND);
+        }
+        System.exit(0);
     }
 
     public void parseGUIStartupResult(GUIController guiController, ArrayList<String> result) {
@@ -159,12 +169,20 @@ public class ClientController extends Observable implements Observer {
     }
 
     public void sendGeneralChatCommand(String message) {
+        if (DEBUG) {
+            System.out.println("[DEBUG] Sending general chat message...");
+        }
+
         String messageToServer = Protocol.CLIENT_GENERAL_CHAT_COMMAND
                 + " " + message;
         commOps.sendMessage(messageToServer);
     }
 
     public void sendPrivateChatCommand(String recipient, String message) {
+        if (DEBUG) {
+            System.out.println("[DEBUG] Sending private chat message...");
+        }
+
         String messageToServer = Protocol.CLIENT_PRIVATE_CHAT_COMMAND
                 + " " + recipient + " " + message;
         commOps.sendMessage(messageToServer);
@@ -192,7 +210,9 @@ public class ClientController extends Observable implements Observer {
 
     // Receiving commands
     private void receiveWelcomeCommand(String[] messageParts) {
-        serverFeatures = Arrays.copyOfRange(messageParts, 1, messageParts.length);
+        for (int i = 1; i < messageParts.length; i++) {
+            serverFeatures.add(messageParts[i]);
+        }
     }
 
     private void receivePlayersCommand(String[] messageParts) {

@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import nl.tiesdavid.ssproject.online.clientside.ui.ChatController;
 
 public class ChatConsole extends Application {
@@ -29,14 +30,13 @@ public class ChatConsole extends Application {
     private static ObservableList<String> messagesList;
     private static ObservableList<String> playersList;
 
+    private static ListView<String> chatOutputView;
     private static ListView<String> playersView;
     private static TextField input;
     private static Button button;
 
-    public void startUI(ChatController newChatController) {
-        this.chatController = newChatController;
-        playersList.add("Lola");
-        playersList.add("Freek");
+    public static void setChatController(ChatController newChatController) {
+        chatController = newChatController;
     }
 
     public void sendMessage() {
@@ -54,11 +54,25 @@ public class ChatConsole extends Application {
         });
     }
 
+    private void handleAddMessage() {
+        Platform.runLater(() -> {
+            if (messagesList.size() == 1) {
+                if (messagesList.get(0).equals("Connected!")) {
+                    messagesList.remove(0);
+                }
+            }
+
+            chatOutputView.scrollTo(Integer.MAX_VALUE);
+        });
+    }
+
     public void addGeneralMessage(String timeStamp, String sender, String message) {
         Platform.runLater(() -> {
             String line = timeStamp + " - " + sender + ": " + message;
             messagesList.add(line);
         });
+
+        handleAddMessage();
     }
 
     public void addPrivateMessage(String timeStamp, String sender, String message) {
@@ -66,6 +80,8 @@ public class ChatConsole extends Application {
             String line = "[PRIVATE] " + timeStamp + " - " + sender + ": " + message;
             messagesList.add(line);
         });
+
+        handleAddMessage();
     }
 
     public void addPlayer(String playerName) {
@@ -91,6 +107,14 @@ public class ChatConsole extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Chat console");
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.runLater(() -> {
+                    chatController.close();
+                });
+            }
+        });
         primaryStage.getIcons().add(new Image(getClass().getResource("/icon.png").toString()));
         Group root = new Group();
         Scene scene = new Scene(root, 640, 480, Color.WHITESMOKE);
@@ -103,7 +127,7 @@ public class ChatConsole extends Application {
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
-        ListView<String> chatOutputView = new ListView<>();
+        chatOutputView = new ListView<>();
         chatOutputView.setPrefWidth(400);
         chatOutputView.setPrefHeight(400);
         GridPane.setHalignment(chatOutputView, HPos.LEFT);

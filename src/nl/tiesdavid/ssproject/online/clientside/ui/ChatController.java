@@ -29,10 +29,14 @@ public class ChatController extends Thread implements Observer {
         clientController.sendPrivateChatCommand(recipient, message);
     }
 
+    public void close() {
+        clientController.disconnect();
+    }
+
     @Override
     public void run() {
-        Application.launch(ChatConsole.class, "");
-        chatConsole.startUI(this);
+        chatConsole.setChatController(this);
+        Application.launch(chatConsole.getClass());
     }
 
     @Override
