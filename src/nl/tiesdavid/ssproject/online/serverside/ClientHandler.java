@@ -28,23 +28,23 @@ public class ClientHandler extends Thread {
             this.running = true;
         }
 
-        public void close() {
-            this.running = false;
-        }
-
         @Override
         public void run() {
             try {
-                while (running) {
-                    String line = in.readLine();
+                String line = in.readLine();
+                while (!line.equals(Protocol.CLIENT_DISCONNECT_COMMAND)) {
                     if (!line.equals("")) {
                         System.out.println("Command received: " + line
-                                + "\n\tFrom: " + inetAddress);
+                                + "From: " + inetAddress);
                         clientHandler.handleMessage(line);
                     }
+                    line = in.readLine();
                 }
             } catch (IOException e) {
-                e.printStackTrace(); //TODO: Disconnect client.
+                System.out.println("Lost connection with "
+                        + clientHandler.getPlayerName() + " @ " + inetAddress);
+            } finally {
+                clientHandler.disconnect();
             }
         }
     }
@@ -66,7 +66,6 @@ public class ClientHandler extends Thread {
 
     private String name;
     private boolean initialized;
-    private boolean disconnected;
 
     private final BufferedReader in;
     private final BufferedWriter out;
@@ -79,7 +78,6 @@ public class ClientHandler extends Thread {
         this.options = new ArrayList<>();
 
         this.initialized = false;
-        this.disconnected = false;
 
         this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -106,9 +104,9 @@ public class ClientHandler extends Thread {
     private void disconnect() {
         if (currentGame != null) {
             currentGame.disconnectClient(this); //TODO
+            disconnectFromGame();
         }
         lobby.disconnectClient(this);
-        disconnected = true;
     }
 
     private void initClient(String[] messageParts) {

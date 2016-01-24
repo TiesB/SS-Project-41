@@ -19,6 +19,8 @@ import java.net.Socket;
 import java.util.*;
 
 public class ClientController extends Observable implements Observer {
+    public static final boolean DEBUG = true;
+
     private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
 
@@ -39,25 +41,13 @@ public class ClientController extends Observable implements Observer {
         this.currentGame = new ClientGame();
         this.previousScore = new TreeSet<>();
         startUI();
-    }
-
-    public static void main(String[] args) {
-        new ClientController().startChat();
+        startChat();
     }
 
     public void startChat() {
         ChatController chatController = new ChatController(this);
         chatController.start();
-        addObserver(chatController.getChatConsole());
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-
-        }
-
-        setChanged();
-        notifyObservers("Lolaaa");
+        addObserver(chatController);
     }
 
     private void startUI() {
@@ -78,7 +68,7 @@ public class ClientController extends Observable implements Observer {
         // TODO: 24-1-2016 Implement ChatController
     }
 
-    private void init() {
+    private void initConnection() {
         if (commOps != null) {
             sendHelloCommand();
         }
@@ -93,7 +83,7 @@ public class ClientController extends Observable implements Observer {
 
         try {
             connect(result.get(0), result.get(1), serverPort);
-            init();
+            initConnection();
         } catch (IOException e) {
             deleteObserver(guiController);
             startUI();
@@ -104,7 +94,7 @@ public class ClientController extends Observable implements Observer {
                                       String serverIP, int serverPort) {
         try {
             connect(newUsername, serverIP, serverPort);
-            init();
+            initConnection();
         } catch (IOException e) {
             deleteObserver(tuiController);
             startUI();
@@ -155,7 +145,7 @@ public class ClientController extends Observable implements Observer {
 
     // Sending commands
     private void sendHelloCommand() {
-        String message = Protocol.CLIENT_HELLO_COMMAND + username;
+        String message = Protocol.CLIENT_HELLO_COMMAND + " " + username;
         for (String option : FEATURES) {
             message += " " + option;
         }
@@ -289,6 +279,9 @@ public class ClientController extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (DEBUG) {
+            System.out.println("[DEBUG] Received: " + arg);
+        }
         if (arg instanceof String) {
             String[] parts = ((String) arg).split(" ");
             String command = parts[0];

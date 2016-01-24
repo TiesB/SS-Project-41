@@ -6,6 +6,7 @@ package nl.tiesdavid.ssproject.online.clientside;
 import java.io.*;
 import java.net.Socket;
 import java.util.Observable;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class CommunicationController extends Observable {
     private static class Reader extends Thread {
@@ -36,9 +37,13 @@ public class CommunicationController extends Observable {
 
     private BufferedWriter out;
 
+    private ReentrantLock lock;
+
     public CommunicationController(ClientController clientController, Socket socket)
             throws IOException {
         addObserver(clientController);
+
+        this.lock = new ReentrantLock();
 
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -46,12 +51,15 @@ public class CommunicationController extends Observable {
     }
 
     public void sendMessage(String message) {
+        lock.lock();
         try {
             out.write(message);
             out.newLine();
             out.flush();
         } catch (IOException e) {
             e.printStackTrace(); //TODO
+        } finally {
+            lock.unlock();
         }
     }
 }

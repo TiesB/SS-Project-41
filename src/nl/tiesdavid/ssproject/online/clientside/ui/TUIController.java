@@ -31,18 +31,18 @@ public class TUIController extends Thread implements Observer {
 
     private void init() {
         String username = readUsername();
-        printMessage(false, "Enter the server IP address:");
+        printMessage(false, "Enter the server IP address: ");
         String serverIP = readString();
-        printMessage(false, "Enter the server port:");
+        printMessage(false, "Enter the server port: ");
         int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
         clientController.parseTUIStartupResult(this, username, serverIP, serverPort);
     }
 
     private void takeTurn() {
         printDeck();
-        printMessage(false, "Do you want to:");
-        printMessage(false, " (1) Place (a) tile(s).");
-        printMessage(false, " (2) Trade (a) tile(s).");
+        printMessageLine(false, "Do you want to:");
+        printMessageLine(false, " (1) Place (a) tile(s).");
+        printMessageLine(false, " (2) Trade (a) tile(s).");
         int response = readInt("That's not a valid choice. Choose 1 or 2.", 0, 3);
         switch (response) {
             case 1:
@@ -74,9 +74,9 @@ public class TUIController extends Thread implements Observer {
      * @return true when the player wants to make a different move.
      */
     private boolean offerCancelMoveChoice(String reason) {
-        printMessage(false, reason);
-        printMessage(false, "Do you want to make a different move?");
-        printMessage(false, "Enter 1 for no, 2 for yes.");
+        printMessageLine(false, reason);
+        printMessageLine(false, "Do you want to make a different move?");
+        printMessageLine(false, "Enter 1 for no, 2 for yes.");
         int response = readInt("That's not a valid choice. Choose 1 or 2.", 0, 3);
         switch (response) {
             case 1:
@@ -89,6 +89,12 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void printMessage(boolean notification, String message) {
+        System.out.print((notification ? " --- " : "")
+                + message
+                + (notification ? " --- " : ""));
+    }
+
+    private void printMessageLine(boolean notification, String message) {
         System.out.println((notification ? " --- " : "")
                 + message
                 + (notification ? " --- " : ""));
@@ -98,10 +104,12 @@ public class TUIController extends Thread implements Observer {
         String message = "Current players on server: ";
         int i = 0;
         for (String player : playersWithFeatures.keySet()) {
-            message += (i == 0 ? "" : ',') + player;
-            i++;
+            if (!player.equals(clientController.getUsername())) {
+                message += (i == 0 ? "" : ',') + player;
+                i++;
+            }
         }
-        printMessage(true, message);
+        printMessageLine(true, message);
     }
 
     private void printBoard() {
@@ -114,7 +122,7 @@ public class TUIController extends Thread implements Observer {
         for (int i = 0; i < deck.size(); i++) {
             message += " (" + Integer.toString(i) + ") " + deck.get(i).toString();
         }
-        printMessage(false, message);
+        printMessageLine(false, message);
     }
 
     private int readInt(String errorMessage, int lowerBound, int upperBound) {
@@ -127,10 +135,10 @@ public class TUIController extends Thread implements Observer {
                 if (response > lowerBound && response < upperBound) {
                     read = true;
                 } else {
-                    printMessage(true, errorMessage);
+                    printMessageLine(true, errorMessage);
                 }
             } catch (NumberFormatException e) {
-                printMessage(true, errorMessage);
+                printMessageLine(true, errorMessage);
             }
         }
         return response;
@@ -164,27 +172,27 @@ public class TUIController extends Thread implements Observer {
         Deck tempDeck = clientController.getCurrentGame().getDeck().getCopy();
         while (tiles.size() < 6
                 && tiles.size() < clientController.getCurrentGame().getAmountOfTilesInBag()) {
-            printMessage(false, "Which tile do you want to place?");
-            printMessage(true, "Choose one per time, by entering the corresponding number.");
+            printMessageLine(false, "Which tile do you want to place?");
+            printMessage(true, "Choose one per time, by entering the corresponding number: ");
             int response = readInt("That's not a valid choice. Choose 0 to 5.", -1, 6);
             Tile tile = clientController.getCurrentGame().getTileFromDeck(response);
             if (tile != null && tempDeck.contains(tile)) {
                 tiles.add(tile);
                 tempDeck.remove(tile);
             } else if (!tempDeck.contains(tile)) {
-                printMessage(false, "You have already chosen this tile.");
+                printMessageLine(false, "You have already chosen this tile.");
             }
         }
         return tiles;
     }
 
     private String readUsername() {
-        printMessage(false, "Enter your username:");
+        printMessage(false, "Enter your username: ");
         String username = readString();
         if (!username.contains("\\") && !username.contains(" ")) {
             return username;
         } else {
-            printMessage(false, "Invalid username. Please enter again.");
+            printMessageLine(false, "Invalid username. Please enter again.");
             return readUsername();
         }
     }
@@ -195,7 +203,7 @@ public class TUIController extends Thread implements Observer {
 
 
     private void receiveWelcomeCommand(String[] messageParts) {
-        printMessage(true, "You have succesfully joined the server.");
+        printMessageLine(true, "You have succesfully joined the server.");
     }
 
     private void receiveJoinCommand(String[] messageParts) {
@@ -224,7 +232,9 @@ public class TUIController extends Thread implements Observer {
         }
 
         if (playersAdded == 1) {
-            printMessage(true, currentPlayer + " has joined the server.");
+            if (!currentPlayer.equals(clientController.getUsername())) {
+                printMessageLine(true, currentPlayer + " has joined the server.");
+            }
         } else {
             printPlayersOnServer();
         }
@@ -237,7 +247,7 @@ public class TUIController extends Thread implements Observer {
 
         String player = messageParts[1];
         playersWithFeatures.remove(player);
-        printMessage(true, player + " has disconnected from the server.");
+        printMessageLine(true, player + " has disconnected from the server.");
     }
 
     private void receiveStartGameCommand(String[] messageParts) {
@@ -245,7 +255,7 @@ public class TUIController extends Thread implements Observer {
         for (int i = 1; i < messageParts.length; i++) {
             message += (i == 1 ? "" : ',') + messageParts[i];
         }
-        printMessage(false, message);
+        printMessageLine(false, message);
     }
 
     private void receiveTurnCommand(String[] messageParts) {
@@ -255,10 +265,10 @@ public class TUIController extends Thread implements Observer {
 
         String player = messageParts[1];
         if (player.equals(clientController.getUsername())) {
-            printMessage(false, "It's your turn!");
+            printMessageLine(false, "It's your turn!");
             takeTurn();
         } else {
-            printMessage(false, "It's " + player + "'"
+            printMessageLine(false, "It's " + player + "'"
                     + (player.toCharArray()[player.length() - 1] == 's' ? "" : 's') + " turn!");
         }
     }
@@ -273,7 +283,7 @@ public class TUIController extends Thread implements Observer {
                 message += "";
             }
         }
-        printMessage(false, message);
+        printMessageLine(false, message);
         printDeck();
     }
 
@@ -284,7 +294,7 @@ public class TUIController extends Thread implements Observer {
 
         String player = messageParts[1];
         int count = (messageParts.length - 2) / 2;
-        printMessage(false, player + " has placed " + Integer.toString(count) + " tiles.");
+        printMessageLine(false, player + " has placed " + Integer.toString(count) + " tiles.");
 
         printBoard();
     }
@@ -294,13 +304,13 @@ public class TUIController extends Thread implements Observer {
             return;
         }
 
-        printMessage(false, messageParts[1] + " has traded " + messageParts[2] + " tiles.");
+        printMessageLine(false, messageParts[1] + " has traded " + messageParts[2] + " tiles.");
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
         Pair<String, Integer> winner = clientController.getPreviousScore()
                 .descendingIterator().next();
-        printMessage(false, winner.getKey() + " has won with "
+        printMessageLine(false, winner.getKey() + " has won with "
                 + Integer.toString(winner.getValue()) + " points!");
     }
 

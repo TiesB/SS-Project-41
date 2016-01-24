@@ -7,6 +7,7 @@ public class Protocol {
     // Features
     public static final String CHAT_FEATURE = "chat";
     public static final String CHALLENGE_FEATURE = "challenge";
+    public static final String DISCONNECT_FEATURE = "disconnect";
 
 
     // Server -> Client control commands
@@ -36,6 +37,7 @@ public class Protocol {
     // Client -> Server control commands
     public static final String CLIENT_HELLO_COMMAND = "hello";
     public static final String CLIENT_WAIT_FOR_GAME_COMMAND = "join";
+    public static final String CLIENT_DISCONNECT_COMMAND = "client_disconnect";
 
     // Client -> Server chat commands
     public static final String CLIENT_GENERAL_CHAT_COMMAND = "chat";

@@ -3,9 +3,7 @@
  */
 package nl.tiesdavid.ssproject.online.clientside;
 
-import java.io.*;
 import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 //TODO: Remove.
@@ -20,14 +18,7 @@ public class TestClient extends Thread {
 
     @Override
     public void run() {
-        ClientController clientController = new ClientController();
-
-        try {
-            Socket socket = new Socket(inetAddress, port);
-            clientController.setSocket(socket);
-        } catch (IOException e) {
-            clientController.showError(e);
-        }
+        new ClientController();
     }
 
     public static void main(String[] args) {
