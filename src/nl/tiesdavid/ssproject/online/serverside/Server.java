@@ -4,7 +4,6 @@
 package nl.tiesdavid.ssproject.online.serverside;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -24,7 +23,7 @@ public class Server extends Thread {
             when actually going online.
              */
             ServerSocket serverSocket =
-                    new ServerSocket(port, 0, InetAddress.getByName("127.0.0.1"));
+                    new ServerSocket(port);
 
             Lobby lobby = new Lobby();
 

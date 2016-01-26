@@ -9,6 +9,7 @@ import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TreeSet;
 
@@ -34,6 +35,16 @@ public class ClientGame {
 
     public Tile getTileFromDeck(int no) {
         return deck.get(no);
+    }
+
+    public void removeTileFromDeck(Tile tile) {
+        deck.remove(tile);
+    }
+
+    public void removeTilesFromDeck(ArrayList<Tile> tiles) {
+        for (Tile tile : tiles) {
+            removeTileFromDeck(tile);
+        }
     }
 
     public void placeTile(Tile tile) {

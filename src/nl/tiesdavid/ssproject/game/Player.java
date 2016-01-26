@@ -50,7 +50,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     private void fillDeck() {
-        while (deck.size() <= DECK_SIZE) {
+        while (deck.size() < DECK_SIZE) {
             drawTileFromBag();
         }
     }

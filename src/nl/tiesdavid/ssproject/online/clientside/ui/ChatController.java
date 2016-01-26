@@ -18,7 +18,7 @@ public class ChatController extends Thread implements Observer {
 
     public ChatController(ClientController clientController) {
         this.clientController = clientController;
-        this.chatConsole = new ChatConsole();
+        this.chatConsole = new ChatConsole(); // TODO: 25-1-2016 Make messageList not crash when size is extremely big.
     }
 
     public void sendGeneralMessage(String message) {
@@ -63,9 +63,5 @@ public class ChatController extends Thread implements Observer {
                 chatConsole.addPrivateMessage(timeStamp, parts[1], message);
             }
         }
-    }
-
-    public ChatConsole getChatConsole() {
-        return chatConsole;
     }
 }

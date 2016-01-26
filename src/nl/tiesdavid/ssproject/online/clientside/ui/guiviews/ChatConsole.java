@@ -111,7 +111,9 @@ public class ChatConsole extends Application {
             @Override
             public void handle(WindowEvent event) {
                 Platform.runLater(() -> {
-                    chatController.close();
+                    if (chatController != null) {
+                        chatController.close();
+                    }
                 });
             }
         });
@@ -141,7 +143,6 @@ public class ChatConsole extends Application {
         GridPane.setHalignment(playersView, HPos.LEFT);
         playersView.setEditable(false);
         playersView.setItems(playersList);
-        playersList.add("Me");
 
         input = new TextField();
         input.setPrefWidth(400);

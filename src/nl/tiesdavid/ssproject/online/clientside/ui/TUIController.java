@@ -35,7 +35,7 @@ public class TUIController extends Thread implements Observer {
         String serverIP = readString();
         printMessage(false, "Enter the server port: ");
         int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
-        clientController.parseTUIStartupResult(this, username, serverIP, serverPort);
+        clientController.parseGeneralStartupResult(this, username, serverIP, serverPort);
     }
 
     private void takeTurn() {

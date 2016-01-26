@@ -24,7 +24,8 @@ public class ClientController extends Observable implements Observer {
     private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
 
-    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
+//    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
+    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
 
     // Control
     private CommunicationController commOps;
@@ -34,29 +35,32 @@ public class ClientController extends Observable implements Observer {
     // Game
     private String username;
     private ClientGame currentGame;
+    private ArrayList<Tile> tilesToBeTraded;
     private TreeSet<Pair<String, Integer>> previousScore;
 
     public ClientController() {
         this.serverFeatures = new ArrayList<>();
         this.playersInServer = new HashMap<>();
         this.currentGame = new ClientGame();
+        this.tilesToBeTraded = new ArrayList<>();
         this.previousScore = new TreeSet<>();
         startUI();
         startChat();
     }
 
     public void startChat() {
+        ChatController chatController = new ChatController(this);
+        chatController.start();
+        addObserver(chatController);
         if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
-            ChatController chatController = new ChatController(this);
-            chatController.start();
-            addObserver(chatController);
+
         }
     }
 
     private void startUI() {
         if (USE_AI) {
             AIPlayer aiPlayer = new AIPlayer(this);
-            //TODO
+            aiPlayer.start();
             addObserver(aiPlayer);
         } else if (USE_GUI) {
             GUIController guiController = new GUIController(this);
@@ -84,6 +88,17 @@ public class ClientController extends Observable implements Observer {
         System.exit(0);
     }
 
+    public void parseGeneralStartupResult(Observer observer, String newUsername,
+                                           String serverIP, int serverPort) {
+        try {
+            connect(newUsername, serverIP, serverPort);
+            initConnection();
+        } catch (IOException e) {
+            deleteObserver(observer);
+            startUI();
+        }
+    }
+
     public void parseGUIStartupResult(GUIController guiController, ArrayList<String> result) {
         if (result.size() < 3) {
             return;
@@ -91,24 +106,7 @@ public class ClientController extends Observable implements Observer {
 
         int serverPort = Integer.parseInt(result.get(2));
 
-        try {
-            connect(result.get(0), result.get(1), serverPort);
-            initConnection();
-        } catch (IOException e) {
-            deleteObserver(guiController);
-            startUI();
-        }
-    }
-
-    public void parseTUIStartupResult(TUIController tuiController, String newUsername,
-                                      String serverIP, int serverPort) {
-        try {
-            connect(newUsername, serverIP, serverPort);
-            initConnection();
-        } catch (IOException e) {
-            deleteObserver(tuiController);
-            startUI();
-        }
+        parseGeneralStartupResult(guiController, result.get(0), result.get(1), serverPort);
     }
 
     public void waitForGame(int no) {
@@ -192,6 +190,9 @@ public class ClientController extends Observable implements Observer {
         String message = Protocol.CLIENT_PLACE_COMMAND;
 
         for (Tile tile : tiles) {
+            if (!tile.hasXY()) {
+                return;
+            }
             message += " " + tile.toProtocolForm();
         }
 
@@ -203,6 +204,7 @@ public class ClientController extends Observable implements Observer {
 
         for (Tile tile : tiles) {
             message += " " + tile.toProtocolForm();
+            tilesToBeTraded.add(tile);
         }
 
         commOps.sendMessage(message);
@@ -211,6 +213,7 @@ public class ClientController extends Observable implements Observer {
     // Receiving commands
     private void receiveWelcomeCommand(String[] messageParts) {
         for (int i = 1; i < messageParts.length; i++) {
+            System.out.println("Added server featue: " + messageParts[i]);
             serverFeatures.add(messageParts[i]);
         }
     }
@@ -287,6 +290,21 @@ public class ClientController extends Observable implements Observer {
                 return;
             }
             currentGame.placeTile(tile);
+            if (player.equals(username)) {
+                currentGame.removeTileFromDeck(tile);
+            }
+        }
+    }
+
+    private void receiveTradedCommand(String[] messageParts) {
+        if (messageParts.length < 3) {
+            return;
+        }
+
+        String player = messageParts[1];
+        if (player.equals(username)) {
+            currentGame.removeTilesFromDeck(tilesToBeTraded);
+            tilesToBeTraded.clear();
         }
     }
 
@@ -327,6 +345,8 @@ public class ClientController extends Observable implements Observer {
                 case Protocol.SERVER_PLACED_COMMAND:
                     receivePlacedCommand(parts);
                     break;
+                case Protocol.SERVER_TRADED_COMMAND:
+                    receiveTradedCommand(parts);
                 case Protocol.SERVER_END_GAME_COMMAND:
                     receiveEndGameCommand(parts);
                     break;

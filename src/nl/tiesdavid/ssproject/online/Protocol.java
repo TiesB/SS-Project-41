@@ -8,10 +8,11 @@ public class Protocol {
     public static final String CHAT_FEATURE = "chat";
     public static final String CHALLENGE_FEATURE = "challenge";
     public static final String DISCONNECT_FEATURE = "disconnect";
+    public static final String LEADERBOARD_FEATURE = "leaderboard"; // TODO: 25-1-2016 Use enum
 
 
     // Server -> Client control commands
-    public static final String SERVER_WELCOME_COMMAND = "hello_from_the_otherside";
+    public static final String SERVER_WELCOME_COMMAND = "hello_from_the_other_side";
     public static final String SERVER_PLAYERS_COMMAND = "players";
     public static final String SERVER_JOIN_COMMAND = "joinlobby";
     public static final String SERVER_DISCONNECT_COMMAND = "disconnect";

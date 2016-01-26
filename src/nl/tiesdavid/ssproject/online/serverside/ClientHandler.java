@@ -10,7 +10,9 @@ import nl.tiesdavid.ssproject.online.Protocol;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ClientHandler extends Thread {
     private static class Reader extends Thread {
@@ -40,7 +42,7 @@ public class ClientHandler extends Thread {
                     }
                     line = in.readLine();
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 System.out.println("Lost connection with "
                         + clientHandler.getPlayerName() + " @ " + inetAddress);
             } finally {
@@ -95,7 +97,7 @@ public class ClientHandler extends Thread {
             out.newLine();
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            disconnect();
         }
     }
 
