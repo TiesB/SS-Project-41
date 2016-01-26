@@ -6,6 +6,7 @@ package nl.tiesdavid.ssproject.online.clientside;
 import javafx.util.Pair;
 import nl.tiesdavid.ssproject.game.Deck;
 import nl.tiesdavid.ssproject.game.Game;
+import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 
@@ -27,6 +28,8 @@ public class ClientGame {
             }
         });
         this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
+        this.deck = new Deck(Player.DECK_SIZE);
+        this.board = new ClientBoard();
     }
 
     public void addTileToDeck(Tile tile) {

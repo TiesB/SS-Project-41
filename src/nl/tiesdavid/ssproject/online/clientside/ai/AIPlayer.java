@@ -33,10 +33,13 @@ public class AIPlayer extends Thread implements Observer {
                 determinePlaceMove(clientController.getCurrentGame());
         if (tilesToBePlaced == null) {
             tradeAllTiles();
+        } else {
+            clientController.sendPlaceCommand(tilesToBePlaced);
         }
     }
 
     private void tradeAllTiles() {
+        System.out.println("Trading all tiles.");
         clientController.sendTradeCommand(clientController.getCurrentGame().getDeck());
     }
 
@@ -54,12 +57,6 @@ public class AIPlayer extends Thread implements Observer {
     }
 
     private void askAmountPlayersAndStrategy() {
-        printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
-        int amount = readInt("Invalid amount. Please try again.",
-                Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
-        clientController.waitForGame(amount);
-
-
         while (strategy == null) {
             printMessage(false, "Enter the strategy you want to use (smart): ");
             String strategyString = readString();
@@ -69,6 +66,11 @@ public class AIPlayer extends Thread implements Observer {
                     break;
             }
         }
+
+        printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
+        int amount = readInt("Invalid amount. Please try again.",
+                Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
+        clientController.waitForGame(amount);
     }
 
     private void printMessage(boolean notification, String message) {

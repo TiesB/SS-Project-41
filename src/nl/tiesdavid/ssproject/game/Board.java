@@ -47,7 +47,30 @@ public class Board {
         return getScore(tile);
     }
 
-    private boolean checkNeighboringTiles(Tile tile) {
+    public void tryPlace(ArrayList<Tile> checkTiles) throws InvalidTilePlacementException {
+        Board board = this.deepCopy();
+        ArrayList<Tile> tilesToBePlaced = new ArrayList<>();
+        tilesToBePlaced.addAll(checkTiles);
+
+        int tries = 0;
+        while (!tilesToBePlaced.isEmpty() && tries < 720) {
+            Tile tile = tilesToBePlaced.get(0);
+            try {
+                board.placeTile(tile);
+            } catch (InvalidTilePlacementException e) {
+                tilesToBePlaced.add(tilesToBePlaced.size(), tile);
+            } finally {
+                tilesToBePlaced.remove(0);
+            }
+            tries++;
+        }
+
+        if (!tilesToBePlaced.isEmpty()) {
+            throw new InvalidTilePlacementException();
+        }
+    }
+
+    protected boolean checkNeighboringTiles(Tile tile) {
         int x = tile.getX();
         int y = tile.getY();
         Tile.Color color = tile.getColor();
@@ -120,8 +143,8 @@ public class Board {
         return true;
     }
 
-    private boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
-        return !(!tile.getColor().equals(color) && !tile.getShape().equals(shape));
+    public static boolean checkTile(Tile tile, Tile.Color color, Tile.Shape shape) {
+        return tile.getColor().equals(color) || tile.getShape().equals(shape);
     }
 
     /**
@@ -144,7 +167,7 @@ public class Board {
      * @param y The Y coordinate of the requested tile.
      * @return The tile at the given coordinate, or null when it's non-existent.
      */
-    private Tile getTile(int x, int y) {
+    protected Tile getTile(int x, int y) {
         for (Tile tile : tiles) {
             if (tile.getX() == x && tile.getY() == y) {
                 return tile;
@@ -333,6 +356,10 @@ public class Board {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
     }
 
     @Override

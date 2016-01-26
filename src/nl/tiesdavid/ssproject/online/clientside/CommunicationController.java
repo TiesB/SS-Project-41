@@ -52,6 +52,9 @@ public class CommunicationController extends Observable {
 
     public void sendMessage(String message) {
         lock.lock();
+        if (ClientController.DEBUG) {
+            System.out.println("[DEBUG] Sending: " + message);
+        }
         try {
             out.write(message);
             out.newLine();

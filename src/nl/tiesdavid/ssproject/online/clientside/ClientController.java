@@ -21,7 +21,7 @@ import java.util.*;
 public class ClientController extends Observable implements Observer {
     public static final boolean DEBUG = true;
 
-    private static final boolean USE_AI = false;
+    private static final boolean USE_AI = true;
     private static final boolean USE_GUI = false;
 
 //    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
@@ -277,13 +277,14 @@ public class ClientController extends Observable implements Observer {
             return;
         }
 
-        int amount = 0;
-
         for (int i = 3; i < messageParts.length; i = i + 2) {
             String tileString = messageParts[i];
             String locationString = messageParts[i + 1];
             Tile tile;
             try {
+                if (DEBUG) {
+                    System.out.println("Parsing tile: " + tileString + " @ " + locationString);
+                }
                 tile = Tile.fromProtocolString(tileString, locationString);
             } catch (UnparsableDataException e) {
                 System.out.println(e.getMessage());

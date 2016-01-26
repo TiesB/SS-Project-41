@@ -32,15 +32,21 @@ public class AIUtils {
     public static SortedSet<SortedSet<Tile>> findSets(Deck deck) {
         Set<SortedSet<Tile>> hashResult = new HashSet<>(); //HashSet to eliminate duplicates.
         for (Tile tile : deck) {
-            hashResult.add(findTilesAlike(deck, tile, tile.getColor()));
-            hashResult.add(findTilesAlike(deck, tile, tile.getShape()));
+            SortedSet<Tile> byColor = findTilesAlike(deck, tile, tile.getColor());
+            SortedSet<Tile> byShape = findTilesAlike(deck, tile, tile.getShape());
+            if (byColor.size() > 0) {
+                hashResult.add(byColor);
+            }
+            if (byShape.size() > 0) {
+                hashResult.add(byShape);
+            }
         }
 
         //Sorted set because it's easier to work with in a strategy.
         SortedSet<SortedSet<Tile>> sortedResult = new TreeSet<>(new Comparator<SortedSet<Tile>>() {
             @Override
             public int compare(SortedSet<Tile> o1, SortedSet<Tile> o2) {
-                return Integer.compare(o1.size(), o2.size());
+                return Integer.compare(o1.size(), o2.size()) * -1;
             }
         });
 

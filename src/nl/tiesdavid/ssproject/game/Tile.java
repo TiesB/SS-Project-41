@@ -19,17 +19,17 @@ public class Tile {
     };
 
     public enum Color {
-        BLUE('4', 0x0000FF),
-        GREEN('3', 0x00FF00),
-        ORANGE('1', 0xFFA500),
-        PURPLE('5', 0x551A8B),
-        RED('0', 0xFF0000),
-        YELLOW('2', 0xFFFF00);
+        BLUE(4, 0x0000FF),
+        GREEN(3, 0x00FF00),
+        ORANGE(1, 0xFFA500),
+        PURPLE(5, 0x551A8B),
+        RED(0, 0xFF0000),
+        YELLOW(2, 0xFFFF00);
 
-        public final char user;
+        public final int user;
         public final int hex;
 
-        Color(char user, int hex) {
+        Color(int user, int hex) {
             this.user = user;
             this.hex = hex;
         }
@@ -41,17 +41,17 @@ public class Tile {
     }
 
     public enum Shape {
-        CIRCLE('0', '\u25cb'),
-        DIAMOND('2', '\u25c7'),
-        CLOVER('5', '\u2618'),
-        CRISSCROSS('1', '\u2716'),
-        STARBURST('4', '\u273A'),
-        SQUARE('3', '\u25A0');
+        CIRCLE(0, '\u25cb'),
+        DIAMOND(2, '\u25c7'),
+        CLOVER(5, '\u2618'),
+        CRISSCROSS(1, '\u2716'),
+        STARBURST(4, '\u273A'),
+        SQUARE(3, '\u25A0');
 
-        public final char user;
+        public final int user;
         public final char printable;
 
-        Shape(char user, char printable) {
+        Shape(int user, char printable) {
             this.user = user;
             this.printable = printable;
         }
@@ -122,8 +122,8 @@ public class Tile {
     }
 
     public String toProtocolForm() {
-        String string = Character.toString(this.getShape().user)
-                + "," + Character.toString(this.getColor().user);
+        String string = Integer.toString(this.getShape().user)
+                + "," + Integer.toString(this.getColor().user);
         if (this.hasXY()) {
             string += " " + Integer.toString(getX()) + "," + Integer.toString(getY());
         }
@@ -134,19 +134,19 @@ public class Tile {
         Color color = null;
         Shape shape = null;
 
-        char[] tileStringChars = tileString.toCharArray();
+        String[] tileStringChars = tileString.split(",");
 
-        char shapeChar = tileStringChars[0];
-        char colorChar = tileStringChars[2];
+        int shapeInt = Integer.parseInt(tileStringChars[0]);
+        int colorInt = Integer.parseInt(tileStringChars[1]);
 
         for (Color color1 : Color.values()) {
-            if (color1.user == colorChar) {
+            if (color1.user == colorInt) {
                 color = color1;
             }
         }
 
         for (Shape shape1 : Shape.values()) {
-            if (shape1.user == shapeChar) {
+            if (shape1.user == shapeInt) {
                 shape = shape1;
             }
         }
@@ -160,7 +160,6 @@ public class Tile {
 
     public static Tile fromProtocolString(String tileString, String locationString)
             throws UnparsableDataException {
-        //TODO: The entire parsing is fucked at the moment.
         Tile tile = fromProtocolString(tileString);
         int x, y;
 
@@ -180,6 +179,14 @@ public class Tile {
         tile.setY(y);
 
         return tile;
+    }
+
+    public Tile deepCopy() {
+        if (hasXY()) {
+            return new Tile(getX(), getY(), getColor(), getShape());
+        } else {
+            return new Tile(getColor(), getShape());
+        }
     }
 
     /**
