@@ -299,17 +299,17 @@ public class Board {
         }
     }
 
+    public void forcePlace(Tile tile) {
+        tiles.add(tile);
+        calculateMinMax(tile.getX(), tile.getY());
+    }
+
     public Board deepCopy() {
         Board board = new Board();
-        try {
-            for (Tile tile : tiles) {
-                board.placeTile(tile);
-            }
-            return board;
-        } catch (InvalidTilePlacementException e) {
-            e.printStackTrace();
-            return null;
+        for (Tile tile : tiles) {
+            board.forcePlace(tile);
         }
+        return board;
     }
 
     /**
@@ -367,10 +367,10 @@ public class Board {
         String string = "";
 
         for (int i = 0; i < tiles.size() - 1; i++) {
-            string += tiles.get(i) + " | ";
+            string += tiles.get(i).toLongString() + " | ";
         }
         if (tiles.size() > 0) {
-            string += tiles.get(tiles.size() - 1);
+            string += tiles.get(tiles.size() - 1).toLongString();
         }
 
         return string;

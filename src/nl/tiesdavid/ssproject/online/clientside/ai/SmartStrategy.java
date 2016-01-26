@@ -10,14 +10,14 @@ import nl.tiesdavid.ssproject.game.exceptions.InvalidTilePlacementException;
 import nl.tiesdavid.ssproject.online.clientside.ClientGame;
 
 import java.util.ArrayList;
-import java.util.SortedSet;
+import java.util.Collections;
 
 public class SmartStrategy implements Strategy {
     public enum Direction {
         UP, RIGHT, DOWN, LEFT
     }
 
-    private ArrayList<Tile> findMatchingTiles(Board board, ArrayList<Tile> tiles) {
+    private static ArrayList<Tile> findMatchingTiles(Board board, ArrayList<Tile> tiles) {
         System.out.println("Trying to find matching tiles for: " + tiles);
         ArrayList<Tile> result = new ArrayList<>();
 
@@ -25,12 +25,10 @@ public class SmartStrategy implements Strategy {
         Tile.Color color = firstTile.getColor();
         Tile.Shape shape = firstTile.getShape();
 
-        for (Tile tile : board.getTiles()) {
-            if (Board.checkTile(tile, color, shape)) {
-                System.out.println("Found: " + tile.toLongString());
-                result.add(tile);
-            }
-        }
+        board.getTiles().stream().filter(tile -> Board.checkTile(tile, color, shape)).forEach(tile -> {
+            System.out.println("Found: " + tile.toLongString());
+            result.add(tile);
+        });
 
         System.out.println("Found matching tiles: " + result);
 
@@ -52,27 +50,22 @@ public class SmartStrategy implements Strategy {
         Board board = game.getBoard();
         Deck deck = game.getDeck();
 
+        System.out.println("Current state of deck: " + deck.toString());
         System.out.println("Current state of board: " + board.toString());
 
-        SortedSet<SortedSet<Tile>> sets = AIUtils.findSets(deck);
+        ArrayList<ArrayList<Tile>> sets = AIUtils.findSets(deck);
 
         System.out.println("Found sets: " + sets);
 
         if (sets.size() == 0) {
             System.out.println("Sets size is 0.");
             return null;
-        } else if (sets.first() == null) {
-            System.out.println("First set is null.");
-            return null;
-        } else if (sets.first().size() == 0) {
-            System.out.println("First set size is 0");
-            return null;
         }
 
-        while (sets.size() > 0) {
-            SortedSet<Tile> tileSet = sets.first();
-            ArrayList<Tile> tileList = new ArrayList<>(tileSet);
-            sets.remove(tileSet);
+        Collections.sort(sets, (o1, o2) -> Integer.compare(o1.size(), o2.size()));
+
+        for (int i = (sets.size() - 1); i >= 0; i++) {
+            ArrayList<Tile> tileList = sets.get(i - 1);
 
             if (board.isEmpty()) {
                 return generateFirstMove(tileList);
@@ -86,7 +79,6 @@ public class SmartStrategy implements Strategy {
                 }
             }
         }
-
         return null;
     }
 
@@ -107,6 +99,7 @@ public class SmartStrategy implements Strategy {
                     }
                     try {
                         board.tryPlace(tilesWithXY);
+                        System.out.println("Up placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
                         System.out.println("Up placement not possible.");
@@ -121,6 +114,7 @@ public class SmartStrategy implements Strategy {
                     }
                     try {
                         board.tryPlace(tilesWithXY);
+                        System.out.println("Down placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
                         System.out.println("Down placement not possible.");
@@ -135,6 +129,7 @@ public class SmartStrategy implements Strategy {
                     }
                     try {
                         board.tryPlace(tilesWithXY);
+                        System.out.println("Left placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
                         System.out.println("Left placement not possible.");
@@ -149,6 +144,7 @@ public class SmartStrategy implements Strategy {
                     }
                     try {
                         board.tryPlace(tilesWithXY);
+                        System.out.println("Right placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
                         System.out.println("Right placement not possible.");

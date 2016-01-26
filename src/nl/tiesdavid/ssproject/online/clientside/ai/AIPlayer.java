@@ -7,14 +7,12 @@ import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
+import nl.tiesdavid.ssproject.online.clientside.ClientGame;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Scanner;
+import java.util.*;
 
 public class AIPlayer extends Thread implements Observer {
-    public static final String BASE_NAME = "xXx_Optic_Qwirkle_xXx";
+    public static final boolean YOEP = true;
 
     private final ClientController clientController;
     private final Scanner scanner;
@@ -25,12 +23,20 @@ public class AIPlayer extends Thread implements Observer {
     public AIPlayer(ClientController clientController) {
         this.clientController = clientController;
         this.scanner = new Scanner(System.in);
-        this.localName = BASE_NAME + Double.toString(Math.random());
+        if (!YOEP) {
+            this.localName = "xXx_Optic_Qwirkle_" +
+                    Integer.toString(new Random(System.currentTimeMillis()).nextInt()) +
+                    "_xXx";
+        } else {
+            localName = Integer.toString(new Random(System.currentTimeMillis()).nextInt());
+        }
     }
 
     private void makeMove() {
+        ClientGame game = clientController.getCurrentGame();
+        System.out.println(game);
         ArrayList<Tile> tilesToBePlaced = strategy.
-                determinePlaceMove(clientController.getCurrentGame());
+                determinePlaceMove(game);
         if (tilesToBePlaced == null) {
             tradeAllTiles();
         } else {
@@ -49,28 +55,37 @@ public class AIPlayer extends Thread implements Observer {
     }
 
     private void askForServerAndConnect() {
-        printMessage(false, "Enter the server IP address: ");
-        String serverIP = readString();
-        printMessage(false, "Enter the server port: ");
-        int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
-        clientController.parseGeneralStartupResult(this, localName, serverIP, serverPort);
+        if (YOEP) {
+            clientController.parseGeneralStartupResult(this, localName, "130.89.136.146", 2727);
+        } else {
+            printMessage(false, "Enter the server IP address: ");
+            String serverIP = readString();
+            printMessage(false, "Enter the server port: ");
+            int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
+            clientController.parseGeneralStartupResult(this, localName, serverIP, serverPort);
+        }
     }
 
     private void askAmountPlayersAndStrategy() {
-        while (strategy == null) {
-            printMessage(false, "Enter the strategy you want to use (smart): ");
-            String strategyString = readString();
-            switch (strategyString) {
-                case "smart":
-                    strategy = new SmartStrategy();
-                    break;
+        if (YOEP) {
+            strategy = new SmartStrategy();
+            clientController.waitForGame(2);
+        } else {
+            while (strategy == null) {
+                printMessage(false, "Enter the strategy you want to use (smart): ");
+                String strategyString = readString();
+                switch (strategyString) {
+                    case "smart":
+                        strategy = new SmartStrategy();
+                        break;
+                }
             }
-        }
 
-        printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
-        int amount = readInt("Invalid amount. Please try again.",
-                Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
-        clientController.waitForGame(amount);
+            printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
+            int amount = readInt("Invalid amount. Please try again.",
+                    Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
+            clientController.waitForGame(amount);
+        }
     }
 
     private void printMessage(boolean notification, String message) {

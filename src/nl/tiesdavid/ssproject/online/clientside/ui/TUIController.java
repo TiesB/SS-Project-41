@@ -308,8 +308,15 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
-        Pair<String, Integer> winner = clientController.getPreviousScore()
-                .descendingIterator().next();
+        ArrayList<Pair<String, Integer>> previousScore = clientController.getPreviousScore();
+        previousScore.sort(new Comparator<Pair<String, Integer>>() {
+            @Override
+            public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
+                return Integer.compare(o1.getValue(), o2.getValue());
+            }
+        });
+        Pair<String, Integer> winner = clientController.getPreviousScore().
+                get(previousScore.size() - 1);
         printMessageLine(false, winner.getKey() + " has won with "
                 + Integer.toString(winner.getValue()) + " points!");
     }

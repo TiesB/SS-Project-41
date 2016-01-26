@@ -29,28 +29,33 @@ public class AIUtils {
         return result;
     }
 
-    public static SortedSet<SortedSet<Tile>> findSets(Deck deck) {
-        Set<SortedSet<Tile>> hashResult = new HashSet<>(); //HashSet to eliminate duplicates.
-        for (Tile tile : deck) {
-            SortedSet<Tile> byColor = findTilesAlike(deck, tile, tile.getColor());
-            SortedSet<Tile> byShape = findTilesAlike(deck, tile, tile.getShape());
-            if (byColor.size() > 0) {
-                hashResult.add(byColor);
+    public static ArrayList<ArrayList<Tile>> findSets(Deck deck) {
+        ArrayList<ArrayList<Tile>> result = new ArrayList<>();
+
+        for (Tile.Color color : Tile.Color.values()) {
+            ArrayList<Tile> colorList = new ArrayList<>();
+            for (Tile tile : deck) {
+                if (tile.getColor().equals(color)) {
+                    colorList.add(tile);
+                }
             }
-            if (byShape.size() > 0) {
-                hashResult.add(byShape);
+            if (colorList.size() > 0) {
+                result.add(colorList);
             }
         }
 
-        //Sorted set because it's easier to work with in a strategy.
-        SortedSet<SortedSet<Tile>> sortedResult = new TreeSet<>(new Comparator<SortedSet<Tile>>() {
-            @Override
-            public int compare(SortedSet<Tile> o1, SortedSet<Tile> o2) {
-                return Integer.compare(o1.size(), o2.size()) * -1;
+        for (Tile.Shape shape : Tile.Shape.values()) {
+            ArrayList<Tile> shapeList = new ArrayList<>();
+            for (Tile tile : deck) {
+                if (tile.getShape().equals(shape)) {
+                    shapeList.add(tile);
+                }
             }
-        });
+            if (shapeList.size() > 0) {
+                result.add(shapeList);
+            }
+        }
 
-        sortedResult.addAll(hashResult);
-        return sortedResult;
+        return result;
     }
 }

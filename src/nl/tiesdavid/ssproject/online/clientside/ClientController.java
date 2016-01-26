@@ -36,24 +36,25 @@ public class ClientController extends Observable implements Observer {
     private String username;
     private ClientGame currentGame;
     private ArrayList<Tile> tilesToBeTraded;
-    private TreeSet<Pair<String, Integer>> previousScore;
+    private ArrayList<Pair<String, Integer>> previousScore;
 
     public ClientController() {
         this.serverFeatures = new ArrayList<>();
         this.playersInServer = new HashMap<>();
-        this.currentGame = new ClientGame();
         this.tilesToBeTraded = new ArrayList<>();
-        this.previousScore = new TreeSet<>();
+        this.previousScore = new ArrayList<>();
         startUI();
         startChat();
     }
 
     public void startChat() {
-        ChatController chatController = new ChatController(this);
-        chatController.start();
-        addObserver(chatController);
-        if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
-
+        if (!AIPlayer.YOEP) {
+            ChatController chatController = new ChatController(this);
+            chatController.start();
+            addObserver(chatController);
+            if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
+                // TODO: 26-1-2016
+            }
         }
     }
 
@@ -138,7 +139,7 @@ public class ClientController extends Observable implements Observer {
         return currentGame;
     }
 
-    public TreeSet<Pair<String, Integer>> getPreviousScore() {
+    public ArrayList<Pair<String, Integer>> getPreviousScore() {
         return previousScore;
     }
 
@@ -238,11 +239,12 @@ public class ClientController extends Observable implements Observer {
     }
 
     private void receiveStartGameCommand(String[] messageParts) {
+        if (DEBUG) {
+            System.out.println("[DEBUG] Starting new game.");
+        }
         currentGame = new ClientGame();
         for (int i = 1; i < messageParts.length; i++) {
-            if (!messageParts[i].equals(username)) {
-                currentGame.addPlayer(messageParts[i]);
-            }
+            currentGame.addPlayer(messageParts[i]);
         }
     }
 
@@ -264,6 +266,17 @@ public class ClientController extends Observable implements Observer {
             return;
         }
         String player = messageParts[1];
+        if (DEBUG) {
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            for (int i = 0; i < messageParts.length; i++) {
+                System.out.println(i + ": " + messageParts[i]);
+            }
+            System.out.println();
+            System.out.println(player.equals(getUsername()));
+        }
+
         int score = 0;
         try {
             score = Integer.parseInt(messageParts[2]);
@@ -274,6 +287,7 @@ public class ClientController extends Observable implements Observer {
         try {
             currentGame.raiseScore(player, score);
         } catch (NonexistingPlayerException e) {
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -283,7 +297,7 @@ public class ClientController extends Observable implements Observer {
             Tile tile;
             try {
                 if (DEBUG) {
-                    System.out.println("Parsing tile: " + tileString + " @ " + locationString);
+                    System.out.println("Parsing tile that is placed: " + tileString);
                 }
                 tile = Tile.fromProtocolString(tileString, locationString);
             } catch (UnparsableDataException e) {
@@ -310,6 +324,10 @@ public class ClientController extends Observable implements Observer {
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
+        if (DEBUG) {
+            System.out.println("[DEBUG] Game ended.");
+        }
+
         if (currentGame != null) {
             previousScore = currentGame.getPlayersWithScores();
             currentGame = new ClientGame();
@@ -348,6 +366,7 @@ public class ClientController extends Observable implements Observer {
                     break;
                 case Protocol.SERVER_TRADED_COMMAND:
                     receiveTradedCommand(parts);
+                    break;
                 case Protocol.SERVER_END_GAME_COMMAND:
                     receiveEndGameCommand(parts);
                     break;

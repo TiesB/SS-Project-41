@@ -35,10 +35,12 @@ public class Deck extends ArrayList<Tile> {
     @Override
     public String toString() {
         String line = "";
-        for (int i = 0; i < size() - 1; i++) {
-            line += get(i) + " ";
+        if (size() > 0) {
+            for (int i = 0; i < size() - 1; i++) {
+                line += get(i) + " ";
+            }
+            line += get(size() - 1);
         }
-        line += get(size() - 1);
 
         return line;
     }

@@ -17,7 +17,7 @@ public abstract class Player implements Comparable<Player> {
 
     public Player(String name, Game game) {
         this.name = name;
-        this.deck = new Deck(DECK_SIZE);
+        this.deck = new Deck(DECK_SIZE * 2);
         this.game = game;
 
         score = 0;

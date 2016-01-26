@@ -4,44 +4,48 @@
 package nl.tiesdavid.ssproject.online.clientside;
 
 import javafx.util.Pair;
-import nl.tiesdavid.ssproject.game.Deck;
-import nl.tiesdavid.ssproject.game.Game;
-import nl.tiesdavid.ssproject.game.Player;
-import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesdavid.ssproject.game.*;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.TreeSet;
 
 public class ClientGame {
-    private TreeSet<Pair<String, Integer>> playersWithScores;
+    private ArrayList<Pair<String, Integer>> playersWithScores;
     private int amountOfTilesInBag;
     private Deck deck;
-    private ClientBoard board;
+    private Board board;
 
     public ClientGame() {
-        this.playersWithScores = new TreeSet<Pair<String, Integer>>(new Comparator<Pair<String, Integer>>() {
-            @Override
-            public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-                return Integer.compare(o1.getValue(), o2.getValue());
-            }
-        });
+        System.out.println("Creating new game");
+        this.playersWithScores = new ArrayList<>();
         this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
-        this.deck = new Deck(Player.DECK_SIZE);
-        this.board = new ClientBoard();
+        this.deck = new Deck(Player.DECK_SIZE * 2);
+        this.board = new Board();
     }
 
-    public void addTileToDeck(Tile tile) {
+    public synchronized void addTileToDeck(Tile tile) {
         deck.add(tile);
+        if (ClientController.DEBUG) {
+            System.out.println("Added to deck: " + tile.toLongString());
+        }
     }
 
     public Tile getTileFromDeck(int no) {
         return deck.get(no);
     }
 
-    public void removeTileFromDeck(Tile tile) {
-        deck.remove(tile);
+    public synchronized void removeTileFromDeck(Tile tile) {
+        if (ClientController.DEBUG) {
+            System.out.println("Removing tile from deck: " + tile.toLongString());
+        }
+        for (Tile tile1 : deck) {
+            if (tile1.getColor().equals(tile.getColor()) &&
+                    tile1.getShape().equals(tile.getShape())) {
+                deck.remove(tile1);
+                System.out.println("Lola: " + deck);
+                return;
+            }
+        }
     }
 
     public void removeTilesFromDeck(ArrayList<Tile> tiles) {
@@ -60,7 +64,7 @@ public class ClientGame {
         playersWithScores.add(new Pair<>(name, 0));
     }
 
-    public TreeSet<Pair<String, Integer>> getPlayersWithScores() {
+    public ArrayList<Pair<String, Integer>> getPlayersWithScores() {
         return playersWithScores;
     }
 
@@ -97,7 +101,7 @@ public class ClientGame {
         throw new NonexistingPlayerException(name);
     }
 
-    public ClientBoard getBoard() {
+    public Board getBoard() {
         return board;
     }
 

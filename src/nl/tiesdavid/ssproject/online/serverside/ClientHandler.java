@@ -93,6 +93,9 @@ public class ClientHandler extends Thread {
 
     public void sendMessageToClient(String messageToBeSend) {
         try {
+            if (DEBUG) {
+                System.out.println("Sending message to " + name + ": " + messageToBeSend);
+            }
             out.write(messageToBeSend);
             out.newLine();
             out.flush();
@@ -277,7 +280,7 @@ public class ClientHandler extends Thread {
         }
 
         try {
-            ArrayList<Tile> tilesToBeDealed = currentGame.place(this, tiles); //TODO
+            currentGame.place(this, tiles); //TODO
         } catch (MoveException e) {
             printDebugMessage(e.getMessage());
             sendWrongCommandMessage();
@@ -304,10 +307,14 @@ public class ClientHandler extends Thread {
         }
 
         try {
-            ArrayList<Tile> tilesToBeDealed = currentGame.trade(this, tiles); //TODO
+            currentGame.trade(this, tiles); //TODO
         } catch (MoveException e) {
             sendWrongCommandMessage();
         }
+    }
+
+    private void dealTiles(ArrayList<Tile> tiles) {
+
     }
 
     private void handleMessage(String message) {

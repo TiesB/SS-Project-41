@@ -41,7 +41,7 @@ public class OnlineGame extends Game {
         super.handlePlaced(player, score, tiles);
         String message = Protocol.SERVER_PLACED_COMMAND + " " + player.getName() + " " + Integer.toString(score);
         for (Tile tile : tiles) {
-            message += tile.toProtocolForm();
+            message += " " + tile.toProtocolForm();
         }
 
         distributeMessage(message);
@@ -56,14 +56,16 @@ public class OnlineGame extends Game {
         distributeMessage(message);
     }
 
-    public ArrayList<Tile> place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
+    public void place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
-        return this.place(player, tiles);
+        ArrayList<Tile> tilesToBeDealed = this.place(player, tiles);
+        player.sendNewTiles(tilesToBeDealed);
     }
 
-    public ArrayList<Tile> trade(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
+    public void trade(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
-        return this.trade(player, tiles);
+        ArrayList<Tile> tilesToBeDealed = this.trade(player, tiles);
+        player.sendNewTiles(tilesToBeDealed);
     }
 
     public void addPlayer(ClientHandler clientHandler) {
