@@ -13,7 +13,7 @@ import nl.tiesdavid.ssproject.online.clientside.ClientGame;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SmartStrategy implements Strategy {
+public class BruteStrategy implements Strategy {
     public enum Direction {
         UP, RIGHT, DOWN, LEFT
     }
@@ -108,6 +108,8 @@ public class SmartStrategy implements Strategy {
             //
         }
 
+        ArrayList<ArrayList<Tile>> possibleMoves = new ArrayList<>();
+
         int setsSize = sets.size();
         for (int i = setsSize - 1; i >= 0; i--) {
             ArrayList<Tile> tileList = sets.get(i);
@@ -127,11 +129,34 @@ public class SmartStrategy implements Strategy {
             for (Tile matchingTile : matchingTiles) {
                 ArrayList<Tile> legalTilesWithXY = getLegalPlacement(board, matchingTile, tileList);
                 if (legalTilesWithXY != null) {
-                    return legalTilesWithXY;
+                    if (!possibleMoves.contains(legalTilesWithXY)) {
+                        possibleMoves.add(legalTilesWithXY);
+                    }
                 }
             }
         }
-        return null;
+
+        if (possibleMoves.size() == 0) {
+            return null;
+        } else {
+            int highestScore = -1;
+            ArrayList<Tile> bestMove = null;
+            for (ArrayList<Tile> possibleMove : possibleMoves) {
+                Board tempBoard = board.deepCopy();
+                try {
+                    int score = tempBoard.placeTiles(possibleMove);
+                    if (score > highestScore) {
+                        highestScore = score;
+                        bestMove = possibleMove;
+                    }
+                } catch (InvalidTilePlacementException e) {
+                    if (ClientController.DEBUG) {
+                        System.out.println(possibleMove + " not possible.");
+                    }
+                }
+            }
+            return bestMove;
+        }
     }
 
     public ArrayList<Tile> getLegalPlacement(Board board, Tile tile,

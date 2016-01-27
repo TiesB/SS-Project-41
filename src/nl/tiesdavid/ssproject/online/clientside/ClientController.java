@@ -24,13 +24,12 @@ public class ClientController extends Observable implements Observer {
     private static final boolean USE_AI = true;
     private static final boolean USE_GUI = false;
 
-//    private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
     private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
 
     // Control
     private CommunicationController commOps;
-    private ArrayList<String> serverFeatures;
-    private Map<String, ArrayList<String>> playersInServer;
+    private final ArrayList<String> serverFeatures;
+    private final Map<String, ArrayList<String>> playersInServer;
 
     // Game
     private String username;
@@ -47,13 +46,12 @@ public class ClientController extends Observable implements Observer {
         startChat();
     }
 
-    public void startChat() {
+    private void startChat() {
         if (!AIPlayer.YOEP && !AIPlayer.LOCAL) {
-            ChatController chatController = new ChatController(this);
-            chatController.start();
-            addObserver(chatController);
             if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
-                // TODO: 26-1-2016
+                ChatController chatController = new ChatController(this);
+                chatController.start();
+                addObserver(chatController); // TODO: 27-1-2016 Look at serverFeatures
             }
         }
     }
@@ -108,12 +106,10 @@ public class ClientController extends Observable implements Observer {
     }
 
     public void waitForGame(int no) {
-        if (commOps != null) {
-            commOps.sendMessage(Protocol.CLIENT_WAIT_FOR_GAME_COMMAND + " " + Integer.toString(no));
-        }
+        sendJoinCommand(no);
     }
 
-    public void connect(String newUsername, String serverIP, int serverPort) throws IOException {
+    private void connect(String newUsername, String serverIP, int serverPort) throws IOException {
         InetAddress serverIPAddress;
         Socket socket;
 
@@ -126,7 +122,7 @@ public class ClientController extends Observable implements Observer {
         setSocket(socket);
     }
 
-    public void setSocket(Socket socket) throws IOException {
+    private void setSocket(Socket socket) throws IOException {
         this.commOps = new CommunicationController(this, socket);
     }
 
@@ -142,16 +138,13 @@ public class ClientController extends Observable implements Observer {
         return previousScore;
     }
 
-    public CommunicationController getCommOps() {
-        return commOps;
-    }
-
-    public void showError(Exception e) {
-        setChanged();
-        notifyObservers(e);
-    }
-
     // Sending commands
+    private synchronized void sendMessage(String message) {
+        if (commOps != null) {
+            commOps.sendMessage(message);
+        }
+    }
+
     private void sendHelloCommand() {
         String message = Protocol.CLIENT_HELLO_COMMAND + " " + username;
         for (String option : FEATURES) {
@@ -163,7 +156,7 @@ public class ClientController extends Observable implements Observer {
     public void sendJoinCommand(int amount) {
         String message = Protocol.CLIENT_WAIT_FOR_GAME_COMMAND
                 + " " + Integer.toString(amount);
-        commOps.sendMessage(message);
+        sendMessage(message);
     }
 
     public void sendGeneralChatCommand(String message) {
@@ -173,7 +166,7 @@ public class ClientController extends Observable implements Observer {
 
         String messageToServer = Protocol.CLIENT_GENERAL_CHAT_COMMAND
                 + " " + message;
-        commOps.sendMessage(messageToServer);
+        sendMessage(messageToServer);
     }
 
     public void sendPrivateChatCommand(String recipient, String message) {
@@ -183,7 +176,7 @@ public class ClientController extends Observable implements Observer {
 
         String messageToServer = Protocol.CLIENT_PRIVATE_CHAT_COMMAND
                 + " " + recipient + " " + message;
-        commOps.sendMessage(messageToServer);
+        sendMessage(messageToServer);
     }
 
     public void sendPlaceCommand(ArrayList<Tile> tiles) {
@@ -196,7 +189,7 @@ public class ClientController extends Observable implements Observer {
             message += " " + tile.toProtocolForm();
         }
 
-        commOps.sendMessage(message);
+        sendMessage(message);
     }
 
     public void sendTradeCommand(ArrayList<Tile> tiles) {
@@ -207,7 +200,7 @@ public class ClientController extends Observable implements Observer {
             tilesToBeTraded.add(tile);
         }
 
-        commOps.sendMessage(message);
+        sendMessage(message);
     }
 
     // Receiving commands
@@ -241,14 +234,27 @@ public class ClientController extends Observable implements Observer {
         if (DEBUG) {
             System.out.println("[DEBUG] Starting new game.");
         }
-        currentGame = new ClientGame();
-        for (int i = 1; i < messageParts.length; i++) {
-            currentGame.addPlayer(messageParts[i]);
-            currentGame.decreaseAmountOfTilesInBag(6);
+
+        ArrayList<String> players = new ArrayList<>();
+
+        players.addAll(Arrays.asList(messageParts).subList(1, messageParts.length));
+
+        if (players.contains(username)) {
+            currentGame = new ClientGame();
+            for (String player : players) {
+                currentGame.addPlayer(player);
+                currentGame.decreaseAmountOfTilesInBag(6);
+            }
         }
     }
 
     private void receiveNewStonesCommand(String[] messageParts) {
+        if (messageParts.length < 2) {
+            if (DEBUG) {
+                System.out.println("[DEBUG] No tiles received. Bag is probably empty.");
+            }
+        }
+
         if (currentGame != null) {
             for (int i = 1; i < messageParts.length; i++) {
                 try {
@@ -266,18 +272,8 @@ public class ClientController extends Observable implements Observer {
             return;
         }
         String player = messageParts[1];
-        if (DEBUG) {
-            System.out.println();
-            System.out.println();
-            System.out.println();
-            for (int i = 0; i < messageParts.length; i++) {
-                System.out.println(i + ": " + messageParts[i]);
-            }
-            System.out.println();
-            System.out.println(player.equals(getUsername()));
-        }
 
-        int score = 0;
+        int score;
         try {
             score = Integer.parseInt(messageParts[2]);
         } catch (NumberFormatException e) {
@@ -286,6 +282,9 @@ public class ClientController extends Observable implements Observer {
 
         try {
             currentGame.raiseScore(player, score);
+            if (DEBUG) {
+                System.out.println(player + " score: " + currentGame.getScore(player));
+            }
         } catch (NonexistingPlayerException e) {
             System.out.println(e.getMessage());
             return;
@@ -329,7 +328,6 @@ public class ClientController extends Observable implements Observer {
 
         try {
             int amount = Integer.parseInt(messageParts[2]);
-            currentGame.decreaseAmountOfTilesInBag(amount);
         } catch (NumberFormatException e) {
             //
         }

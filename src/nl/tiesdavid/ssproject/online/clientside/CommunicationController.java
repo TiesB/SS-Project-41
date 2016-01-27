@@ -23,9 +23,11 @@ public class CommunicationController extends Observable {
             while (true) {
                 try {
                     String line = in.readLine();
-                    if (!line.equals("")) {
-                        controller.setChanged();
-                        controller.notifyObservers(line);
+                    if (line != null) {
+                        if (!line.equals("")) {
+                            controller.setChanged();
+                            controller.notifyObservers(line);
+                        }
                     }
                 } catch (IOException e) {
                     System.out.println("Lost connection with the server.");

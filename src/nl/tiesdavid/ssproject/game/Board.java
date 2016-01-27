@@ -20,6 +20,32 @@ public class Board {
         minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
+    public synchronized int placeTiles(ArrayList<Tile> tiles) throws InvalidTilePlacementException {
+        int score = 0;
+
+        ArrayList<Tile> tilesToBePlaced = new ArrayList<>();
+        tilesToBePlaced.addAll(tiles);
+
+        int tries = 0;
+        while (!tilesToBePlaced.isEmpty() && tries < 720) {
+            Tile tile = tilesToBePlaced.get(0);
+            try {
+                score += placeTile(tile);
+            } catch (InvalidTilePlacementException e) {
+                tilesToBePlaced.add(tilesToBePlaced.size(), tile);
+            } finally {
+                tilesToBePlaced.remove(0);
+            }
+            tries++;
+        }
+
+        if (!tilesToBePlaced.isEmpty()) {
+            throw new InvalidTilePlacementException();
+        }
+
+        return score;
+    }
+
     public synchronized int placeTile(Tile tile) throws InvalidTilePlacementException {
         int x = tile.getX();
         int y = tile.getY();

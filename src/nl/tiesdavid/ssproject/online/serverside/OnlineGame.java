@@ -81,6 +81,7 @@ public class OnlineGame extends Game {
         player.sendNewTiles(tilesToBeDealed);
         if (ClientHandler.DEBUG) {
             System.out.println(player.getPlayerName() + "'s deck: " + player.getDeck());
+            System.out.println(client.getPlayerName() + " score: " + getScore(player));
         }
     }
 
@@ -89,6 +90,9 @@ public class OnlineGame extends Game {
         ArrayList<Tile> tilesToBeDealed = this.trade(player, tiles);
         player.addTilesToDeck(tilesToBeDealed);
         player.sendNewTiles(tilesToBeDealed);
+        if (ClientHandler.DEBUG) {
+            System.out.println(client.getPlayerName() + " score: " + getScore(player));
+        }
     }
 
     public void addPlayer(ClientHandler clientHandler) {

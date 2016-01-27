@@ -15,7 +15,7 @@ import java.util.*;
 
 public class AIPlayer extends Thread implements Observer {
     public static final boolean YOEP = false;
-    public static final boolean LOCAL = true;
+    public static final boolean LOCAL = false;
 
     private final ClientController clientController;
     private final Scanner scanner;
@@ -39,6 +39,15 @@ public class AIPlayer extends Thread implements Observer {
         }
     }
 
+    private void makeSingleTileMove() {
+        Random random = new Random(System.currentTimeMillis());
+        ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
+        Tile tile = deck.get(random.nextInt(deck.size()));
+        ArrayList<Tile> tiles = new ArrayList<>();
+        tiles.add(tile);
+        clientController.sendTradeCommand(tiles);
+    }
+
     private void makeMove() {
         ClientGame game = clientController.getCurrentGame();
         if (ClientController.DEBUG) {
@@ -48,12 +57,15 @@ public class AIPlayer extends Thread implements Observer {
                 determinePlaceMove(game, previousPlaceMoves);
         if (tilesToBePlaced == null) {
             int amountPossibleToTrade = game.getAmountOfTilesInBag();
-            if (amountPossibleToTrade > game.getDeck().size()) {
+            if (amountPossibleToTrade >= game.getDeck().size()) {
                 tradeAllTiles();
             } else if (amountPossibleToTrade < game.getDeck().size()) {
-                tradeTiles(amountPossibleToTrade);
-            } else {
-                System.out.println("FUDGED");
+                if (amountPossibleToTrade > 0) {
+                    tradeTiles(amountPossibleToTrade);
+                } else {
+                    previousPlaceMoves.clear();
+                    makeSingleTileMove();
+                }
             }
         } else {
             clientController.sendPlaceCommand(tilesToBePlaced);
@@ -70,6 +82,7 @@ public class AIPlayer extends Thread implements Observer {
                 tilesToBeTraded.add(tile);
             }
         }
+        clientController.sendTradeCommand(tilesToBeTraded);
     }
 
     private void tradeAllTiles() {
@@ -99,20 +112,20 @@ public class AIPlayer extends Thread implements Observer {
     }
 
     private void askAmountPlayersAndStrategy() {
+        while (strategy == null) {
+            printMessage(false, "Enter the strategy you want to use (smart, brute): ");
+            String strategyString = readString();
+            switch (strategyString) {
+                case "smart":
+                    strategy = new SmartStrategy();
+                    break;
+                case "brute":
+                    strategy = new BruteStrategy();
+            }
+        }
         if (YOEP || LOCAL) {
-            strategy = new SmartStrategy();
             clientController.waitForGame(2);
         } else {
-            while (strategy == null) {
-                printMessage(false, "Enter the strategy you want to use (smart): ");
-                String strategyString = readString();
-                switch (strategyString) {
-                    case "smart":
-                        strategy = new SmartStrategy();
-                        break;
-                }
-            }
-
             printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
             int amount = readInt("Invalid amount. Please try again.",
                     Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
@@ -180,13 +193,18 @@ public class AIPlayer extends Thread implements Observer {
             return;
         }
 
+        for (int i = 0; i < messageParts.length; i++) {
+            System.out.println(i + ": " + messageParts[i]);
+        }
+
         int error = -1;
         try {
             error = Integer.parseInt(messageParts[1]);
         } catch (NumberFormatException e) {
             return;
         }
-        if (error == 0 && !previousPlaceMoves.isEmpty()) {
+        if ((error == 0 || error == 1) && !previousPlaceMoves.isEmpty()) {
+            System.out.println("Making move because of error.");
             makeMove();
         }
     }
