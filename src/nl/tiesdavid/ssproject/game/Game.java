@@ -14,7 +14,7 @@ public class Game extends Thread {
     public static final int AMOUNT_OF_DUPLICATES_IN_BAG = 3;
 
     private Board board;
-    private final ArrayList<Tile> bag;
+    protected final ArrayList<Tile> bag;
     private final LinkedHashMap<Player, Integer> playersWithScores;
 
     private Player currentPlayer;
@@ -85,12 +85,12 @@ public class Game extends Thread {
             playersWithScores.keySet().forEach(Player::prepareForGame);
 
             while (running) {
-                while (iterator.hasNext()) {
+                while (iterator.hasNext() && running) {
                     moveFinished = false;
                     takeTurn(currentPlayer);
                     while (!moveFinished) {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(50);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -115,7 +115,7 @@ public class Game extends Thread {
     }
 
     protected void finish() {
-        running = true;
+        running = false;
     }
 
     /**
@@ -278,7 +278,7 @@ public class Game extends Thread {
         if (!hasTilesLeft()) {
             return null;
         }
-        return bag.get(randomGenerator.nextInt(bag.size()));
+        return bag.remove(randomGenerator.nextInt(bag.size()));
     }
 
     public void putBackInBag(ArrayList<Tile> tiles) {
@@ -311,7 +311,8 @@ public class Game extends Thread {
         String string = "";
 
         for (Player player : playersWithScores.keySet()) {
-            string += playersWithScores.get(player) + System.lineSeparator();
+            string += player.getPlayerName() + ": " +
+                    playersWithScores.get(player) + System.lineSeparator();
         }
 
         return string;

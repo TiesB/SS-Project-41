@@ -24,18 +24,18 @@ public class GameTest {
     @Test
     public void addPlayerTest() {
         game.addPlayer(new TestPlayer(game));
-        assertEquals("Test: 0", game.toString());
+        assertEquals("Test: 0" + System.lineSeparator(), game.toString());
     }
 
     @Test
     public void addPlayersTest() {
         game.addPlayer(new TestPlayer(game));
-        assertEquals("Test: 0", game.toString());
+        assertEquals("Test: 0" + System.lineSeparator(), game.toString());
 
         game.addPlayer(new TestPlayer(game));
         String string = "Test: 0" +
                 System.lineSeparator() +
-                "Test: 0";
+                "Test: 0" + System.lineSeparator();
         assertEquals(string, game.toString());
     }
 

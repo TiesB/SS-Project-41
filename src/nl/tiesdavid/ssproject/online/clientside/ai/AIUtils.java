@@ -29,7 +29,7 @@ public class AIUtils {
         return result;
     }
 
-    public static ArrayList<ArrayList<Tile>> findSets(Deck deck) {
+    public static ArrayList<ArrayList<Tile>> findSets(ArrayList<Tile> deck) {
         ArrayList<ArrayList<Tile>> result = new ArrayList<>();
 
         for (Tile.Color color : Tile.Color.values()) {

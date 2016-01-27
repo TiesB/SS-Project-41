@@ -9,5 +9,6 @@ import java.util.ArrayList;
  * Created by Ties on 26-1-2016.
  */
 public interface Strategy {
-    public ArrayList<Tile> determinePlaceMove(ClientGame game);
+    public ArrayList<Tile> determinePlaceMove(ClientGame game,
+                                              ArrayList<ArrayList<Tile>> previousPlaceMoves);
 }

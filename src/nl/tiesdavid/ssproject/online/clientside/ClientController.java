@@ -48,7 +48,7 @@ public class ClientController extends Observable implements Observer {
     }
 
     public void startChat() {
-        if (!AIPlayer.YOEP) {
+        if (!AIPlayer.YOEP && !AIPlayer.LOCAL) {
             ChatController chatController = new ChatController(this);
             chatController.start();
             addObserver(chatController);
@@ -82,10 +82,7 @@ public class ClientController extends Observable implements Observer {
         }
     }
 
-    public void disconnect() {
-        if (commOps != null) {
-            commOps.sendMessage(Protocol.CLIENT_DISCONNECT_COMMAND);
-        }
+    public void close() {
         System.exit(0);
     }
 
@@ -111,7 +108,9 @@ public class ClientController extends Observable implements Observer {
     }
 
     public void waitForGame(int no) {
-        commOps.sendMessage(Protocol.CLIENT_WAIT_FOR_GAME_COMMAND + " " + Integer.toString(no));
+        if (commOps != null) {
+            commOps.sendMessage(Protocol.CLIENT_WAIT_FOR_GAME_COMMAND + " " + Integer.toString(no));
+        }
     }
 
     public void connect(String newUsername, String serverIP, int serverPort) throws IOException {
@@ -204,7 +203,7 @@ public class ClientController extends Observable implements Observer {
         String message = Protocol.CLIENT_TRADE_COMMAND;
 
         for (Tile tile : tiles) {
-            message += " " + tile.toProtocolForm();
+            message += " " + tile.toShortProtocolForm();
             tilesToBeTraded.add(tile);
         }
 
@@ -245,6 +244,7 @@ public class ClientController extends Observable implements Observer {
         currentGame = new ClientGame();
         for (int i = 1; i < messageParts.length; i++) {
             currentGame.addPlayer(messageParts[i]);
+            currentGame.decreaseAmountOfTilesInBag(6);
         }
     }
 
@@ -306,6 +306,11 @@ public class ClientController extends Observable implements Observer {
             }
             currentGame.placeTile(tile);
             if (player.equals(username)) {
+                System.out.println("MAG NIET FALSE ZIJN: " + player.equals(username));
+                if (DEBUG) {
+                    System.out.println("[DEBUG] Removing tile " + tile + " from " + player);
+                    System.out.println("[DEBUG] " + username + " = " + player);
+                }
                 currentGame.removeTileFromDeck(tile);
             }
         }
@@ -320,6 +325,13 @@ public class ClientController extends Observable implements Observer {
         if (player.equals(username)) {
             currentGame.removeTilesFromDeck(tilesToBeTraded);
             tilesToBeTraded.clear();
+        }
+
+        try {
+            int amount = Integer.parseInt(messageParts[2]);
+            currentGame.decreaseAmountOfTilesInBag(amount);
+        } catch (NumberFormatException e) {
+            //
         }
     }
 

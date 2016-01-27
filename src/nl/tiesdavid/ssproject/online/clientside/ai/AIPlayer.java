@@ -3,16 +3,19 @@
  */
 package nl.tiesdavid.ssproject.online.clientside.ai;
 
+import javafx.collections.ObservableList;
 import nl.tiesdavid.ssproject.game.Game;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
 import nl.tiesdavid.ssproject.online.clientside.ClientGame;
+import nl.tiesdavid.ssproject.online.serverside.ClientHandler;
 
 import java.util.*;
 
 public class AIPlayer extends Thread implements Observer {
-    public static final boolean YOEP = true;
+    public static final boolean YOEP = false;
+    public static final boolean LOCAL = true;
 
     private final ClientController clientController;
     private final Scanner scanner;
@@ -20,33 +23,60 @@ public class AIPlayer extends Thread implements Observer {
     private final String localName;
     private Strategy strategy;
 
+    private ArrayList<ArrayList<Tile>> previousPlaceMoves;
+
     public AIPlayer(ClientController clientController) {
         this.clientController = clientController;
         this.scanner = new Scanner(System.in);
-        if (!YOEP) {
+        this.previousPlaceMoves = new ArrayList<>();
+
+        if (YOEP || LOCAL) {
+            this.localName = Integer.toString(new Random(System.currentTimeMillis()).nextInt());
+        } else {
             this.localName = "xXx_Optic_Qwirkle_" +
                     Integer.toString(new Random(System.currentTimeMillis()).nextInt()) +
                     "_xXx";
-        } else {
-            localName = Integer.toString(new Random(System.currentTimeMillis()).nextInt());
         }
     }
 
     private void makeMove() {
         ClientGame game = clientController.getCurrentGame();
-        System.out.println(game);
+        if (ClientController.DEBUG) {
+            System.out.println("Amount of tiles in bag: " + game.getAmountOfTilesInBag());
+        }
         ArrayList<Tile> tilesToBePlaced = strategy.
-                determinePlaceMove(game);
+                determinePlaceMove(game, previousPlaceMoves);
         if (tilesToBePlaced == null) {
-            tradeAllTiles();
+            int amountPossibleToTrade = game.getAmountOfTilesInBag();
+            if (amountPossibleToTrade > game.getDeck().size()) {
+                tradeAllTiles();
+            } else if (amountPossibleToTrade < game.getDeck().size()) {
+                tradeTiles(amountPossibleToTrade);
+            } else {
+                System.out.println("FUDGED");
+            }
         } else {
             clientController.sendPlaceCommand(tilesToBePlaced);
         }
     }
 
+    private void tradeTiles(int amount) {
+        ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
+        ArrayList<Tile> tilesToBeTraded = new ArrayList<>();
+        Random random = new Random(System.currentTimeMillis());
+        for (int i = 0; i < amount; i++) {
+            Tile tile = deck.get(random.nextInt(amount));
+            if (!tilesToBeTraded.contains(tile)) {
+                tilesToBeTraded.add(tile);
+            }
+        }
+    }
+
     private void tradeAllTiles() {
         System.out.println("Trading all tiles.");
-        clientController.sendTradeCommand(clientController.getCurrentGame().getDeck());
+        ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
+        System.out.println("Trading deck: " + deck);
+        clientController.sendTradeCommand(new ArrayList<>(deck));
     }
 
     private void init() {
@@ -57,6 +87,8 @@ public class AIPlayer extends Thread implements Observer {
     private void askForServerAndConnect() {
         if (YOEP) {
             clientController.parseGeneralStartupResult(this, localName, "130.89.136.146", 2727);
+        } else if (LOCAL) {
+            clientController.parseGeneralStartupResult(this, localName, "127.0.0.1", 3339);
         } else {
             printMessage(false, "Enter the server IP address: ");
             String serverIP = readString();
@@ -67,7 +99,7 @@ public class AIPlayer extends Thread implements Observer {
     }
 
     private void askAmountPlayersAndStrategy() {
-        if (YOEP) {
+        if (YOEP || LOCAL) {
             strategy = new SmartStrategy();
             clientController.waitForGame(2);
         } else {
@@ -126,7 +158,58 @@ public class AIPlayer extends Thread implements Observer {
     private void receiveTurnCommand(String[] messageParts) {
         String player = messageParts[1];
         if (player.equals(localName)) {
+            if (ClientHandler.DEBUG) {
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println("New move.");
+            }
             makeMove();
+            if (ClientHandler.DEBUG) {
+                System.out.println();
+                System.out.println();
+                System.out.println();
+                System.out.println();
+            }
+        }
+    }
+
+    private void receiveErrorCommand(String[] messageParts) {
+        if (messageParts.length < 2) {
+            return;
+        }
+
+        int error = -1;
+        try {
+            error = Integer.parseInt(messageParts[1]);
+        } catch (NumberFormatException e) {
+            return;
+        }
+        if (error == 0 && !previousPlaceMoves.isEmpty()) {
+            makeMove();
+        }
+    }
+
+    private void receivePlacedCommand(String[] messageParts) {
+        if (messageParts.length < 5) {
+            return;
+        }
+
+        String player = messageParts[1];
+        if (player.equals(localName)) {
+            previousPlaceMoves.clear();
+        }
+    }
+
+    private void receiveTradedCommand(String[] messageParts) {
+        if (messageParts.length < 3) {
+            return;
+        }
+
+        String player = messageParts[1];
+        if (player.equals(localName)) {
+            previousPlaceMoves.clear();
         }
     }
 
@@ -144,6 +227,15 @@ public class AIPlayer extends Thread implements Observer {
             switch (command) {
                 case Protocol.SERVER_TURN_COMMAND:
                     receiveTurnCommand(parts);
+                    break;
+                case Protocol.SERVER_ERROR_COMMAND:
+                    receiveErrorCommand(parts);
+                    break;
+                case Protocol.SERVER_PLACED_COMMAND:
+                    receivePlacedCommand(parts);
+                    break;
+                case Protocol.SERVER_TRADED_COMMAND:
+                    receiveTradedCommand(parts);
             }
         }
     }

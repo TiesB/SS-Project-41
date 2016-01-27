@@ -7,7 +7,6 @@ public class Protocol {
     // Features
     public static final String CHAT_FEATURE = "chat";
     public static final String CHALLENGE_FEATURE = "challenge";
-    public static final String DISCONNECT_FEATURE = "disconnect";
     public static final String LEADERBOARD_FEATURE = "leaderboard"; // TODO: 25-1-2016 Use enum
 
 
@@ -18,6 +17,7 @@ public class Protocol {
     public static final String SERVER_DISCONNECT_COMMAND = "disconnect";
     public static final String SERVER_START_GAME_COMMAND = "start";
     public static final String SERVER_END_GAME_COMMAND = "endgame";
+    public static final String SERVER_ERROR_COMMAND = "error";
 
     // Server -> Client chat commands
     public static final String SERVER_GENERAL_CHAT_MESSAGE_COMMAND = "msg";
@@ -38,7 +38,6 @@ public class Protocol {
     // Client -> Server control commands
     public static final String CLIENT_HELLO_COMMAND = "hello";
     public static final String CLIENT_WAIT_FOR_GAME_COMMAND = "join";
-    public static final String CLIENT_DISCONNECT_COMMAND = "client_disconnect";
 
     // Client -> Server chat commands
     public static final String CLIENT_GENERAL_CHAT_COMMAND = "chat";

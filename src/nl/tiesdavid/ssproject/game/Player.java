@@ -2,6 +2,8 @@ package nl.tiesdavid.ssproject.game;
 
 import nl.tiesdavid.ssproject.game.exceptions.NotInDeckException;
 
+import java.util.ArrayList;
+
 /**
  * Created by Ties on 19-12-2015.
  * @author Ties
@@ -17,7 +19,7 @@ public abstract class Player implements Comparable<Player> {
 
     public Player(String name, Game game) {
         this.name = name;
-        this.deck = new Deck(DECK_SIZE * 2);
+        this.deck = new Deck();
         this.game = game;
 
         score = 0;
@@ -115,6 +117,14 @@ public abstract class Player implements Comparable<Player> {
         return count;
     }
 
+    public void addTilesToDeck(ArrayList<Tile> tiles) {
+        for (Tile tile : tiles) {
+            if (tile != null) {
+                deck.add(tile);
+            }
+        }
+    }
+
     public void removeTile(Tile tile) {
         Tile.Color color = tile.getColor();
         Tile.Shape shape = tile.getShape();
@@ -139,6 +149,10 @@ public abstract class Player implements Comparable<Player> {
 
     public String getPlayerName() {
         return name;
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
     @Override

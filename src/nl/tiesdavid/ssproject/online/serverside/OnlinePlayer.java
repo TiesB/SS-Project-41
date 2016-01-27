@@ -34,7 +34,9 @@ public class OnlinePlayer extends Player {
     public void sendNewTiles(ArrayList<Tile> tiles) {
         String message = Protocol.SERVER_NEW_STONES_COMMAND;
         for (Tile tile : tiles) {
-            message += " " + tile.toProtocolForm();
+            if (tile != null) {
+                message += " " + tile.toProtocolForm();
+            }
         }
 
         sendMessage(message);

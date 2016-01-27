@@ -3,6 +3,9 @@
  */
 package nl.tiesdavid.ssproject.online.clientside;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import nl.tiesdavid.ssproject.game.*;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
@@ -12,21 +15,28 @@ import java.util.ArrayList;
 public class ClientGame {
     private ArrayList<Pair<String, Integer>> playersWithScores;
     private int amountOfTilesInBag;
-    private Deck deck;
+    private ObservableList<Tile> deck;
     private Board board;
 
     public ClientGame() {
         System.out.println("Creating new game");
         this.playersWithScores = new ArrayList<>();
         this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
-        this.deck = new Deck(Player.DECK_SIZE * 2);
+        this.deck = FXCollections.observableArrayList();
+        this.deck.addListener(new ListChangeListener<Tile>() {
+            @Override
+            public void onChanged(Change<? extends Tile> c) {
+                System.out.println("Tile changed: " + c);
+            }
+        });
         this.board = new Board();
     }
 
     public synchronized void addTileToDeck(Tile tile) {
         deck.add(tile);
         if (ClientController.DEBUG) {
-            System.out.println("Added to deck: " + tile.toLongString());
+            System.out.println("[DEBUG] Added to deck: " + tile.toLongString());
+            System.out.println("[DEBUG] Current state of deck: " + deck);
         }
     }
 
@@ -36,15 +46,12 @@ public class ClientGame {
 
     public synchronized void removeTileFromDeck(Tile tile) {
         if (ClientController.DEBUG) {
-            System.out.println("Removing tile from deck: " + tile.toLongString());
+            System.out.println("[DEBUG] Removing tile from deck: " + tile.toLongString());
+            System.out.println("[DEBUG] State of deck before removal: " + deck);
         }
-        for (Tile tile1 : deck) {
-            if (tile1.getColor().equals(tile.getColor()) &&
-                    tile1.getShape().equals(tile.getShape())) {
-                deck.remove(tile1);
-                System.out.println("Lola: " + deck);
-                return;
-            }
+        deck.remove(tile);
+        if (ClientController.DEBUG) {
+            System.out.println("[DEBUG] State of deck after removal: " + deck);
         }
     }
 
@@ -56,7 +63,6 @@ public class ClientGame {
 
     public void placeTile(Tile tile) {
         board.forcePlace(tile);
-        deck.remove(tile);
         amountOfTilesInBag--;
     }
 
@@ -87,6 +93,10 @@ public class ClientGame {
         return amountOfTilesInBag;
     }
 
+    public void decreaseAmountOfTilesInBag(int amount) {
+        amountOfTilesInBag -= amount;
+    }
+
     public synchronized int getScore(String name) throws NonexistingPlayerException {
         Pair<String, Integer> player = getPlayerFromSet(name);
         return player.getValue();
@@ -105,7 +115,7 @@ public class ClientGame {
         return board;
     }
 
-    public Deck getDeck() {
+    public ObservableList<Tile> getDeck() {
         return deck;
     }
 }

@@ -3,10 +3,11 @@
  */
 package nl.tiesdavid.ssproject.online.clientside.ai;
 
+import javafx.collections.ObservableList;
 import nl.tiesdavid.ssproject.game.Board;
-import nl.tiesdavid.ssproject.game.Deck;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.InvalidTilePlacementException;
+import nl.tiesdavid.ssproject.online.clientside.ClientController;
 import nl.tiesdavid.ssproject.online.clientside.ClientGame;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class SmartStrategy implements Strategy {
     }
 
     private ArrayList<Tile> generateFirstMove(ArrayList<Tile> tiles) {
+        if (ClientController.DEBUG) {
+            System.out.println("Generating first move with: " + tiles);
+        }
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
             tile.setX(i);
@@ -45,15 +49,50 @@ public class SmartStrategy implements Strategy {
     }
 
     @Override
-    public ArrayList<Tile> determinePlaceMove(ClientGame game) {
+    public ArrayList<Tile> determinePlaceMove(ClientGame game, ArrayList<ArrayList<Tile>> previousPlaceMoves) {
         System.out.println("Trying to determine a place move.");
+        for (ArrayList<Tile> previousPlaceMove : previousPlaceMoves) {
+            System.out.println("Previous place move: " + previousPlaceMove);
+        }
         Board board = game.getBoard();
-        Deck deck = game.getDeck();
+        ObservableList deck = game.getDeck();
 
         System.out.println("Current state of deck: " + deck.toString());
         System.out.println("Current state of board: " + board.toString());
+        System.out.println("Amount of tiles on the board: " + board.getTiles().size());
 
-        ArrayList<ArrayList<Tile>> sets = AIUtils.findSets(deck);
+        ArrayList<ArrayList<Tile>> sets = AIUtils.findSets(new ArrayList<>(deck));
+
+        if (ClientController.DEBUG) {
+            System.out.println("      Found possible sets: " + sets);
+        }
+
+        ArrayList<Tile> setToRemove = null;
+
+        if (previousPlaceMoves != null) {
+            for (ArrayList<Tile> previousPlaceMove : previousPlaceMoves) {
+                for (ArrayList<Tile> set : sets) {
+                    if (set.size() == previousPlaceMove.size()) {
+                        boolean isPreviousMove = true;
+                        for (Tile tile : set) {
+                            if (!previousPlaceMove.contains(tile)) {
+                                isPreviousMove = false;
+                                continue;
+                            }
+                            if (isPreviousMove) {
+                                setToRemove = set;
+                                break;
+                            }
+                        }
+                    }
+                }
+                while (sets.contains(setToRemove)) {
+                    System.out.println("Removing set: " + setToRemove);
+                    System.out.println(sets.remove(setToRemove));
+                    System.out.println("      Found possible sets: " + sets);
+                }
+            }
+        }
 
         System.out.println("Found sets: " + sets);
 
@@ -63,12 +102,25 @@ public class SmartStrategy implements Strategy {
         }
 
         Collections.sort(sets, (o1, o2) -> Integer.compare(o1.size(), o2.size()));
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            //
+        }
 
-        for (int i = (sets.size() - 1); i >= 0; i++) {
-            ArrayList<Tile> tileList = sets.get(i - 1);
+        int setsSize = sets.size();
+        for (int i = setsSize - 1; i >= 0; i--) {
+            ArrayList<Tile> tileList = sets.get(i);
 
             if (board.isEmpty()) {
-                return generateFirstMove(tileList);
+                ArrayList<Tile> tiles = generateFirstMove(tileList);
+                previousPlaceMoves.add(tiles);
+                return tiles;
+            }
+
+            if (!previousPlaceMoves.contains(tileList)) {
+                System.out.println("Adding to previous move: " + tileList);
+                previousPlaceMoves.add(tileList);
             }
 
             ArrayList<Tile> matchingTiles = findMatchingTiles(board, tileList);

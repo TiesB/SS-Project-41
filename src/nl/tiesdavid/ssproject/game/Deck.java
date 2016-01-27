@@ -7,11 +7,8 @@ package nl.tiesdavid.ssproject.game;
 import java.util.ArrayList;
 
 public class Deck extends ArrayList<Tile> {
-    private int deckSize;
-
-    public Deck(int deckSize) {
-        super(deckSize);
-        this.deckSize = deckSize;
+    public Deck() {
+        super();
     }
 
     public String toUserString() {
@@ -25,7 +22,7 @@ public class Deck extends ArrayList<Tile> {
     }
 
     public Deck getCopy() {
-        Deck newDeck = new Deck(deckSize);
+        Deck newDeck = new Deck();
         for (Tile tile : this) {
             newDeck.add(tile);
         }

@@ -30,7 +30,7 @@ public class OnlineGame extends Game {
         distributeMessage(Protocol.SERVER_TURN_COMMAND + " " + player.getPlayerName());
     }
 
-    private void distributeMessage(String message) {
+    private synchronized void distributeMessage(String message) {
         for (ClientHandler handler : clientHandlers.keySet()) {
             handler.sendMessageToClient(message);
         }
@@ -44,7 +44,21 @@ public class OnlineGame extends Game {
             message += " " + tile.toProtocolForm();
         }
 
+        if (ClientHandler.DEBUG) {
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+        }
+
         distributeMessage(message);
+
+        if (ClientHandler.DEBUG) {
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+        }
     }
 
     @Override
@@ -54,17 +68,26 @@ public class OnlineGame extends Game {
                 + " " + Integer.toString(tiles.size());
 
         distributeMessage(message);
+
+        if (ClientHandler.DEBUG) {
+            System.out.println("Tiles left in bag: " + bag);
+        }
     }
 
     public void place(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         ArrayList<Tile> tilesToBeDealed = this.place(player, tiles);
+        player.addTilesToDeck(tilesToBeDealed);
         player.sendNewTiles(tilesToBeDealed);
+        if (ClientHandler.DEBUG) {
+            System.out.println(player.getPlayerName() + "'s deck: " + player.getDeck());
+        }
     }
 
     public void trade(ClientHandler client, ArrayList<Tile> tiles) throws MoveException {
         OnlinePlayer player = clientHandlers.get(client);
         ArrayList<Tile> tilesToBeDealed = this.trade(player, tiles);
+        player.addTilesToDeck(tilesToBeDealed);
         player.sendNewTiles(tilesToBeDealed);
     }
 
@@ -75,12 +98,18 @@ public class OnlineGame extends Game {
         //TODO
     }
 
-    public void disconnectClient(ClientHandler client) {
+    public OnlinePlayer getPlayer(ClientHandler clientHandler) {
+        return clientHandlers.get(clientHandler);
+    }
+
+    public synchronized void disconnectClient(ClientHandler client) {
+        clientHandlers.remove(client);
         shutdown();
     }
 
-    private void shutdown() {
-        //TODO
+    private synchronized void shutdown() {
+        finish();
+        distributeMessage(Protocol.SERVER_END_GAME_COMMAND);
     }
 
     public ArrayList<ClientHandler> getClientHandlers() {

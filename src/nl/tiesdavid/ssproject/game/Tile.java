@@ -121,9 +121,13 @@ public class Tile {
         this.checked = true;
     }
 
-    public String toProtocolForm() {
-        String string = Integer.toString(this.getShape().user)
+    public String toShortProtocolForm() {
+        return Integer.toString(this.getShape().user)
                 + "," + Integer.toString(this.getColor().user);
+    }
+
+    public String toProtocolForm() {
+        String string = toShortProtocolForm();
         if (this.hasXY()) {
             string += " " + Integer.toString(getX()) + "," + Integer.toString(getY());
         }
@@ -161,19 +165,11 @@ public class Tile {
     public static Tile fromProtocolString(String tileString, String locationString)
             throws UnparsableDataException {
         Tile tile = fromProtocolString(tileString);
-        int x, y;
 
-        char[] locationStringChars = locationString.toCharArray();
+        String[] locationStringChars = locationString.split(",");
 
-        char xChar = locationStringChars[0];
-        char yChar = locationStringChars[2];
-
-        try {
-            x = Integer.parseInt(new String(new char[]{xChar}));
-            y = Integer.parseInt(new String(new char[]{yChar}));
-        } catch (NumberFormatException e) {
-            throw new UnparsableDataException(locationString);
-        }
+        int x = Integer.parseInt(locationStringChars[0]);
+        int y = Integer.parseInt(locationStringChars[1]);
 
         tile.setX(x);
         tile.setY(y);
@@ -199,6 +195,16 @@ public class Tile {
 
     public String toUserString() {
         return "" + color.user + shape.user;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Tile) {
+            Tile tile = (Tile) obj;
+            return getColor().equals(tile.getColor()) && getShape().equals(tile.getShape());
+        } else {
+            return super.equals(obj);
+        }
     }
 
     @Override

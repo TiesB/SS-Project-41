@@ -24,8 +24,12 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import nl.tiesdavid.ssproject.online.clientside.ui.ChatController;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 public class ChatConsole extends Application {
     private static ChatController chatController;
+
+    private ReentrantLock lock = new ReentrantLock();
 
     private static ObservableList<String> messagesList;
     private static ObservableList<String> playersList;
@@ -40,6 +44,7 @@ public class ChatConsole extends Application {
     }
 
     public void sendMessage() {
+        lock.lock();
         Platform.runLater(() -> {
             String message = input.getText();
 
@@ -52,9 +57,11 @@ public class ChatConsole extends Application {
                 chatController.sendGeneralMessage(message);
             }
         });
+        lock.unlock();
     }
 
     private void handleAddMessage() {
+        lock.lock();
         Platform.runLater(() -> {
             if (messagesList.size() == 1) {
                 if (messagesList.get(0).equals("Connected!")) {
@@ -64,48 +71,60 @@ public class ChatConsole extends Application {
 
             chatOutputView.scrollTo(Integer.MAX_VALUE);
         });
+        lock.unlock();
     }
 
     public void addGeneralMessage(String timeStamp, String sender, String message) {
+        lock.lock();
         Platform.runLater(() -> {
             String line = timeStamp + " - " + sender + ": " + message;
             messagesList.add(line);
         });
+        lock.unlock();
 
         handleAddMessage();
     }
 
     public void addPrivateMessage(String timeStamp, String sender, String message) {
+        lock.lock();
         Platform.runLater(() -> {
             String line = "[PRIVATE] " + timeStamp + " - " + sender + ": " + message;
             messagesList.add(line);
         });
+        lock.unlock();
 
         handleAddMessage();
     }
 
     public void addPlayer(String playerName) {
+        lock.lock();
         Platform.runLater(() -> {
             playersList.add(playerName);
         });
+        lock.unlock();
     }
 
     public void removePlayer(String playerName) {
+        lock.lock();
         Platform.runLater(() -> {
             playersList.remove(playerName);
         });
+        lock.unlock();
     }
 
     public void connected() {
+        lock.lock();
         Platform.runLater(() -> {
             messagesList.remove(0);
             messagesList.add("Connected!");
             input.requestFocus();
         });
+        lock.unlock();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        lock.lock();
         primaryStage.setTitle("Chat console");
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -171,6 +190,7 @@ public class ChatConsole extends Application {
 
         root.getChildren().add(gridPane);
         primaryStage.setScene(scene);
+        lock.unlock();
         primaryStage.show();
     }
 }

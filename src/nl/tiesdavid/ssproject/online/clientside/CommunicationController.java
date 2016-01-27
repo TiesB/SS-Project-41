@@ -28,10 +28,12 @@ public class CommunicationController extends Observable {
                         controller.notifyObservers(line);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    System.exit(-1);
+                    System.out.println("Lost connection with the server.");
+                    break;
+                    //System.exit(-1);
                 }
             }
+            System.out.println("STOPPING WITH LISTENING");
         }
     }
 
@@ -60,7 +62,7 @@ public class CommunicationController extends Observable {
             out.newLine();
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace(); //TODO
+            System.out.println("Error in sending message (" + message + "): " + e.getMessage());
         } finally {
             lock.unlock();
         }

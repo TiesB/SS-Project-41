@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Lobby {
-    public static final String[] SERVER_FEATURES = {Protocol.CHALLENGE_FEATURE, Protocol.CHAT_FEATURE, Protocol.DISCONNECT_FEATURE};
+    public static final String[] SERVER_FEATURES = {Protocol.CHALLENGE_FEATURE, Protocol.CHAT_FEATURE};
 
     private Map<String, ClientHandler> namesWithClients;
     private Map<OnlineGame, ArrayList<ClientHandler>> gamesWithClients;
@@ -248,6 +248,7 @@ public class Lobby {
 
     public void disconnectClient(ClientHandler client) {
         namesWithClients.remove(client.getPlayerName());
+        sendMessageToAllClients(Protocol.SERVER_DISCONNECT_COMMAND + " " + client.getPlayerName());
     }
 
     private void sendWelcomeMessage(ClientHandler client) {

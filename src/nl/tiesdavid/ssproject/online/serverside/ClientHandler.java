@@ -34,7 +34,7 @@ public class ClientHandler extends Thread {
         public void run() {
             try {
                 String line = in.readLine();
-                while (!line.equals(Protocol.CLIENT_DISCONNECT_COMMAND)) {
+                while (line != null) {
                     if (!line.equals("")) {
                         System.out.println("Command received: " + line
                                 + " from: " + inetAddress);
@@ -45,6 +45,7 @@ public class ClientHandler extends Thread {
             } catch (IOException | NullPointerException e) {
                 System.out.println("Lost connection with "
                         + clientHandler.getPlayerName() + " @ " + inetAddress);
+                e.printStackTrace(System.out);
             } finally {
                 clientHandler.disconnect();
             }
@@ -55,7 +56,6 @@ public class ClientHandler extends Thread {
 
     public static final int NONEXISTING_PLAYER_ERROR = 0;
     public static final int PLAYER_UNSUPPORTED_COMMAND_ERROR = -429;
-    public static final String ERROR_COMMAND = "error";
 
     private final Lobby lobby;
     private OnlineGame currentGame;
@@ -100,7 +100,10 @@ public class ClientHandler extends Thread {
             out.newLine();
             out.flush();
         } catch (IOException e) {
-            disconnect();
+            if (currentGame != null) {
+                disconnect();
+            }
+            currentGame = null;
         }
     }
 
@@ -257,12 +260,13 @@ public class ClientHandler extends Thread {
     }
 
     private void placeTiles(String[] messageParts) {
-        printDebugMessage("Placing tiles...");
         if (messageParts.length % 2 != 1 || messageParts.length < 3
                 || currentGame == null) {
             sendWrongCommandMessage();
             return;
         }
+
+        printDebugMessage("Placing tiles...");
 
         ArrayList<Tile> tiles = new ArrayList<>();
         
@@ -270,10 +274,12 @@ public class ClientHandler extends Thread {
             String tileString = messageParts[i];
             String locationString = messageParts[i + 1];
             try {
+                printDebugMessage("Going to parse tile with: " + tileString + " @ " + locationString);
                 Tile tile = Tile.fromProtocolString(tileString, locationString);
                 printDebugMessage("Tile: " + tile.toLongString());
                 tiles.add(tile);
             } catch (UnparsableDataException e) {
+                printDebugMessage("Unparsable data: " + tileString + " @ " + locationString);
                 sendWrongCommandMessage();
                 return;
             }
@@ -306,9 +312,17 @@ public class ClientHandler extends Thread {
             }
         }
 
+        if (DEBUG) {
+            System.out.println("[DEBUG] Trying to trade tiles: " + tiles);
+        }
+
         try {
-            currentGame.trade(this, tiles); //TODO
+            currentGame.trade(this, tiles);
         } catch (MoveException e) {
+            if (DEBUG) {
+                System.out.println("[DEBUG] Actual deck: " +getCurrentGame().getPlayer(this).getDeck());
+                System.out.println("[DEBUG] " + e.getMessage());
+            }
             sendWrongCommandMessage();
         }
     }
@@ -366,8 +380,7 @@ public class ClientHandler extends Thread {
     }
 
     private void sendErrorMessage(int error) {
-        //TODO: Use variable error message.
-        sendMessageToClient(ERROR_COMMAND + " " + Integer.toString(error));
+        sendMessageToClient(Protocol.SERVER_ERROR_COMMAND + " " + Integer.toString(error));
     }
 
     private void setPlayerName(String newName) throws UnacceptableNameException {

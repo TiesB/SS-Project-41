@@ -3,8 +3,8 @@
  */
 package nl.tiesdavid.ssproject.online.clientside.ui;
 
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
-import nl.tiesdavid.ssproject.game.Deck;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesdavid.ssproject.online.Protocol;
@@ -118,7 +118,7 @@ public class TUIController extends Thread implements Observer {
 
     private void printDeck() {
         String message = "Your current deck is:";
-        Deck deck = clientController.getCurrentGame().getDeck();
+        ObservableList deck = clientController.getCurrentGame().getDeck();
         for (int i = 0; i < deck.size(); i++) {
             message += " (" + Integer.toString(i) + ") " + deck.get(i).toString();
         }
@@ -169,7 +169,7 @@ public class TUIController extends Thread implements Observer {
 
     private ArrayList<Tile> readTiles() {
         ArrayList<Tile> tiles = new ArrayList<>();
-        Deck tempDeck = clientController.getCurrentGame().getDeck().getCopy();
+        ArrayList<Tile> tempDeck = new ArrayList<>(clientController.getCurrentGame().getDeck());
         while (tiles.size() < 6
                 && tiles.size() < clientController.getCurrentGame().getAmountOfTilesInBag()) {
             printMessageLine(false, "Which tile do you want to place?");

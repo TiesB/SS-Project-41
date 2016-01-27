@@ -30,7 +30,7 @@ public class ChatController extends Thread implements Observer {
     }
 
     public void close() {
-        clientController.disconnect();
+        clientController.close();
     }
 
     @Override
