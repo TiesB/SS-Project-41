@@ -25,6 +25,9 @@ public class CommunicationController extends Observable {
                     String line = in.readLine();
                     if (line != null) {
                         if (!line.equals("")) {
+                            if (ClientController.DEBUG) {
+                                System.out.println("[DEBUG] Received: " + line);
+                            }
                             controller.setChanged();
                             controller.notifyObservers(line);
                         }
@@ -32,10 +35,10 @@ public class CommunicationController extends Observable {
                 } catch (IOException e) {
                     System.out.println("Lost connection with the server.");
                     break;
-                    //System.exit(-1);
                 }
             }
-            System.out.println("STOPPING WITH LISTENING");
+            System.out.println("Exiting the program...");
+            System.exit(0);
         }
     }
 

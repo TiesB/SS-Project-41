@@ -42,7 +42,7 @@ public class Lobby {
         }
 
         //TODO: Decide whether sender should receive own message.
-        receivers.stream().filter(client -> client != sender).forEach(client -> { //TODO: Decide whether sender should receive own message.
+        receivers.stream().forEach(client -> { //TODO: Decide whether sender should receive own message.
             client.sendMessageToClient(Protocol.SERVER_GENERAL_CHAT_MESSAGE_COMMAND + " "
                     + sender.getPlayerName() + " " + message);
         });
@@ -248,6 +248,15 @@ public class Lobby {
 
     public void disconnectClient(ClientHandler client) {
         namesWithClients.remove(client.getPlayerName());
+        for (ArrayList<ClientHandler> clientHandlerArrayList :
+                waitingClientsByRequestedNo.values()) {
+            for (ClientHandler clientHandler : clientHandlerArrayList) {
+                if (clientHandler.equals(client)) {
+                    clientHandlerArrayList.remove(client);
+                    break;
+                }
+            }
+        }
         sendMessageToAllClients(Protocol.SERVER_DISCONNECT_COMMAND + " " + client.getPlayerName());
     }
 

@@ -9,18 +9,14 @@ import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
 import nl.tiesdavid.ssproject.online.clientside.ClientGame;
-import nl.tiesdavid.ssproject.online.serverside.ClientHandler;
 
 import java.util.*;
 
 public class AIPlayer extends Thread implements Observer {
-    public static final boolean YOEP = false;
-    public static final boolean LOCAL = false;
-
     private final ClientController clientController;
     private final Scanner scanner;
 
-    private final String localName;
+    private String localName;
     private Strategy strategy;
 
     private ArrayList<ArrayList<Tile>> previousPlaceMoves;
@@ -29,23 +25,20 @@ public class AIPlayer extends Thread implements Observer {
         this.clientController = clientController;
         this.scanner = new Scanner(System.in);
         this.previousPlaceMoves = new ArrayList<>();
-
-        if (YOEP || LOCAL) {
-            this.localName = Integer.toString(new Random(System.currentTimeMillis()).nextInt());
-        } else {
-            this.localName = "xXx_Optic_Qwirkle_" +
-                    Integer.toString(new Random(System.currentTimeMillis()).nextInt()) +
-                    "_xXx";
-        }
     }
 
     private void makeSingleTileMove() {
         Random random = new Random(System.currentTimeMillis());
         ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
-        Tile tile = deck.get(random.nextInt(deck.size()));
-        ArrayList<Tile> tiles = new ArrayList<>();
-        tiles.add(tile);
-        clientController.sendTradeCommand(tiles);
+        try {
+            Tile tile = deck.get(random.nextInt(deck.size()));
+            ArrayList<Tile> tiles = new ArrayList<>();
+            tiles.add(tile);
+            clientController.sendTradeCommand(tiles);
+        } catch (IllegalArgumentException e) {
+            //Shouldn't happen because then the deck would be empty.
+            //The server should have stopped the game before a deck is empty.
+        }
     }
 
     private void makeMove() {
@@ -56,59 +49,32 @@ public class AIPlayer extends Thread implements Observer {
         ArrayList<Tile> tilesToBePlaced = strategy.
                 determinePlaceMove(game, previousPlaceMoves);
         if (tilesToBePlaced == null) {
-            int amountPossibleToTrade = game.getAmountOfTilesInBag();
-            if (amountPossibleToTrade >= game.getDeck().size()) {
-                tradeAllTiles();
-            } else if (amountPossibleToTrade < game.getDeck().size()) {
-                if (amountPossibleToTrade > 0) {
-                    tradeTiles(amountPossibleToTrade);
-                } else {
-                    previousPlaceMoves.clear();
-                    makeSingleTileMove();
-                }
-            }
+            makeSingleTileMove();
         } else {
             clientController.sendPlaceCommand(tilesToBePlaced);
         }
     }
 
-    private void tradeTiles(int amount) {
-        ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
-        ArrayList<Tile> tilesToBeTraded = new ArrayList<>();
-        Random random = new Random(System.currentTimeMillis());
-        for (int i = 0; i < amount; i++) {
-            Tile tile = deck.get(random.nextInt(amount));
-            if (!tilesToBeTraded.contains(tile)) {
-                tilesToBeTraded.add(tile);
-            }
-        }
-        clientController.sendTradeCommand(tilesToBeTraded);
-    }
-
-    private void tradeAllTiles() {
-        System.out.println("Trading all tiles.");
-        ObservableList<Tile> deck = clientController.getCurrentGame().getDeck();
-        System.out.println("Trading deck: " + deck);
-        clientController.sendTradeCommand(new ArrayList<>(deck));
-    }
-
     private void init() {
         askForServerAndConnect();
+        setUsername();
         askAmountPlayersAndStrategy();
     }
 
     private void askForServerAndConnect() {
-        if (YOEP) {
-            clientController.parseGeneralStartupResult(this, localName, "130.89.136.146", 2727);
-        } else if (LOCAL) {
-            clientController.parseGeneralStartupResult(this, localName, "127.0.0.1", 3339);
-        } else {
+        while (!clientController.isConnected()) {
             printMessage(false, "Enter the server IP address: ");
             String serverIP = readString();
             printMessage(false, "Enter the server port: ");
             int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
-            clientController.parseGeneralStartupResult(this, localName, serverIP, serverPort);
+            clientController.parseGeneralStartupResult(this, serverIP, serverPort);
         }
+    }
+
+    private void setUsername() {
+        localName = "TiesB_Qwirkle_" +
+                Integer.toString(new Random(System.currentTimeMillis()).nextInt(10));
+        clientController.setUsername(localName);
     }
 
     private void askAmountPlayersAndStrategy() {
@@ -123,14 +89,10 @@ public class AIPlayer extends Thread implements Observer {
                     strategy = new BruteStrategy();
             }
         }
-        if (YOEP || LOCAL) {
-            clientController.waitForGame(2);
-        } else {
-            printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
-            int amount = readInt("Invalid amount. Please try again.",
-                    Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
-            clientController.waitForGame(amount);
-        }
+        printMessage(false, "Enter the amount of players you want to play with (2, 3 or 4): ");
+        int amount = readInt("Invalid amount. Please try again.",
+                Game.MIN_AMOUNT_OF_PLAYERS - 1, Game.MAX_AMOUNT_OF_PLAYERS + 1);
+        clientController.sendJoinCommand(amount);
     }
 
     private void printMessage(boolean notification, String message) {
@@ -169,22 +131,10 @@ public class AIPlayer extends Thread implements Observer {
     }
 
     private void receiveTurnCommand(String[] messageParts) {
+        previousPlaceMoves.clear();
         String player = messageParts[1];
         if (player.equals(localName)) {
-            if (ClientHandler.DEBUG) {
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println("New move.");
-            }
             makeMove();
-            if (ClientHandler.DEBUG) {
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                System.out.println();
-            }
         }
     }
 
@@ -193,42 +143,30 @@ public class AIPlayer extends Thread implements Observer {
             return;
         }
 
-        for (int i = 0; i < messageParts.length; i++) {
-            System.out.println(i + ": " + messageParts[i]);
-        }
-
-        int error = -1;
+        int error;
         try {
             error = Integer.parseInt(messageParts[1]);
         } catch (NumberFormatException e) {
             return;
         }
-        if ((error == 0 || error == 1) && !previousPlaceMoves.isEmpty()) {
-            System.out.println("Making move because of error.");
-            makeMove();
+        switch (error) {
+            case 1:
+                if (ClientController.DEBUG) {
+                    System.out.println("[DEBUG] Making move because of error.");
+                }
+                makeMove();
+                break;
+            case 2:
+                setUsername();
         }
     }
 
     private void receivePlacedCommand(String[] messageParts) {
-        if (messageParts.length < 5) {
-            return;
-        }
-
-        String player = messageParts[1];
-        if (player.equals(localName)) {
-            previousPlaceMoves.clear();
-        }
+        previousPlaceMoves.clear();
     }
 
     private void receiveTradedCommand(String[] messageParts) {
-        if (messageParts.length < 3) {
-            return;
-        }
-
-        String player = messageParts[1];
-        if (player.equals(localName)) {
-            previousPlaceMoves.clear();
-        }
+        previousPlaceMoves.clear();
     }
 
     @Override

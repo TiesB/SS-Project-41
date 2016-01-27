@@ -30,7 +30,8 @@ public class Board {
         while (!tilesToBePlaced.isEmpty() && tries < 720) {
             Tile tile = tilesToBePlaced.get(0);
             try {
-                score += placeTile(tile);
+                int tileScore = placeTile(tile);
+                score += tileScore;
             } catch (InvalidTilePlacementException e) {
                 tilesToBePlaced.add(tilesToBePlaced.size(), tile);
             } finally {
@@ -73,16 +74,17 @@ public class Board {
         return getScore(tile);
     }
 
-    public void tryPlace(ArrayList<Tile> checkTiles) throws InvalidTilePlacementException {
+    public int tryPlace(ArrayList<Tile> checkTiles) throws InvalidTilePlacementException {
         Board board = this.deepCopy();
         ArrayList<Tile> tilesToBePlaced = new ArrayList<>();
         tilesToBePlaced.addAll(checkTiles);
 
+        int score = 0;
         int tries = 0;
         while (!tilesToBePlaced.isEmpty() && tries < 720) {
             Tile tile = tilesToBePlaced.get(0);
             try {
-                board.placeTile(tile);
+                score += board.placeTile(tile);
             } catch (InvalidTilePlacementException e) {
                 tilesToBePlaced.add(tilesToBePlaced.size(), tile);
             } finally {
@@ -94,6 +96,8 @@ public class Board {
         if (!tilesToBePlaced.isEmpty()) {
             throw new InvalidTilePlacementException();
         }
+
+        return score;
     }
 
     protected boolean checkNeighboringTiles(Tile tile) {

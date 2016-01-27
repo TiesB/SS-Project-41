@@ -5,6 +5,7 @@
 package nl.tiesdavid.ssproject.game;
 
 import nl.tiesdavid.ssproject.game.exceptions.*;
+import nl.tiesdavid.ssproject.online.serverside.ClientHandler;
 
 import java.util.*;
 
@@ -87,6 +88,9 @@ public class Game extends Thread {
             while (running) {
                 while (iterator.hasNext() && running) {
                     moveFinished = false;
+                    if (ClientHandler.DEBUG) {
+                        System.out.println("New move time!!");
+                    }
                     takeTurn(currentPlayer);
                     while (!moveFinished) {
                         try {
@@ -102,6 +106,9 @@ public class Game extends Thread {
                     }
 
                     currentPlayer = iterator.next();
+                }
+                if (ClientHandler.DEBUG) {
+                    System.out.println("[DEBUG] End of iterator.");
                 }
                 iterator = playersWithScores.keySet().iterator();
             }
@@ -159,6 +166,8 @@ public class Game extends Thread {
         }
     }
 
+
+
     public synchronized ArrayList<Tile> place(Player player, ArrayList<Tile> tiles)
             throws MoveException {
         if (!currentPlayer.equals(player)) {
@@ -201,6 +210,7 @@ public class Game extends Thread {
         int amount = tiles.size();
 
         if (amount > amountOfTilesLeft()) {
+
             throw new NoTilesLeftInBagException();
         }
 

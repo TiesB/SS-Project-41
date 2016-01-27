@@ -4,6 +4,7 @@
 package nl.tiesdavid.ssproject.online.clientside;
 
 import javafx.util.Pair;
+import nl.tiesdavid.ssproject.game.Player;
 import nl.tiesdavid.ssproject.game.Tile;
 import nl.tiesdavid.ssproject.game.exceptions.NonexistingPlayerException;
 import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
@@ -21,7 +22,7 @@ import java.util.*;
 public class ClientController extends Observable implements Observer {
     public static final boolean DEBUG = true;
 
-    private static final boolean USE_AI = true;
+    private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
 
     private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
@@ -30,6 +31,9 @@ public class ClientController extends Observable implements Observer {
     private CommunicationController commOps;
     private final ArrayList<String> serverFeatures;
     private final Map<String, ArrayList<String>> playersInServer;
+
+    // UI
+    ChatController chatController;
 
     // Game
     private String username;
@@ -47,13 +51,9 @@ public class ClientController extends Observable implements Observer {
     }
 
     private void startChat() {
-        if (!AIPlayer.YOEP && !AIPlayer.LOCAL) {
-            if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
-                ChatController chatController = new ChatController(this);
-                chatController.start();
-                addObserver(chatController); // TODO: 27-1-2016 Look at serverFeatures
-            }
-        }
+        chatController = new ChatController(this);
+        chatController.start();
+        addObserver(chatController); // TODO: 27-1-2016 Look at serverFeatures
     }
 
     private void startUI() {
@@ -74,21 +74,14 @@ public class ClientController extends Observable implements Observer {
         // TODO: 24-1-2016 Implement ChatController
     }
 
-    private void initConnection() {
-        if (commOps != null) {
-            sendHelloCommand();
-        }
-    }
-
     public void close() {
         System.exit(0);
     }
 
-    public void parseGeneralStartupResult(Observer observer, String newUsername,
+    public void parseGeneralStartupResult(Observer observer,
                                            String serverIP, int serverPort) {
         try {
-            connect(newUsername, serverIP, serverPort);
-            initConnection();
+            connect(serverIP, serverPort);
         } catch (IOException e) {
             deleteObserver(observer);
             startUI();
@@ -102,14 +95,16 @@ public class ClientController extends Observable implements Observer {
 
         int serverPort = Integer.parseInt(result.get(2));
 
-        parseGeneralStartupResult(guiController, result.get(0), result.get(1), serverPort);
+        parseGeneralStartupResult(guiController, result.get(1), serverPort);
+        setUsername(result.get(0));
     }
 
-    public void waitForGame(int no) {
-        sendJoinCommand(no);
+    public void setUsername(String newUsername) {
+        username = newUsername;
+        sendHelloCommand();
     }
 
-    private void connect(String newUsername, String serverIP, int serverPort) throws IOException {
+    private void connect(String serverIP, int serverPort) throws IOException {
         InetAddress serverIPAddress;
         Socket socket;
 
@@ -117,13 +112,16 @@ public class ClientController extends Observable implements Observer {
 
         socket = new Socket(serverIPAddress, serverPort);
 
-        this.username = newUsername;
-
         setSocket(socket);
     }
 
     private void setSocket(Socket socket) throws IOException {
-        this.commOps = new CommunicationController(this, socket);
+        try {
+            this.commOps = new CommunicationController(this, socket);
+        } catch (IOException e) {
+            this.commOps = null;
+            throw e;
+        }
     }
 
     public String getUsername() {
@@ -136,6 +134,10 @@ public class ClientController extends Observable implements Observer {
 
     public ArrayList<Pair<String, Integer>> getPreviousScore() {
         return previousScore;
+    }
+
+    public boolean isConnected() {
+        return commOps != null;
     }
 
     // Sending commands
@@ -206,7 +208,9 @@ public class ClientController extends Observable implements Observer {
     // Receiving commands
     private void receiveWelcomeCommand(String[] messageParts) {
         for (int i = 1; i < messageParts.length; i++) {
-            System.out.println("Added server featue: " + messageParts[i]);
+            if (DEBUG) {
+                System.out.println("[DEBUG] Added server feature: " + messageParts[i]);
+            }
             serverFeatures.add(messageParts[i]);
         }
     }
@@ -243,7 +247,7 @@ public class ClientController extends Observable implements Observer {
             currentGame = new ClientGame();
             for (String player : players) {
                 currentGame.addPlayer(player);
-                currentGame.decreaseAmountOfTilesInBag(6);
+                currentGame.decreaseAmountOfTilesInBag(Player.DECK_SIZE);
             }
         }
     }
@@ -346,9 +350,6 @@ public class ClientController extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (DEBUG) {
-            System.out.println("[DEBUG] Received: " + arg);
-        }
         if (arg instanceof String) {
             String[] parts = ((String) arg).split(" ");
             String command = parts[0];

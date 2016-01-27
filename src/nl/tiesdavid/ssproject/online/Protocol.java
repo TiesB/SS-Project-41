@@ -57,5 +57,5 @@ public class Protocol {
     // Error codes
     public static final int NAME_ALREADY_EXISTS_ERROR = 2;
     public static final int UNACCEPTABLE_NAME_ERROR = 2;
-    public static final int WRONG_COMMAND_ERROR = 0;
+    public static final int WRONG_COMMAND_ERROR = 1;
 }

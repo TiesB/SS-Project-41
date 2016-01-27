@@ -136,6 +136,10 @@ public class BruteStrategy implements Strategy {
             }
         }
 
+        if (ClientController.DEBUG) {
+            System.out.println("Possible moves: " + possibleMoves);
+        }
+
         if (possibleMoves.size() == 0) {
             return null;
         } else {
@@ -165,6 +169,8 @@ public class BruteStrategy implements Strategy {
         int y = tile.getY();
         int x = tile.getX();
         ArrayList<Tile> tilesWithXY;
+        ArrayList<Tile> result = null;
+        int highestScore = -1;
         for (Direction direction : Direction.values()) {
             switch (direction) {
                 case UP:
@@ -175,9 +181,12 @@ public class BruteStrategy implements Strategy {
                         tile1.setX(x);
                     }
                     try {
-                        board.tryPlace(tilesWithXY);
+                        int score = board.tryPlace(tilesWithXY);
+                        if (score > highestScore) {
+                            highestScore = score;
+                            result = tilesWithXY;
+                        }
                         System.out.println("Up placement possible");
-                        return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
                         System.out.println("Up placement not possible.");
                     }
@@ -190,7 +199,11 @@ public class BruteStrategy implements Strategy {
                         tile1.setX(x);
                     }
                     try {
-                        board.tryPlace(tilesWithXY);
+                        int score = board.tryPlace(tilesWithXY);
+                        if (score > highestScore) {
+                            highestScore = score;
+                            result = tilesWithXY;
+                        }
                         System.out.println("Down placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
@@ -205,7 +218,11 @@ public class BruteStrategy implements Strategy {
                         tile1.setX(x - i - 1);
                     }
                     try {
-                        board.tryPlace(tilesWithXY);
+                        int score = board.tryPlace(tilesWithXY);
+                        if (score > highestScore) {
+                            highestScore = score;
+                            result = tilesWithXY;
+                        }
                         System.out.println("Left placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
@@ -220,7 +237,11 @@ public class BruteStrategy implements Strategy {
                         tile1.setX(x);
                     }
                     try {
-                        board.tryPlace(tilesWithXY);
+                        int score = board.tryPlace(tilesWithXY);
+                        if (score > highestScore) {
+                            highestScore = score;
+                            result = tilesWithXY;
+                        }
                         System.out.println("Right placement possible");
                         return tilesWithXY;
                     } catch (InvalidTilePlacementException e) {
@@ -229,7 +250,6 @@ public class BruteStrategy implements Strategy {
                     break;
             }
         }
-        System.out.println("No placement possible for tile: " + tile.toLongString());
-        return null;
+        return result;
     }
 }

@@ -27,6 +27,11 @@ public class TUIController extends Thread implements Observer {
     public void run() {
         scanner = new Scanner(System.in);
         init();
+        try {
+            Thread.sleep(100); // So that the
+        } catch (InterruptedException ignored) {
+        }
+        askIfPlayerWantsToJoin();
     }
 
     private void init() {
@@ -35,7 +40,14 @@ public class TUIController extends Thread implements Observer {
         String serverIP = readString();
         printMessage(false, "Enter the server port: ");
         int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
-        clientController.parseGeneralStartupResult(this, username, serverIP, serverPort);
+        clientController.parseGeneralStartupResult(this, serverIP, serverPort);
+        clientController.setUsername(username);
+    }
+
+    private void askIfPlayerWantsToJoin() {
+        printMessage(false, "With how many players would you like to play? ");
+        int amount = readInt("That's not a valid amount. Choose 2-4.", 1, 5);
+        clientController.sendJoinCommand(amount);
     }
 
     private void takeTurn() {
@@ -201,6 +213,7 @@ public class TUIController extends Thread implements Observer {
         System.out.println(e.getMessage());
     }
 
+    // TODO: 27-1-2016 Fix that tui still receives message when asking for input.
 
     private void receiveWelcomeCommand(String[] messageParts) {
         printMessageLine(true, "You have succesfully joined the server.");
@@ -216,7 +229,8 @@ public class TUIController extends Thread implements Observer {
         for (int i = 1; i < messageParts.length; i++) {
             String part = messageParts[i];
             if (!part.toLowerCase().equals(Protocol.CHAT_FEATURE)
-                    && !part.toLowerCase().equals(Protocol.CHALLENGE_FEATURE)) {
+                    && !part.toLowerCase().equals(Protocol.CHALLENGE_FEATURE)
+                    && !part.toLowerCase().equals(Protocol.LEADERBOARD_FEATURE)) {
                 currentPlayer = part;
                 playersAdded++;
                 if (!playersWithFeatures.containsKey(currentPlayer)) {

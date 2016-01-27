@@ -111,7 +111,7 @@ public class OnlineGame extends Game {
         shutdown();
     }
 
-    private synchronized void shutdown() {
+    public synchronized void shutdown() {
         finish();
         distributeMessage(Protocol.SERVER_END_GAME_COMMAND);
     }

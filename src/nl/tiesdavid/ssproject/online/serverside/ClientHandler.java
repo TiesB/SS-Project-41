@@ -323,6 +323,9 @@ public class ClientHandler extends Thread {
                 System.out.println("[DEBUG] Actual deck: " +getCurrentGame().getPlayer(this).getDeck());
                 System.out.println("[DEBUG] " + e.getMessage());
             }
+            if (e instanceof NoTilesLeftInBagException) {
+                currentGame.shutdown();
+            }
             sendWrongCommandMessage();
         }
     }
@@ -384,7 +387,8 @@ public class ClientHandler extends Thread {
     }
 
     private void setPlayerName(String newName) throws UnacceptableNameException {
-        if (newName.contains(" ") || newName.contains("/") || newName.contains("\\")) {
+        if (newName.contains(" ") || newName.contains("/") || newName.contains("\\")
+                || newName.toLowerCase().equals("you")) {
             throw new UnacceptableNameException(newName);
         }
         this.name = newName;
