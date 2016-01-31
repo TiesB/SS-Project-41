@@ -7,25 +7,20 @@ import nl.tiesb.ssproject.game.Tile;
 import nl.tiesb.ssproject.game.Deck;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AIUtils {
     private static SortedSet<Tile> findTilesAlike(Deck deck, Tile tile, Tile.Color color) {
         TreeSet<Tile> result = new TreeSet<>(Tile.tileComparator);
-        for (Tile checkTile : deck) {
-            if (!checkTile.equals(tile) && checkTile.getColor().equals(color)) {
-                result.add(checkTile);
-            }
-        }
+        result.addAll(deck.stream().filter(checkTile -> !checkTile.equals(tile) &&
+                checkTile.getColor().equals(color)).collect(Collectors.toList()));
         return result;
     }
 
     private static SortedSet<Tile> findTilesAlike(Deck deck, Tile tile, Tile.Shape shape) {
         TreeSet<Tile> result = new TreeSet<>(Tile.tileComparator);
-        for (Tile checkTile : deck) {
-            if (!checkTile.equals(tile) && checkTile.getShape().equals(shape)) {
-                result.add(checkTile);
-            }
-        }
+        result.addAll(deck.stream().filter(checkTile -> !checkTile.equals(tile) &&
+                checkTile.getShape().equals(shape)).collect(Collectors.toList()));
         return result;
     }
 
@@ -33,24 +28,16 @@ public class AIUtils {
         ArrayList<ArrayList<Tile>> result = new ArrayList<>();
 
         for (Tile.Color color : Tile.Color.values()) {
-            ArrayList<Tile> colorList = new ArrayList<>();
-            for (Tile tile : deck) {
-                if (tile.getColor().equals(color)) {
-                    colorList.add(tile);
-                }
-            }
+            ArrayList<Tile> colorList = deck.stream().filter(tile ->
+                    tile.getColor().equals(color)).collect(Collectors.toCollection(ArrayList::new));
             if (colorList.size() > 0) {
                 result.add(colorList);
             }
         }
 
         for (Tile.Shape shape : Tile.Shape.values()) {
-            ArrayList<Tile> shapeList = new ArrayList<>();
-            for (Tile tile : deck) {
-                if (tile.getShape().equals(shape)) {
-                    shapeList.add(tile);
-                }
-            }
+            ArrayList<Tile> shapeList = deck.stream().filter(tile ->
+                    tile.getShape().equals(shape)).collect(Collectors.toCollection(ArrayList::new));
             if (shapeList.size() > 0) {
                 result.add(shapeList);
             }

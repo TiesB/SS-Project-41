@@ -11,9 +11,13 @@ import nl.tiesb.ssproject.game.exceptions.ExistingNameException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Lobby {
-    public static final String[] SERVER_FEATURES = {Protocol.CHALLENGE_FEATURE, Protocol.CHAT_FEATURE};
+    public static final String[] SERVER_FEATURES = {
+        Protocol.CHALLENGE_FEATURE,
+        Protocol.CHAT_FEATURE
+    };
 
     private Map<String, ClientHandler> namesWithClients;
     private Map<OnlineGame, ArrayList<ClientHandler>> gamesWithClients;
@@ -41,11 +45,9 @@ public class Lobby {
             receivers = clientsInLobby;
         }
 
-        //TODO: Decide whether sender should receive own message.
-        receivers.stream().forEach(client -> { //TODO: Decide whether sender should receive own message.
-            client.sendMessageToClient(Protocol.SERVER_GENERAL_CHAT_MESSAGE_COMMAND + " "
-                    + sender.getPlayerName() + " " + message);
-        });
+        receivers.stream().forEach(client ->
+                client.sendMessageToClient(Protocol.SERVER_GENERAL_CHAT_MESSAGE_COMMAND + " "
+                + sender.getPlayerName() + " " + message));
     }
 
     public void sendPrivateChatMessage(ClientHandler sender, String receiver, String message)
@@ -120,7 +122,9 @@ public class Lobby {
             client.sendWrongCommandMessage();
             return;
         }
-        waitingClientsByRequestedNo.values().stream().filter(clientHandlers -> clientHandlers.contains(client)).forEach(clientHandlers -> clientHandlers.remove(client));
+        waitingClientsByRequestedNo.values().stream().filter(clientHandlers ->
+                clientHandlers.contains(client)).forEach(clientHandlers ->
+                clientHandlers.remove(client));
 
         challenge.playerAccepts(client);
         challenge.getCreator()
@@ -165,7 +169,9 @@ public class Lobby {
     }
 
     private void checkWaitingPlayers() {
-        waitingClientsByRequestedNo.keySet().stream().filter(requestedNo -> waitingClientsByRequestedNo.get(requestedNo).size() == requestedNo).forEach(this::startWaitingPlayersGame);
+        waitingClientsByRequestedNo.keySet().stream().filter(requestedNo ->
+                waitingClientsByRequestedNo.get(requestedNo).size() == requestedNo).
+                forEach(this::startWaitingPlayersGame);
     }
 
     private void startWaitingPlayersGame(int requestedNo) {
@@ -241,15 +247,10 @@ public class Lobby {
 
     public void endGame(OnlineGame game) {
         ArrayList<ClientHandler> handlers = gamesWithClients.get(game);
-        for (ClientHandler handler : handlers) {
-            handler.disconnectFromGame();
-        }
+        handlers.forEach(ClientHandler::disconnectFromGame);
 
-        for (ClientHandler handler : handlers) {
-            if (namesWithClients.containsValue(handler)) {
-                clientsInLobby.add(handler);
-            }
-        }
+        clientsInLobby.addAll(handlers.stream().filter(handler ->
+                namesWithClients.containsValue(handler)).collect(Collectors.toList()));
         gamesWithClients.remove(game);
     }
 

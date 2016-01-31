@@ -24,12 +24,9 @@ public class ClientGame {
         this.playersWithScores = new ArrayList<>();
         this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
         this.deck = FXCollections.observableArrayList();
-        this.deck.addListener(new ListChangeListener<Tile>() {
-            @Override
-            public void onChanged(Change<? extends Tile> c) {
-                if (ClientController.DEBUG) {
-                    System.out.println("[DEBUG] Tile changed: " + c);
-                }
+        this.deck.addListener((ListChangeListener<Tile>) c -> {
+            if (ClientController.DEBUG) {
+                System.out.println("[DEBUG] Tile changed: " + c);
             }
         });
         this.board = new Board();
@@ -59,9 +56,7 @@ public class ClientGame {
     }
 
     public void removeTilesFromDeck(ArrayList<Tile> tiles) {
-        for (Tile tile : tiles) {
-            removeTileFromDeck(tile);
-        }
+        tiles.forEach(this::removeTileFromDeck);
     }
 
     public void placeTile(Tile tile) {

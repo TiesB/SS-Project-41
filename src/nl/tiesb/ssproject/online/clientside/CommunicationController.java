@@ -3,6 +3,8 @@
  */
 package nl.tiesb.ssproject.online.clientside;
 
+import nl.tiesb.ssproject.online.clientside.ui.ChatController;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class CommunicationController extends Observable {
                     if (line != null) {
                         if (!line.equals("")) {
                             if (ClientController.DEBUG) {
-                                System.out.println("[DEBUG] Observers: " + controller.countObservers());
+                                System.out.println("[DEBUG] Observers: " +
+                                        controller.countObservers());
                                 System.out.println("[DEBUG] Received: " + line);
                             }
                             controller.setChanged();
@@ -62,9 +65,15 @@ public class CommunicationController extends Observable {
         new Reader(this, in).start();
 
         ArrayList<Observer> clientControllerObservers = clientController.getObservers();
+        ArrayList<Observer> remainingObservers = new ArrayList<>();
         for (Observer observer : clientControllerObservers) {
-            addObserver(observer);
+            if (!(observer instanceof ChatController)) {
+                remainingObservers.add(observer);
+            } else {
+                addObserver(observer);
+            }
         }
+        remainingObservers.forEach(this::addObserver);
 
         clientController.setCommOps(this);
         setChanged();

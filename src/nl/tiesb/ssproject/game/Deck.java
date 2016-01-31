@@ -5,6 +5,7 @@
 package nl.tiesb.ssproject.game;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Deck extends ArrayList<Tile> {
     public Deck() {
@@ -22,10 +23,7 @@ public class Deck extends ArrayList<Tile> {
     }
 
     public Deck getCopy() {
-        Deck newDeck = new Deck();
-        for (Tile tile : this) {
-            newDeck.add(tile);
-        }
+        Deck newDeck = this.stream().collect(Collectors.toCollection(Deck::new));
         return newDeck;
     }
 

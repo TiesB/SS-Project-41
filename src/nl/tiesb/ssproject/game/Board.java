@@ -21,11 +21,12 @@ public class Board {
         minX = 1; maxX = 0; minY = 0; maxY = 0;
     }
 
-    public synchronized int placeTiles(ArrayList<Tile> tiles) throws InvalidTilePlacementException {
+    public synchronized int placeTiles(ArrayList<Tile> newTiles)
+            throws InvalidTilePlacementException {
         int score = 0;
 
         ArrayList<Tile> tilesToBePlaced = new ArrayList<>();
-        tilesToBePlaced.addAll(tiles);
+        tilesToBePlaced.addAll(newTiles);
 
         int tries = 0;
         while (!tilesToBePlaced.isEmpty() && tries < 720) {
@@ -337,9 +338,7 @@ public class Board {
 
     public Board deepCopy() {
         Board board = new Board();
-        for (Tile tile : tiles) {
-            board.forcePlace(tile);
-        }
+        tiles.forEach(board::forcePlace);
         return board;
     }
 

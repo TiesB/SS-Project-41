@@ -66,7 +66,8 @@ public class AIPlayer extends Thread implements Observer {
             printMessage(false, "Enter the server IP address: ");
             String serverIP = readString();
             printMessage(false, "Enter the server port: ");
-            int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
+            int serverPort = readInt("Invalid port number. Please try again.",
+                    0, Integer.MAX_VALUE);
             clientController.parseGeneralStartupResult(this, serverIP, serverPort);
         }
     }

@@ -3,6 +3,7 @@ package nl.tiesb.ssproject.game;
 import nl.tiesb.ssproject.game.exceptions.NotInDeckException;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by Ties on 19-12-2015.
@@ -118,11 +119,7 @@ public abstract class Player implements Comparable<Player> {
     }
 
     public void addTilesToDeck(ArrayList<Tile> tiles) {
-        for (Tile tile : tiles) {
-            if (tile != null) {
-                deck.add(tile);
-            }
-        }
+        deck.addAll(tiles.stream().filter(tile -> tile != null).collect(Collectors.toList()));
     }
 
     public void removeTile(Tile tile) {

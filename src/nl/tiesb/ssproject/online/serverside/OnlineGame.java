@@ -39,7 +39,8 @@ public class OnlineGame extends Game {
     @Override
     protected void handlePlaced(Player player, int score, ArrayList<Tile> tiles) {
         super.handlePlaced(player, score, tiles);
-        String message = Protocol.SERVER_PLACED_COMMAND + " " + player.getName() + " " + Integer.toString(score);
+        String message = Protocol.SERVER_PLACED_COMMAND + " " + player.getName() +
+                " " + Integer.toString(score);
         for (Tile tile : tiles) {
             message += " " + tile.toProtocolForm();
         }

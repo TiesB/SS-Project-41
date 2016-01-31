@@ -26,10 +26,11 @@ public class SmartStrategy implements Strategy {
         Tile.Color color = firstTile.getColor();
         Tile.Shape shape = firstTile.getShape();
 
-        board.getTiles().stream().filter(tile -> Board.checkTile(tile, color, shape)).forEach(tile -> {
-            System.out.println("Found: " + tile.toLongString());
-            result.add(tile);
-        });
+        board.getTiles().stream().filter(tile -> Board.checkTile(tile, color, shape)).
+                forEach(tile -> {
+                System.out.println("Found: " + tile.toLongString());
+                result.add(tile);
+            });
 
         System.out.println("Found matching tiles: " + result);
 
@@ -69,28 +70,26 @@ public class SmartStrategy implements Strategy {
 
         ArrayList<Tile> setToRemove = null;
 
-        if (previousPlaceMoves != null) {
-            for (ArrayList<Tile> previousPlaceMove : previousPlaceMoves) {
-                for (ArrayList<Tile> set : sets) {
-                    if (set.size() == previousPlaceMove.size()) {
-                        boolean isPreviousMove = true;
-                        for (Tile tile : set) {
-                            if (!previousPlaceMove.contains(tile)) {
-                                isPreviousMove = false;
-                                continue;
-                            }
-                            if (isPreviousMove) {
-                                setToRemove = set;
-                                break;
-                            }
+        for (ArrayList<Tile> previousPlaceMove : previousPlaceMoves) {
+            for (ArrayList<Tile> set : sets) {
+                if (set.size() == previousPlaceMove.size()) {
+                    boolean isPreviousMove = true;
+                    for (Tile tile : set) {
+                        if (!previousPlaceMove.contains(tile)) {
+                            isPreviousMove = false;
+                            continue;
+                        }
+                        if (isPreviousMove) {
+                            setToRemove = set;
+                            break;
                         }
                     }
                 }
-                while (sets.contains(setToRemove)) {
-                    System.out.println("Removing set: " + setToRemove);
-                    System.out.println(sets.remove(setToRemove));
-                    System.out.println("      Found possible sets: " + sets);
-                }
+            }
+            while (sets.contains(setToRemove)) {
+                System.out.println("Removing set: " + setToRemove);
+                System.out.println(sets.remove(setToRemove));
+                System.out.println("      Found possible sets: " + sets);
             }
         }
 

@@ -28,7 +28,6 @@ public class ClientController implements Observer {
     private CommunicationController commOps;
     private final ArrayList<Observer> observers;
     private final ArrayList<String> serverFeatures;
-    private final Map<String, ArrayList<String>> playersInServer;
 
     // UI
     ChatController chatController;
@@ -43,7 +42,6 @@ public class ClientController implements Observer {
         this.useAI = useAI;
         this.observers = new ArrayList<>();
         this.serverFeatures = new ArrayList<>();
-        this.playersInServer = new HashMap<>();
         this.tilesToBeTraded = new ArrayList<>();
         this.previousScore = new ArrayList<>();
         startChat();
@@ -223,25 +221,9 @@ public class ClientController implements Observer {
             }
             serverFeatures.add(messageParts[i]);
         }
-    }
-
-    private void receivePlayersCommand(String[] messageParts) {
-        if (messageParts.length >= 2) {
-            for (int i = 1; i < messageParts.length; i++) {
-                playersInServer.put(messageParts[i], new ArrayList<>());
-            }
+        if (serverFeatures.contains(Protocol.CHAT_FEATURE)) {
+            startChat();
         }
-    }
-
-    private void receiveJoinCommand(String[] messageParts) {
-        //TODO: Onduidelijke specificatie.
-    }
-
-    private void receiveDisconnectCommand(String[] messageParts) {
-        if (messageParts.length < 2) {
-            return;
-        }
-        playersInServer.remove(messageParts[1]);
     }
 
     private void receiveStartGameCommand(String[] messageParts) {
@@ -338,12 +320,6 @@ public class ClientController implements Observer {
             currentGame.removeTilesFromDeck(tilesToBeTraded);
             tilesToBeTraded.clear();
         }
-
-        try {
-            int amount = Integer.parseInt(messageParts[2]);
-        } catch (NumberFormatException e) {
-            //
-        }
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
@@ -365,15 +341,6 @@ public class ClientController implements Observer {
             switch (command) {
                 case Protocol.SERVER_WELCOME_COMMAND:
                     receiveWelcomeCommand(parts);
-                    break;
-                case Protocol.SERVER_PLAYERS_COMMAND:
-                    receivePlayersCommand(parts);
-                    break;
-                case Protocol.SERVER_JOIN_COMMAND:
-                    receiveJoinCommand(parts);
-                    break;
-                case Protocol.SERVER_DISCONNECT_COMMAND:
-                    receiveDisconnectCommand(parts);
                     break;
                 case Protocol.SERVER_START_GAME_COMMAND:
                     receiveStartGameCommand(parts);

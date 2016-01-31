@@ -57,14 +57,14 @@ public class ChatConsole extends Application {
             String message = input.getText();
 
             if (!message.equals("")) {
-                ObservableList<String> recipients = playersView.getSelectionModel().getSelectedItems();
+                ObservableList<String> recipients = playersView
+                        .getSelectionModel().getSelectedItems();
                 if (recipients.size() > 0) {
-                    for (String recipient : recipients) {
-                        if (!recipient.equals("You")) {
-                            chatController.sendPrivateMessage(recipient, message);
-                            addSentPrivateMessage(recipient, message);
-                        }
-                    }
+                    recipients.stream().filter(recipient ->
+                            !recipient.equals("You")).forEach(recipient -> {
+                                chatController.sendPrivateMessage(recipient, message);
+                                addSentPrivateMessage(recipient, message);
+                            });
                 } else {
                     chatController.sendGeneralMessage(message);
                 }
@@ -94,7 +94,8 @@ public class ChatConsole extends Application {
         lock.lock();
         Platform.runLater(() -> {
             // Replace the sender with "You" if user is sender.
-            String line = timeStamp + " - " + (username != null && sender.equals(username) ? "You" : sender) + ": " + message;
+            String line = timeStamp + " - " +
+                    (username != null && sender.equals(username) ? "You" : sender) + ": " + message;
             messagesList.add(line);
         });
         lock.unlock();
@@ -258,11 +259,16 @@ public class ChatConsole extends Application {
         usageAlert.setTitle("Usage Information");
         usageAlert.setGraphic(new ImageView(getClass().getResource("logo.png").toString()));
         usageAlert.setHeaderText("");
-        usageAlert.setContentText("Wait for the list to show \"" + CONNECTED_MESSAGE + "\"." + System.lineSeparator() +
-                "Now you can type a message in the lower input box, and send it by pressing the \"" + SEND_BUTTON_TEXT + "\" button." + System.lineSeparator() +
+        usageAlert.setContentText("Wait for the list to show \"" + CONNECTED_MESSAGE + "\"." +
                 System.lineSeparator() +
-                "You can send private messages by selecting the recipient in the list on the right." + System.lineSeparator() +
-                "To send general messages again, deselect the name you are sending private messages to."
+                "Now you can type a message in the lower input box, and send it by pressing the \""
+                + SEND_BUTTON_TEXT + "\" button." +
+                System.lineSeparator() +
+                System.lineSeparator() +
+                "You can send private messages by selecting the recipient in the list on the right."
+                + System.lineSeparator() +
+                "To send general messages again, " +
+                "deselect the name you are sending private messages to."
         );
 
         usageAlert.show();

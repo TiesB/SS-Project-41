@@ -191,13 +191,15 @@ public class TUIController extends Thread implements Observer {
         while (tiles.size() < 6
                 && tiles.size() < clientController.getCurrentGame().getAmountOfTilesInBag()) {
             printMessageLine(false, "Which tile do you want to place?");
-            printMessage(true, "Choose one per time, by entering the corresponding number (or -1 to stop): ");
+            printMessage(true, "Choose one per time, by entering the corresponding number " +
+                    "(or -1 to stop): ");
             int response = readInt("That's not a valid choice. Choose -1 to 5.", -2, 6);
             if (response != -1) {
                 Tile tile = clientController.getCurrentGame().getTileFromDeck(response);
                 if (tile != null && tempDeck.contains(tile)) {
                     if (readXY) {
-                        printMessage(false, "At what X coordinate do you want to place this tile: ");
+                        printMessage(false,
+                                "At what X coordinate do you want to place this tile: ");
                         int x = readInt("", Integer.MIN_VALUE, Integer.MAX_VALUE);
                         printMessage(false, "And at what y coordinate: ");
                         int y = readInt("", Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -331,7 +333,8 @@ public class TUIController extends Thread implements Observer {
 
         String player = messageParts[1];
         int count = (messageParts.length - 2) / 2;
-        printMessageLine(false, (player.equals(clientController.getUsername()) ? "You have" : player + " has") + " placed " + Integer.toString(count) + " tiles.");
+        printMessageLine(false, (player.equals(clientController.getUsername()) ? "You have" :
+                player + " has") + " placed " + Integer.toString(count) + " tiles.");
     }
 
     private void receiveTradedCommand(String[] messageParts) {
@@ -356,7 +359,7 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void receiveErrorCommand(String[] messageParts) {
-        int errorCode = -1;
+        int errorCode;
         try {
             errorCode = Integer.parseInt(messageParts[1]);
         } catch (NumberFormatException e) {

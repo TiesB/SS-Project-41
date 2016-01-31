@@ -19,7 +19,7 @@ public class ChatController extends Thread implements Observer {
 
     public ChatController(ClientController clientController) {
         this.clientController = clientController;
-        this.chatConsole = new ChatConsole(); // TODO: 25-1-2016 Make messageList not crash when size is extremely big.
+        this.chatConsole = new ChatConsole();
     }
 
     public void sendGeneralMessage(String message) {
@@ -41,16 +41,12 @@ public class ChatController extends Thread implements Observer {
     }
 
     private void receiveWelcomeMessage(String[] messageParts) {
-        Platform.runLater(() -> {
-            chatConsole.connected(clientController.getUsername());
-        });
+        Platform.runLater(() -> chatConsole.connected(clientController.getUsername()));
     }
 
     private void receiveDisconnectCommand(String[] messageParts) {
         if (messageParts.length == 2) {
-            Platform.runLater(() -> {
-                chatConsole.removePlayer(messageParts[1]);
-            });
+            Platform.runLater(() -> chatConsole.removePlayer(messageParts[1]));
         }
     }
 
@@ -64,13 +60,9 @@ public class ChatController extends Thread implements Observer {
                 players.add(part);
             }
         }
-        Platform.runLater(() -> {
-            for (String player : players) {
-                if (!player.equals(clientController.getUsername())) {
-                    chatConsole.addPlayer(player);
-                }
-            }
-        });
+        Platform.runLater(() -> players.stream().filter(player ->
+                !player.equals(clientController.getUsername())).forEach(player ->
+                chatConsole.addPlayer(player)));
     }
 
     private void receivePlayersCommand(String[] messageParts) {
@@ -106,9 +98,7 @@ public class ChatController extends Thread implements Observer {
             message += messageParts[messageParts.length - 1];
         }
         String m = message;
-        Platform.runLater(() -> {
-            chatConsole.addReceivedPrivateMessage(messageParts[1], m);
-        });
+        Platform.runLater(() -> chatConsole.addReceivedPrivateMessage(messageParts[1], m));
     }
 
     @Override

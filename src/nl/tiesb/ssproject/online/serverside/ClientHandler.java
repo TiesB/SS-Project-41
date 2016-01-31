@@ -274,7 +274,8 @@ public class ClientHandler extends Thread {
             String tileString = messageParts[i];
             String locationString = messageParts[i + 1];
             try {
-                printDebugMessage("Going to parse tile with: " + tileString + " @ " + locationString);
+                printDebugMessage("Going to parse tile with: " + tileString +
+                        " @ " + locationString);
                 Tile tile = Tile.fromProtocolString(tileString, locationString);
                 printDebugMessage("Tile: " + tile.toLongString());
                 tiles.add(tile);
@@ -320,7 +321,8 @@ public class ClientHandler extends Thread {
             currentGame.trade(this, tiles);
         } catch (MoveException e) {
             if (DEBUG) {
-                System.out.println("[DEBUG] Actual deck: " +getCurrentGame().getPlayer(this).getDeck());
+                System.out.println("[DEBUG] Actual deck: " +
+                        getCurrentGame().getPlayer(this).getDeck());
                 System.out.println("[DEBUG] " + e.getMessage());
             }
             if (e instanceof NoTilesLeftInBagException) {
