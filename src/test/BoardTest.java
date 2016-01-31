@@ -4,12 +4,12 @@ package test;
  * @author Ties
  */
 
-import nl.tiesdavid.ssproject.game.Board;
-import nl.tiesdavid.ssproject.game.Tile;
-import nl.tiesdavid.ssproject.game.exceptions.CoordinatesAlreadyFilledException;
-import nl.tiesdavid.ssproject.game.exceptions.InvalidTilePlacementException;
-import nl.tiesdavid.ssproject.game.exceptions.MoveException;
-import nl.tiesdavid.ssproject.game.exceptions.NoNeighboringTileException;
+import nl.tiesb.ssproject.game.Board;
+import nl.tiesb.ssproject.game.Tile;
+import nl.tiesb.ssproject.game.exceptions.CoordinatesAlreadyFilledException;
+import nl.tiesb.ssproject.game.exceptions.InvalidTilePlacementException;
+import nl.tiesb.ssproject.game.exceptions.MoveException;
+import nl.tiesb.ssproject.game.exceptions.NoNeighboringTileException;
 import org.junit.Before;
 import org.junit.Test;
 

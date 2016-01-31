@@ -4,9 +4,9 @@
  */
 package test;
 
-import nl.tiesdavid.ssproject.game.Game;
-import nl.tiesdavid.ssproject.game.Player;
-import nl.tiesdavid.ssproject.game.Tile;
+import nl.tiesb.ssproject.game.Game;
+import nl.tiesb.ssproject.game.Player;
+import nl.tiesb.ssproject.game.Tile;
 
 public class TestPlayer extends Player {
     TestPlayer(Game game) {
