@@ -7,5 +7,3 @@ Now you can start a server with the "Start Server.bat" file.
 
 "Start Client.bat" will start a normal client. This is a client for a human player.  
 "Start AIClient.bat" will start a AI client. After specifying a server, this client will play by itself.  
-
-![alt tag](https://travis-ci.com/TiesB/SS-Project-41.svg?token=REe8HaejobMj8KWxGpiy&branch=projectrules)
