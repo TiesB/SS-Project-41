@@ -3,13 +3,13 @@
  */
 package nl.tiesb.ssproject.online.clientside;
 
-public class Client extends Thread {
+public class AIClient extends Thread {
     @Override
     public void run() {
-        new ClientController(false);
+        new ClientController(true);
     }
 
     public static void main(String[] args) {
-        new Client().start();
+        new AIClient().start();
     }
 }

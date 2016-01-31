@@ -22,12 +22,12 @@ import java.util.*;
 public class ClientController implements Observer {
     public static final boolean DEBUG = false;
 
-    private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
 
     private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
 
     // Control
+    private final boolean useAI;
     private CommunicationController commOps;
     private final ArrayList<Observer> observers;
     private final ArrayList<String> serverFeatures;
@@ -42,7 +42,8 @@ public class ClientController implements Observer {
     private ArrayList<Tile> tilesToBeTraded;
     private ArrayList<Pair<String, Integer>> previousScore;
 
-    public ClientController() {
+    public ClientController(boolean useAI) {
+        this.useAI = useAI;
         this.observers = new ArrayList<>();
         this.serverFeatures = new ArrayList<>();
         this.playersInServer = new HashMap<>();
@@ -59,7 +60,7 @@ public class ClientController implements Observer {
     }
 
     private void startUI() {
-        if (USE_AI) {
+        if (useAI) {
             AIPlayer aiPlayer = new AIPlayer(this);
             aiPlayer.start();
             addObserver(aiPlayer);
