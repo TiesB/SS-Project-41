@@ -6,6 +6,7 @@ package nl.tiesdavid.ssproject.online.serverside;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server extends Thread {
     private final int port;
@@ -17,11 +18,6 @@ public class Server extends Thread {
     @Override
     public void run() {
         try {
-            /* TODO
-            Replace with:
-                new ServerSocket(port);
-            when actually going online.
-             */
             ServerSocket serverSocket =
                     new ServerSocket(port);
 
@@ -39,25 +35,21 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
-
-    private static final String USAGE = "Arguments: <portnumber>";
-
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println(USAGE);
-            System.exit(-1);
-        }
-
         int port = 0;
+        Scanner scanner = new Scanner(System.in);
 
-        try {
-            port = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            System.out.println(USAGE);
-            System.exit(-1);
+        while (port == 0) {
+            System.out.print("Enter the port number the server sould run on: ");
+            int input = scanner.nextInt();
+            if (input <= 0) {
+                System.out.println("Enter a value above 0.");
+} else {
+        port = input;
+        }
         }
 
         System.out.println("Server starting...");
         new Server(port).start();
-    }
-}
+        }
+        }

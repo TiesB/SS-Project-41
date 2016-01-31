@@ -9,7 +9,6 @@ import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
 import nl.tiesdavid.ssproject.online.clientside.ui.guiviews.ChatConsole;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,6 +38,12 @@ public class ChatController extends Thread implements Observer {
     public void run() {
         chatConsole.setChatController(this);
         Application.launch(chatConsole.getClass());
+    }
+
+    private void receiveWelcomeMessage(String[] messageParts) {
+        Platform.runLater(() -> {
+            chatConsole.connected(clientController.getUsername());
+        });
     }
 
     private void receiveDisconnectCommand(String[] messageParts) {
@@ -78,29 +83,43 @@ public class ChatController extends Thread implements Observer {
         });
     }
 
+    private void receiveGeneralMessageCommand(String[] messageParts) {
+        String message = "";
+        if (messageParts.length >= 3) {
+            for (int i = 2; i < messageParts.length - 1; i++) {
+                message += messageParts[i] + " ";
+            }
+            message += messageParts[messageParts.length - 1];
+        }
+        final String m = message;
+        Platform.runLater(() -> {
+            chatConsole.addGeneralMessage(messageParts[1], m); //TODO
+        });
+    }
+
+    private void receivePrivateMessageCommand(String[] messageParts) {
+        String message = "";
+        if (messageParts.length >= 3) {
+            for (int i = 2; i < messageParts.length - 1; i++) {
+                message += messageParts[i] + " ";
+            }
+            message += messageParts[messageParts.length - 1];
+        }
+        String m = message;
+        Platform.runLater(() -> {
+            chatConsole.addReceivedPrivateMessage(messageParts[1], m);
+        });
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         if (arg instanceof String) {
-            String timeStamp = new SimpleDateFormat("HH:mm:ss").format(System.currentTimeMillis());
-
             String[] parts = ((String) arg).split(" ");
             String command = parts[0];
 
-            String message = "";
-            if (parts.length >= 3) {
-                for (int i = 2; i < parts.length - 1; i++) {
-                    message += parts[i] + " ";
-                }
-                message += parts[parts.length - 1];
-            }
-
-            final String m = message;
-
             switch (command) {
                 case Protocol.SERVER_WELCOME_COMMAND:
-                    Platform.runLater(() -> {
-                        chatConsole.connected();
-                    });
+                    receiveWelcomeMessage(parts);
                     break;
                 case Protocol.SERVER_DISCONNECT_COMMAND:
                     receiveDisconnectCommand(parts);
@@ -112,14 +131,10 @@ public class ChatController extends Thread implements Observer {
                     receivePlayersCommand(parts);
                     break;
                 case Protocol.SERVER_GENERAL_CHAT_MESSAGE_COMMAND:
-                    Platform.runLater(() -> {
-                        chatConsole.addGeneralMessage(timeStamp, parts[1], m); //TODO
-                    });
+                    receiveGeneralMessageCommand(parts);
                     break;
                 case Protocol.SERVER_PRIVATE_CHAT_MESSAGE_COMMAND:
-                    Platform.runLater(() -> {
-                        chatConsole.addPrivateMessage(timeStamp, parts[1], m);
-                    });
+                    receivePrivateMessageCommand(parts);
                     break;
             }
         }
