@@ -56,16 +56,18 @@ public class ChatConsole extends Application {
         Platform.runLater(() -> {
             String message = input.getText();
 
-            ObservableList<String> recipients = playersView.getSelectionModel().getSelectedItems();
-            if (recipients.size() > 0) {
-                for (String recipient : recipients) {
-                    if (!recipient.equals("You")) {
-                        chatController.sendPrivateMessage(recipient, message);
-                        addSentPrivateMessage(recipient, message);
+            if (!message.equals("")) {
+                ObservableList<String> recipients = playersView.getSelectionModel().getSelectedItems();
+                if (recipients.size() > 0) {
+                    for (String recipient : recipients) {
+                        if (!recipient.equals("You")) {
+                            chatController.sendPrivateMessage(recipient, message);
+                            addSentPrivateMessage(recipient, message);
+                        }
                     }
+                } else {
+                    chatController.sendGeneralMessage(message);
                 }
-            } else {
-                chatController.sendGeneralMessage(message);
             }
             input.setText("");
         });

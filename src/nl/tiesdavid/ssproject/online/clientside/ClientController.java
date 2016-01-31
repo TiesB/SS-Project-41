@@ -19,8 +19,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.*;
 
-public class ClientController extends Observable implements Observer {
-    public static final boolean DEBUG = true;
+public class ClientController implements Observer {
+    public static final boolean DEBUG = false;
 
     private static final boolean USE_AI = false;
     private static final boolean USE_GUI = false;
@@ -29,6 +29,7 @@ public class ClientController extends Observable implements Observer {
 
     // Control
     private CommunicationController commOps;
+    private final ArrayList<Observer> observers;
     private final ArrayList<String> serverFeatures;
     private final Map<String, ArrayList<String>> playersInServer;
 
@@ -42,6 +43,7 @@ public class ClientController extends Observable implements Observer {
     private ArrayList<Pair<String, Integer>> previousScore;
 
     public ClientController() {
+        this.observers = new ArrayList<>();
         this.serverFeatures = new ArrayList<>();
         this.playersInServer = new HashMap<>();
         this.tilesToBeTraded = new ArrayList<>();
@@ -140,6 +142,26 @@ public class ClientController extends Observable implements Observer {
         return commOps != null;
     }
 
+    public void addObserver(Observer observer) {
+        if (commOps == null) {
+            observers.add(observer);
+        } else {
+            commOps.addObserver(observer);
+        }
+    }
+
+    public ArrayList<Observer> getObservers() {
+        return observers;
+    }
+
+    public void deleteObserver(Observer observer) {
+        if (commOps != null) {
+            commOps.deleteObserver(observer);
+        } else {
+            observers.remove(observer);
+        }
+    }
+
     // Sending commands
     private synchronized void sendMessage(String message) {
         if (commOps != null) {
@@ -152,7 +174,7 @@ public class ClientController extends Observable implements Observer {
         for (String option : FEATURES) {
             message += " " + option;
         }
-        commOps.sendMessage(message);
+        sendMessage(message);
     }
 
     public void sendJoinCommand(int amount) {
@@ -391,8 +413,5 @@ public class ClientController extends Observable implements Observer {
                  */
             }
         }
-
-        setChanged(); // Forward messages to UI.
-        notifyObservers(arg);
     }
 }

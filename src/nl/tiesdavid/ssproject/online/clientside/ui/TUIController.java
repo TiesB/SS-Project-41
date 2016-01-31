@@ -10,6 +10,7 @@ import nl.tiesdavid.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesdavid.ssproject.online.Protocol;
 import nl.tiesdavid.ssproject.online.clientside.ClientController;
 
+import java.io.PrintWriter;
 import java.util.*;
 
 public class TUIController extends Thread implements Observer {
@@ -28,19 +29,22 @@ public class TUIController extends Thread implements Observer {
         scanner = new Scanner(System.in);
         init();
         try {
-            Thread.sleep(100); // So that the
+            Thread.sleep(100); // So the connection is initialized.
         } catch (InterruptedException ignored) {
         }
-        askIfPlayerWantsToJoin();
+        askAndSetUsername();
     }
 
     private void init() {
-        String username = readUsername();
         printMessage(false, "Enter the server IP address: ");
         String serverIP = readString();
         printMessage(false, "Enter the server port: ");
         int serverPort = readInt("Invalid port number. Please try again.", 0, Integer.MAX_VALUE);
         clientController.parseGeneralStartupResult(this, serverIP, serverPort);
+    }
+
+    private void askAndSetUsername() {
+        String username = readUsername();
         clientController.setUsername(username);
     }
 
@@ -51,10 +55,11 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void takeTurn() {
+        printBoard();
         printDeck();
         printMessageLine(false, "Do you want to:");
-        printMessageLine(false, " (1) Place (a) tile(s).");
-        printMessageLine(false, " (2) Trade (a) tile(s).");
+        printMessageLine(false, " (1) Place tile(s).");
+        printMessageLine(false, " (2) Trade tile(s).");
         int response = readInt("That's not a valid choice. Choose 1 or 2.", 0, 3);
         switch (response) {
             case 1:
@@ -125,16 +130,18 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void printBoard() {
-        //TODO
+        clientController.getCurrentGame().getBoard().printBoard(new PrintWriter(System.out));
     }
 
     private void printDeck() {
         String message = "Your current deck is:";
         ObservableList deck = clientController.getCurrentGame().getDeck();
-        for (int i = 0; i < deck.size(); i++) {
-            message += " (" + Integer.toString(i) + ") " + deck.get(i).toString();
+        if (deck.size() > 0) {
+            for (int i = 0; i < deck.size(); i++) {
+                message += " (" + Integer.toString(i) + ") " + deck.get(i).toString();
+            }
+            printMessageLine(false, message);
         }
-        printMessageLine(false, message);
     }
 
     private int readInt(String errorMessage, int lowerBound, int upperBound) {
@@ -157,7 +164,10 @@ public class TUIController extends Thread implements Observer {
     }
 
     private String readString() {
-        return scanner.nextLine();
+        if (scanner.hasNext()) {
+            return scanner.next();
+        }
+        return "";
     }
 
     private ArrayList<Tile> readTilesForMove() {
@@ -185,14 +195,18 @@ public class TUIController extends Thread implements Observer {
         while (tiles.size() < 6
                 && tiles.size() < clientController.getCurrentGame().getAmountOfTilesInBag()) {
             printMessageLine(false, "Which tile do you want to place?");
-            printMessage(true, "Choose one per time, by entering the corresponding number: ");
-            int response = readInt("That's not a valid choice. Choose 0 to 5.", -1, 6);
-            Tile tile = clientController.getCurrentGame().getTileFromDeck(response);
-            if (tile != null && tempDeck.contains(tile)) {
-                tiles.add(tile);
-                tempDeck.remove(tile);
-            } else if (!tempDeck.contains(tile)) {
-                printMessageLine(false, "You have already chosen this tile.");
+            printMessage(true, "Choose one per time, by entering the corresponding number (or -1 to stop): ");
+            int response = readInt("That's not a valid choice. Choose -1 to 5.", -2, 6);
+            if (response != -1) {
+                Tile tile = clientController.getCurrentGame().getTileFromDeck(response);
+                if (tile != null && tempDeck.contains(tile)) {
+                    tiles.add(tile);
+                    tempDeck.remove(tile);
+                } else if (!tempDeck.contains(tile)) {
+                    printMessageLine(false, "You have already chosen this tile.");
+                }
+            } else {
+                break;
             }
         }
         return tiles;
@@ -201,8 +215,10 @@ public class TUIController extends Thread implements Observer {
     private String readUsername() {
         printMessage(false, "Enter your username: ");
         String username = readString();
-        if (!username.contains("\\") && !username.contains(" ")) {
+        if (!username.contains("\\") && !username.contains(" ") && !username.equals("")) {
             return username;
+        } else if (username.equals("")) {
+            return readUsername();
         } else {
             printMessageLine(false, "Invalid username. Please enter again.");
             return readUsername();
@@ -217,6 +233,7 @@ public class TUIController extends Thread implements Observer {
 
     private void receiveWelcomeCommand(String[] messageParts) {
         printMessageLine(true, "You have succesfully joined the server.");
+        askIfPlayerWantsToJoin();
     }
 
     private void receiveJoinCommand(String[] messageParts) {
@@ -267,7 +284,8 @@ public class TUIController extends Thread implements Observer {
     private void receiveStartGameCommand(String[] messageParts) {
         String message = "Starting game with: ";
         for (int i = 1; i < messageParts.length; i++) {
-            message += (i == 1 ? "" : ',') + messageParts[i];
+            message += (i == 1 ? "" : "" +
+                    ", ") + messageParts[i];
         }
         printMessageLine(false, message);
     }
@@ -322,17 +340,36 @@ public class TUIController extends Thread implements Observer {
     }
 
     private void receiveEndGameCommand(String[] messageParts) {
+        printMessageLine(false, "The game has ended.");
         ArrayList<Pair<String, Integer>> previousScore = clientController.getPreviousScore();
-        previousScore.sort(new Comparator<Pair<String, Integer>>() {
-            @Override
-            public int compare(Pair<String, Integer> o1, Pair<String, Integer> o2) {
-                return Integer.compare(o1.getValue(), o2.getValue());
-            }
-        });
-        Pair<String, Integer> winner = clientController.getPreviousScore().
-                get(previousScore.size() - 1);
-        printMessageLine(false, winner.getKey() + " has won with "
-                + Integer.toString(winner.getValue()) + " points!");
+        if (previousScore != null && previousScore.size() > 0) {
+            previousScore.sort((o1, o2) -> Integer.compare(o1.getValue(), o2.getValue()));
+            Pair<String, Integer> winner = previousScore.
+                    get(previousScore.size() - 1);
+            printMessageLine(false, winner.getKey() + " has won with "
+                    + Integer.toString(winner.getValue()) + " points!");
+        }
+        askIfPlayerWantsToJoin();
+    }
+
+    private void receiveErrorCommand(String[] messageParts) {
+        int errorCode = -1;
+        try {
+            errorCode = Integer.parseInt(messageParts[1]);
+        } catch (NumberFormatException e) {
+            return;
+        }
+
+        switch (errorCode) {
+            case 2:
+                receiveErrorTwo();
+                break;
+        }
+    }
+
+    private void receiveErrorTwo() {
+        System.out.println("The username you selected was either invalid or already chosen.");
+        askAndSetUsername();
     }
 
     @Override
@@ -370,6 +407,9 @@ public class TUIController extends Thread implements Observer {
                         break;
                     case Protocol.SERVER_END_GAME_COMMAND:
                         receiveEndGameCommand(parts);
+                        break;
+                    case Protocol.SERVER_ERROR_COMMAND:
+                        receiveErrorCommand(parts);
                         break;
                 }
             }

@@ -5,7 +5,9 @@ package nl.tiesdavid.ssproject.online.clientside;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CommunicationController extends Observable {
@@ -26,6 +28,7 @@ public class CommunicationController extends Observable {
                     if (line != null) {
                         if (!line.equals("")) {
                             if (ClientController.DEBUG) {
+                                System.out.println("[DEBUG] Observers: " + controller.countObservers());
                                 System.out.println("[DEBUG] Received: " + line);
                             }
                             controller.setChanged();
@@ -55,6 +58,11 @@ public class CommunicationController extends Observable {
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         new Reader(this, in).start();
+
+        ArrayList<Observer> clientControllerObservers = clientController.getObservers();
+        for (Observer observer : clientControllerObservers) {
+            addObserver(observer);
+        }
     }
 
     public void sendMessage(String message) {

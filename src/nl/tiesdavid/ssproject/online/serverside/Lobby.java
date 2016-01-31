@@ -239,6 +239,20 @@ public class Lobby {
         game.start();
     }
 
+    public void endGame(OnlineGame game) {
+        ArrayList<ClientHandler> handlers = gamesWithClients.get(game);
+        for (ClientHandler handler : handlers) {
+            handler.disconnectFromGame();
+        }
+
+        for (ClientHandler handler : handlers) {
+            if (namesWithClients.containsValue(handler)) {
+                clientsInLobby.add(handler);
+            }
+        }
+        gamesWithClients.remove(game);
+    }
+
     private void removeWaitingClient(ClientHandler client) {
         for (ArrayList<ClientHandler> waitingClients : waitingClientsByRequestedNo.values()) {
             waitingClients.remove(client);

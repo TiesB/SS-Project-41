@@ -350,40 +350,48 @@ public class Board {
     }
 
     public void printBoard(Writer out) {
-        String string;
+        String string = "";
 
-        for (int i = minY - 2; i <= maxY + 2; i++) {
-            string = "BOARD ";
-
-            if (i == minY - 2) {
-                string += String.format("%5s", "");
-            } else if (i <= maxY + 1) {
-                string += String.format("%5s", Integer.toString(i)) + "|";
-            } else {
-                string += String.format("%5s", "y");
+        if (tiles.size() == 0) {
+            try {
+                out.write("The board is empty.");
+                out.flush();
+            } catch (IOException e) {
+                //
             }
-
-            for (int j = minX - 2; j <= maxX + 1; j++) {
+        } else {
+            for (int i = minY - 2; i <= maxY + 2; i++) {
                 if (i == minY - 2) {
-                    string += String.format("%4s", Integer.toString(j));
+                    string += String.format("%5s", "");
+                } else if (i <= maxY + 1) {
+                    string += String.format("%5s", Integer.toString(i)) + "|";
                 } else {
-                    Tile tile = getTile(j, i);
-                    if (tile == null) {
-                        string += String.format("%4s", "");
+                    string += String.format("%5s", "y");
+                }
+
+                for (int j = minX - 2; j <= maxX + 1; j++) {
+                    if (i == minY - 2) {
+                        string += String.format("%4s", Integer.toString(j));
                     } else {
-                        string += String.format("%4s", tile);
+                        Tile tile = getTile(j, i);
+                        if (tile == null) {
+                            string += String.format("%4s", "");
+                        } else {
+                            string += String.format("%4s", tile);
+                        }
                     }
                 }
-            }
 
-            if (i == minY - 2) {
-                string += String.format("%4s", "x");
-            }
+                if (i == minY - 2) {
+                    string += String.format("%4s", "x");
+                }
 
-            try {
-                out.write(string + System.lineSeparator());
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    out.write(string + System.lineSeparator());
+                    out.flush();
+                } catch (IOException e) {
+                    //
+                }
             }
         }
     }

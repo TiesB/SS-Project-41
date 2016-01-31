@@ -114,6 +114,7 @@ public class OnlineGame extends Game {
     public synchronized void shutdown() {
         finish();
         distributeMessage(Protocol.SERVER_END_GAME_COMMAND);
+        lobby.endGame(this);
     }
 
     public ArrayList<ClientHandler> getClientHandlers() {

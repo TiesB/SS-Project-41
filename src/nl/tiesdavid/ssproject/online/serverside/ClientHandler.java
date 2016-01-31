@@ -45,7 +45,6 @@ public class ClientHandler extends Thread {
             } catch (IOException | NullPointerException e) {
                 System.out.println("Lost connection with "
                         + clientHandler.getPlayerName() + " @ " + inetAddress);
-                e.printStackTrace(System.out);
             } finally {
                 clientHandler.disconnect();
             }
@@ -88,6 +87,7 @@ public class ClientHandler extends Thread {
     }
 
     public void disconnectFromGame() {
+        printDebugMessage("Disconnected from game.");
         this.currentGame = null;
     }
 

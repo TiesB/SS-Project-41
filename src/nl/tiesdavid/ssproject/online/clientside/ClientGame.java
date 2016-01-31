@@ -19,14 +19,15 @@ public class ClientGame {
     private Board board;
 
     public ClientGame() {
-        System.out.println("Creating new game");
         this.playersWithScores = new ArrayList<>();
         this.amountOfTilesInBag = Game.AMOUNT_OF_DUPLICATES_IN_BAG * 6 * 6;
         this.deck = FXCollections.observableArrayList();
         this.deck.addListener(new ListChangeListener<Tile>() {
             @Override
             public void onChanged(Change<? extends Tile> c) {
-                System.out.println("Tile changed: " + c);
+                if (ClientController.DEBUG) {
+                    System.out.println("[DEBUG] Tile changed: " + c);
+                }
             }
         });
         this.board = new Board();

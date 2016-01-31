@@ -44,12 +44,12 @@ public class Server extends Thread {
             int input = scanner.nextInt();
             if (input <= 0) {
                 System.out.println("Enter a value above 0.");
-} else {
-        port = input;
-        }
+            } else {
+                port = input;
+            }
         }
 
         System.out.println("Server starting...");
         new Server(port).start();
-        }
-        }
+    }
+}
