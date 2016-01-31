@@ -4,14 +4,13 @@
 package nl.tiesb.ssproject.online.clientside;
 
 import javafx.util.Pair;
+import nl.tiesb.ssproject.game.Player;
 import nl.tiesb.ssproject.game.Tile;
 import nl.tiesb.ssproject.game.exceptions.NonexistingPlayerException;
+import nl.tiesb.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesb.ssproject.online.Protocol;
 import nl.tiesb.ssproject.online.clientside.ai.AIPlayer;
-import nl.tiesb.ssproject.game.Player;
-import nl.tiesb.ssproject.game.exceptions.UnparsableDataException;
 import nl.tiesb.ssproject.online.clientside.ui.ChatController;
-import nl.tiesb.ssproject.online.clientside.ui.GUIController;
 import nl.tiesb.ssproject.online.clientside.ui.TUIController;
 
 import java.io.IOException;
@@ -21,8 +20,6 @@ import java.util.*;
 
 public class ClientController implements Observer {
     public static final boolean DEBUG = false;
-
-    private static final boolean USE_GUI = false;
 
     private static final String[] FEATURES = new String[] {Protocol.CHAT_FEATURE};
 
@@ -49,8 +46,8 @@ public class ClientController implements Observer {
         this.playersInServer = new HashMap<>();
         this.tilesToBeTraded = new ArrayList<>();
         this.previousScore = new ArrayList<>();
-        startUI();
         startChat();
+        startUI();
     }
 
     private void startChat() {
@@ -64,10 +61,6 @@ public class ClientController implements Observer {
             AIPlayer aiPlayer = new AIPlayer(this);
             aiPlayer.start();
             addObserver(aiPlayer);
-        } else if (USE_GUI) {
-            GUIController guiController = new GUIController(this);
-            guiController.start();
-            addObserver(guiController);
         } else {
             TUIController tuiController = new TUIController(this);
             tuiController.start();
@@ -89,17 +82,6 @@ public class ClientController implements Observer {
             deleteObserver(observer);
             startUI();
         }
-    }
-
-    public void parseGUIStartupResult(GUIController guiController, ArrayList<String> result) {
-        if (result.size() < 3) {
-            return;
-        }
-
-        int serverPort = Integer.parseInt(result.get(2));
-
-        parseGeneralStartupResult(guiController, result.get(1), serverPort);
-        setUsername(result.get(0));
     }
 
     public void setUsername(String newUsername) {

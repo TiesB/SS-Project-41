@@ -254,9 +254,9 @@ public class ChatConsole extends Application {
         // Usage alert.
         Alert usageAlert = new Alert(Alert.AlertType.INFORMATION);
         Stage alertStage = (Stage) usageAlert.getDialogPane().getScene().getWindow();
-        alertStage.getIcons().add(new Image(getClass().getResource("/icon.png").toString()));
+        alertStage.getIcons().add(new Image(getClass().getResource("icon.png").toString()));
         usageAlert.setTitle("Usage Information");
-        usageAlert.setGraphic(new ImageView(getClass().getResource("/logo.png").toString()));
+        usageAlert.setGraphic(new ImageView(getClass().getResource("logo.png").toString()));
         usageAlert.setHeaderText("");
         usageAlert.setContentText("Wait for the list to show \"" + CONNECTED_MESSAGE + "\"." + System.lineSeparator() +
                 "Now you can type a message in the lower input box, and send it by pressing the \"" + SEND_BUTTON_TEXT + "\" button." + System.lineSeparator() +
