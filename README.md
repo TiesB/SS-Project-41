@@ -2,7 +2,7 @@
 Software Systems project for group 61.
 
 # Usage
-First you have to compile the project by starting the "Compile.bat" batch file (note: this project uses and nees Java 8).  
+First you have to compile the project by starting the "Compile.bat" batch file (note: this project uses and needs Java 8).  
 Now you can start a server with the "Start Server.bat" file.
 
 "Start Client.bat" will start a normal client. This is a client for a human player.  
